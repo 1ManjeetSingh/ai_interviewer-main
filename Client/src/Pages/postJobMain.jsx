@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import linkedIn from '../assets/linkedIn.png';
 import ziprecruiter from '../assets/ziprecruiter.png';
@@ -48,6 +49,7 @@ const PostJobMain = () => {
     ];
 
     const [jobCards, setJobCards] = useState({});
+    const navigate = useNavigate();
 
     const fetchJobPosts = async () => {
         try {
@@ -60,6 +62,7 @@ const PostJobMain = () => {
                 // Transform fetched data into jobCards format
                 jobs.forEach((job) => {
                     jobData[job.jobTitle] = {
+                        postId: job._id,
                         postedDate: new Date(job.date).toLocaleDateString('en-GB', {
                             day: 'numeric',
                             month: 'short',
@@ -95,7 +98,7 @@ const PostJobMain = () => {
     // main variable 
     const [jobPost, setJobPost] = useState({
         jobTitle: '',
-        Designation: '',
+        designation: '',
         jobType: '',
         workplaceType: '',
         jobDescription: '',
@@ -106,13 +109,13 @@ const PostJobMain = () => {
         jobPortalsPosting: [],
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(jobPost);
-    },[jobPost])
+    }, [jobPost])
 
-    const [jobDescription, setJobDescription] = useState(`Innovatech Solutions is a cutting-edge technology firm dedicated to revolutionizing the way businesses operate. Founded in 2023, we specialize in developing innovative software solutions that streamline processes and enhance productivity. Our team of experts is passionate about harnessing the power of artificial intelligence and machine learning to create tools that empower organizations to thrive in a competitive landscape. At Innovatech, we believe in a future where technology and creativity go hand in hand, driving success for our clients across various industries. At Innovatech Solutions, we’re all about shaking things up in the tech world! Since 2023, we’ve been crafting cool software that helps businesses run smoother and get more done. Our awesome team loves using AI and machine learning to whip up tools that help companies stand out in today’s fast-paced market. We’re all about blending tech with creativity to help our clients succeed in all sorts of industries.`);
-    const [mainSkills, setMainSkills] = useState(["HTML", "CSS", "JavaScript", "React", "TypeScript", "Tailwind CSS"]);
-    const [subSkills, setSubSkills] = useState(["Flexbox", "Grid Layout", "SASS", "CSS Animations", "Responsive Design"]);
+    const [jobDescription, setJobDescription] = useState("");
+    const [mainSkills, setMainSkills] = useState([]);
+    const [subSkills, setSubSkills] = useState([]);
 
     const [searchPhrase, setSearchPhrase] = useState('');
     const [isFocused1, setisFocused1] = useState(false);
@@ -417,9 +420,9 @@ const PostJobMain = () => {
         });
     };
 
-    useEffect(()=>{
-        console.log("selectedCompany :",selectedCompany);
-    },[selectedCompany])
+    useEffect(() => {
+        console.log("selectedCompany :", selectedCompany);
+    }, [selectedCompany])
 
     // Dialog Flow Variables
     const [openFirstComponent, setOpenFirstComponent] = useState(false);
@@ -463,7 +466,7 @@ const PostJobMain = () => {
         setJobPost((prev) => ({
             ...prev,
             jobTitle: { jobTitle },
-            Designation: { jobOption },
+            designation: { jobOption },
             jobType: { timingOption },
             workplaceType: { workplaceOption },
         }))
@@ -474,6 +477,50 @@ const PostJobMain = () => {
 
         // Optionally, close the dialog after saving
         toggleDialogFirstComponent();
+    };
+
+    // Generate Description
+    const [descriptionLoading, setDescriptionLoading] = useState(false);
+
+    const handleGenerate = async (title, position) => {
+        setDescriptionLoading(true);
+        try {
+            const res = await axios.post('http://127.0.0.1:5000/generate_job_description', {
+                job_title: title,
+                position: position
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: false  // Ensure credentials are not included (if not needed)
+            });
+
+            const data = res.data;
+
+            if (res) {
+                setJobDescription(data.job_description || "");
+                setMainSkills(data.main_skills || []);
+                setSubSkills(data.sub_skills || []);
+
+                console.log({ jobDescription, mainSkills, subSkills });
+            }
+
+        } catch (error) {
+            console.error('Error fetching job description:', error);
+
+            if (error.response) {
+                // Server responded with a status code other than 2xx
+                toast.error(`Failed to generate job description: ${error.response.data.error || 'Unknown error'}`);
+            } else if (error.request) {
+                // Request made but no response received
+                toast.error('No response from the server. Please check the connection.');
+            } else {
+                // Other errors
+                toast.error('Request failed. Please try again.');
+            }
+        } finally {
+            setDescriptionLoading(false);
+        }
     };
 
     const handleFirstToSecondComponent = async (event) => {
@@ -505,6 +552,8 @@ const PostJobMain = () => {
             ...jobData,
             // _id,
         }));
+
+        handleGenerate(jobTitle, jobOption);
 
         toggleDialogFirstComponent();
         toggleDialogSecondComponent();
@@ -635,6 +684,15 @@ const PostJobMain = () => {
         toggleDialogThirdComponent();
     }
 
+    const handleJobPostDetails = (postId) => {
+        const handleNavigate = () => {
+            // Navigate to the page with the postId as a query parameter
+            navigate(`/jobpost_updater?postId=${postId}`);
+          };
+        
+          return handleNavigate;
+    }
+
     return (
         <div className='main-container min-h-[100vh] bg-white pb-8'>
             <ToastContainer />
@@ -748,7 +806,7 @@ const PostJobMain = () => {
                             const job = jobCards[jobKey];
                             const gradientIndex = index % 5;
                             return (
-                                <div key={jobKey}>
+                                <div key={jobKey} onClick={handleJobPostDetails(jobCards[jobKey].postId)} className='cursor-default'>
                                     <div style={{ width: 525, height: 'auto', paddingTop: 12, paddingBottom: 28, paddingLeft: 12, paddingRight: 12, background: 'white', boxShadow: '0px 2px 12px rgba(0, 0, 0, 0.25)', borderRadius: 32, border: '0.50px #D388FF solid', backdropFilter: 'blur(16px)', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end', gap: 16, display: 'inline-flex' }}>
                                         <div style={{ alignSelf: 'stretch', height: 'auto', padding: 24, background: '#F5F5F5', boxShadow: '0px 0px 12px rgba(0, 0, 0, 0.25) inset', borderRadius: 24, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 16, display: 'flex' }}>
                                             <div style={{ width: '100%', height: '100%', justifyContent: 'flex-end', alignItems: 'flex-start', gap: 8, display: 'inline-flex' }}>
@@ -1051,7 +1109,7 @@ const PostJobMain = () => {
                         </div>
                     </div>
 
-                    <div className='flex flex-col w-full gap-8'>
+                    {!descriptionLoading && <div className='flex flex-col w-full gap-8'>
                         <div className='flex flex-col w-full gap-4'>
                             <h1 className='text-xl'>Main Skills</h1>
                             <div className='flex gap-4 mt-4 flex-wrap'>
@@ -1098,7 +1156,7 @@ const PostJobMain = () => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </div>}
 
                     <div className='w-full flex justify-end'>
                         <div onClick={handleSecondToThirdComponent} className="h-[43.06px] px-[17.22px] bg-[#0071db] rounded-[32.30px] border-2 border-[#0071db] justify-center items-center gap-[4.31px] inline-flex cursor-pointer">

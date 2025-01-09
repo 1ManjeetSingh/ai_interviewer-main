@@ -15,6 +15,7 @@ import Applicant from "./Pages/applicant";
 import RecruiterDashboardElements from "./Pages/recruiterDashboardElements";
 import DummyInterface from "./Pages/DummyInterface";
 import PostJobMain from "./Pages/postJobMain";
+import JobPostUpdater from "./Pages/JobPostUpdater";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/dummyInterface" element={<DummyInterface />} />
         <Route path="/postJobMain" element={<PostJobMain />} />
         <Route path="/" element={<CourseSummary />} />
+        <Route path="/jobpost_updater" element={<JobPostUpdater />} />
       </Routes>
     </BrowserRouter>
   )

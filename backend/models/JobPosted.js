@@ -43,8 +43,8 @@ const jobPostedSchema = new mongoose.Schema({
     },
     jobDescription: {
         type: String,
-        required: true,
-        trim: true,
+        // required: true,
+        // trim: true,
     },
     mainSkills: {
         type: [String],  // Array of strings for skills

@@ -31,7 +31,7 @@ const RecruiterDashboard = () => {
 
   const [jobPost, setJobPost] = useState({
     jobTitle: '',
-    Designation: '',
+    designation: '',
     jobType: '',
     workplaceType: '',
     jobDescription: '',
@@ -42,14 +42,61 @@ const RecruiterDashboard = () => {
     jobPortalsPosting: [],
   });
 
+  const fetchJobPosts = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/jobs_posted`);
+
+      if (response.status === 200) {
+        const jobs = response.data;
+        const jobData = {};
+
+        // Transform fetched data into jobCards format
+        jobs.forEach((job) => {
+          jobData[job.jobTitle] = {
+            postedOn: new Date(job.date).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+            }),
+            progress: job.Progress,
+          };
+        });
+
+        if(Object.keys(jobData).length){
+          setJobCards(jobData);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching job posts:', error);
+    }
+  };
+
+
+  // Fetch job posts on component mount
+  useEffect(() => {
+    fetchJobPosts();
+  }, []);
+
 
   const postJobCard = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/upload_job_posted`, jobPost);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/upload_job_posted_laiyla`, jobPost);
 
       if (response.status === 200) {
         toast.success("Job post saved successfully!");
 
+        setJobPost({
+          jobTitle: '',
+          designation: '',
+          jobType: '',
+          workplaceType: '',
+          jobDescription: '',
+          mainSkills: [],
+          subSkills: [],
+          salaryRange: {},
+          benefits: [],
+          jobPortalsPosting: [],
+        })
         // Optionally, close the dialog after saving
         fetchJobPosts();
       }
@@ -77,16 +124,12 @@ const RecruiterDashboard = () => {
         const response = {
           jobDescription: data.job_description || "",
           mainSkills: data.main_skills || [],
-          subSkill: data.sub_skills || []
+          subSkills: data.sub_skills || []
         };
 
         console.log("Structured Response:", response);
 
         setJobPost((prev) => ({ ...prev, ...response }));
-
-        setTimeout(()=>{
-          postJobCard();
-        },2000)
       }
 
     } catch (error) {
@@ -104,6 +147,14 @@ const RecruiterDashboard = () => {
       }
     }
   };
+
+  useEffect(()=>{
+    if(jobPost.jobDescription.length > 0){
+      setTimeout(()=>{
+        postJobCard();
+      },1000)
+    }
+  },[jobPost])
 
 
   const getTranscriptData = async () => {
@@ -163,7 +214,7 @@ const RecruiterDashboard = () => {
 
     const mappedData = {
       jobTitle: dataCollection?.['Job title']?.value || '',
-      Designation: dataCollection?.['Designation']?.value || '',
+      designation: dataCollection?.['Designation']?.value || '',
       jobType: dataCollection?.['Job type']?.value || '',
       workplaceType: dataCollection?.['workplace type']?.value || '',
     };
@@ -281,40 +332,6 @@ const RecruiterDashboard = () => {
     // }
   });
 
-  const fetchJobPosts = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/jobs_posted`);
-
-      if (response.status === 200) {
-        const jobs = response.data;
-        const jobData = {};
-
-        // Transform fetched data into jobCards format
-        jobs.forEach((job) => {
-          jobData[job.jobTitle] = {
-            postedOn: new Date(job.date).toLocaleDateString('en-GB', {
-              day: 'numeric',
-              month: 'short',
-              year: 'numeric',
-            }),
-            progress: job.Progress,
-          };
-        });
-
-        if(Object.keys(jobData).length){
-          setJobCards(jobData);
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching job posts:', error);
-    }
-  };
-
-
-  // Fetch job posts on component mount
-  useEffect(() => {
-    fetchJobPosts();
-  }, []);
 
   // 3rd
   const schedule = {
