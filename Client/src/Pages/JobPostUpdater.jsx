@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 //  second element import
@@ -37,6 +37,16 @@ const customComponents = {
 
 
 const JobPostUpdater = () => {
+
+    const navigate = useNavigate();
+    const handleJobPostDetails = () => {
+        const handleNavigate = () => {
+            // Navigate to the page with the postId as a query parameter
+            navigate(`/applicantPool`);
+          };
+        
+          return handleNavigate;
+    }
 
     const [searchParams] = useSearchParams('');
     const postId = searchParams.get('postId'); // Extract postId from query params
@@ -404,7 +414,7 @@ const JobPostUpdater = () => {
                             </div>
                         </div>
                         <div className="flex items-center space-x-4 ">
-                            <button className="p-3 rounded-[10px] border border-[#0072DC] text-[16px] font-medium text-[#0072DC]">
+                            <button onClick={handleJobPostDetails()} className="p-3 rounded-[10px] border border-[#0072DC] text-[16px] font-medium text-[#0072DC]">
                                 View application
                             </button>
                             <button className="p-[12px] rounded-[10px] text-[16px] font-medium bg-[#0072DC] text-white cursor-not-allowed">

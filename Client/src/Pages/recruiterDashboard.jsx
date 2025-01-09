@@ -14,9 +14,7 @@ import Spline from "@splinetool/react-spline";
 import { fetchTranscript } from '../webhooks/apiService';
 // import startLiveTranscription, { stopLiveTranscription } from '../webhooks/ElevenLabsEmbed'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
+import 'swiper/swiper-bundle.css';
 import { Pagination } from 'swiper/modules';
 
 
@@ -62,8 +60,8 @@ const RecruiterDashboard = () => {
           };
         });
 
-        if(Object.keys(jobData).length){
-          setJobCards(jobData);
+        if (Object.keys(jobData).length) {
+          // setJobCards(jobData);
         }
       }
     } catch (error) {
@@ -127,8 +125,6 @@ const RecruiterDashboard = () => {
           subSkills: data.sub_skills || []
         };
 
-        console.log("Structured Response:", response);
-
         setJobPost((prev) => ({ ...prev, ...response }));
       }
 
@@ -148,20 +144,19 @@ const RecruiterDashboard = () => {
     }
   };
 
-  useEffect(()=>{
-    if(jobPost.jobDescription.length > 0){
-      setTimeout(()=>{
+  useEffect(() => {
+    if (jobPost.jobDescription.length > 0) {
+      setTimeout(() => {
         postJobCard();
-      },1000)
+      }, 1000)
     }
-  },[jobPost])
+  }, [jobPost])
 
 
   const getTranscriptData = async () => {
     try {
       // Call fetchTranscript and wait for the promise to resolve
       const data = await fetchTranscript(conversationId);  // Replace with actual conversation ID
-      console.log("Resolved Data:", data?.analysis.data_collection_results);  // This logs the resolved data
       setDataCollection(data?.analysis.data_collection_results);  // Store the data in the state
 
       if (data?.analysis.data_collection_results?.['Job title']?.value && data?.analysis.data_collection_results?.['Designation']?.value) {
@@ -223,11 +218,6 @@ const RecruiterDashboard = () => {
 
   }, [dataCollection]);
 
-  useEffect(() => {
-
-    console.log(jobPost);
-
-  }, [jobPost])
 
 
 
@@ -264,72 +254,72 @@ const RecruiterDashboard = () => {
         "shortlistedCandidates": 0
       }
     },
-    // "Sales Manager": {
-    //   "postedOn": "12th Dec 2024",
-    //   "progress": {
-    //     "jobPosted": 1,
-    //     "applicantsApplied": 0,
-    //     "selectionComplete": 0,
-    //     "aiInterviewRound": 0,
-    //     "aiTechnicalRound": 0,
-    //     "shortlistedCandidates": 0
-    //   }
-    // },
-    // "Data Scientist": {
-    //   "postedOn": "12th Dec 2024",
-    //   "progress": {
-    //     "jobPosted": 1,
-    //     "applicantsApplied": 1560,
-    //     "selectionComplete": 0,
-    //     "aiInterviewRound": 0,
-    //     "aiTechnicalRound": 0,
-    //     "shortlistedCandidates": 0
-    //   }
-    // },
-    // "Ai Engineer": {
-    //   "postedOn": "12th Dec 2024",
-    //   "progress": {
-    //     "jobPosted": 1,
-    //     "applicantsApplied": 1301,
-    //     "selectionComplete": 1,
-    //     "aiInterviewRound": 0,
-    //     "aiTechnicalRound": 0,
-    //     "shortlistedCandidates": 0
-    //   }
-    // },
-    // "Marketing Manager": {
-    //   "postedOn": "12th Dec 2024",
-    //   "progress": {
-    //     "jobPosted": 1,
-    //     "applicantsApplied": 1278,
-    //     "selectionComplete": 1,
-    //     "aiInterviewRound": 1,
-    //     "aiTechnicalRound": 0,
-    //     "shortlistedCandidates": 0
-    //   }
-    // },
-    // "Sr. Account Manager": {
-    //   "postedOn": "12th Dec 2024",
-    //   "progress": {
-    //     "jobPosted": 1,
-    //     "applicantsApplied": 1278,
-    //     "selectionComplete": 1,
-    //     "aiInterviewRound": 1,
-    //     "aiTechnicalRound": 1,
-    //     "shortlistedCandidates": 0
-    //   }
-    // },
-    // "Software Developer": {
-    //   "postedOn": "12th Dec 2024",
-    //   "progress": {
-    //     "jobPosted": 1,
-    //     "applicantsApplied": 1278,
-    //     "selectionComplete": 1,
-    //     "aiInterviewRound": 1,
-    //     "aiTechnicalRound": 1,
-    //     "shortlistedCandidates": 0
-    //   }
-    // }
+    "Sales Manager": {
+      "postedOn": "12th Dec 2024",
+      "progress": {
+        "jobPosted": 1,
+        "applicantsApplied": 0,
+        "selectionComplete": 0,
+        "aiInterviewRound": 0,
+        "aiTechnicalRound": 0,
+        "shortlistedCandidates": 0
+      }
+    },
+    "Data Scientist": {
+      "postedOn": "12th Dec 2024",
+      "progress": {
+        "jobPosted": 1,
+        "applicantsApplied": 1560,
+        "selectionComplete": 0,
+        "aiInterviewRound": 0,
+        "aiTechnicalRound": 0,
+        "shortlistedCandidates": 0
+      }
+    },
+    "Ai Engineer": {
+      "postedOn": "12th Dec 2024",
+      "progress": {
+        "jobPosted": 1,
+        "applicantsApplied": 1301,
+        "selectionComplete": 1,
+        "aiInterviewRound": 0,
+        "aiTechnicalRound": 0,
+        "shortlistedCandidates": 0
+      }
+    },
+    "Marketing Manager": {
+      "postedOn": "12th Dec 2024",
+      "progress": {
+        "jobPosted": 1,
+        "applicantsApplied": 1278,
+        "selectionComplete": 1,
+        "aiInterviewRound": 1,
+        "aiTechnicalRound": 0,
+        "shortlistedCandidates": 0
+      }
+    },
+    "Sr. Account Manager": {
+      "postedOn": "12th Dec 2024",
+      "progress": {
+        "jobPosted": 1,
+        "applicantsApplied": 1278,
+        "selectionComplete": 1,
+        "aiInterviewRound": 1,
+        "aiTechnicalRound": 1,
+        "shortlistedCandidates": 0
+      }
+    },
+    "Software Developer": {
+      "postedOn": "12th Dec 2024",
+      "progress": {
+        "jobPosted": 1,
+        "applicantsApplied": 1278,
+        "selectionComplete": 1,
+        "aiInterviewRound": 1,
+        "aiTechnicalRound": 1,
+        "shortlistedCandidates": 0
+      }
+    }
   });
 
 
@@ -903,7 +893,15 @@ const RecruiterDashboard = () => {
           <div className="w-[35vw] min-w-[360px] overflow-hidden min-h-[540px] h-[50vh] relative bg-white/30 rounded-[32px] py-[24px] pl-[48px] pr-[24px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.25)] border border-[#d388ff] backdrop-blur-lg flex flex-col relative">
             <style>
               {`
+
+            .swiper-pagination {
+              width: 15px !important;
+              margin-right: 10px !important;
+            }
+
           .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
             background-color: #7D7DA4 !important;
             box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.50);
           }
@@ -915,12 +913,16 @@ const RecruiterDashboard = () => {
 
             </style>
             <Swiper
+              modules={[Pagination]}
+              pagination={{
+                clickable: true,
+                dynamicBullets: true, // Enable dynamic bullets
+              }}
               direction="vertical"  // Enables vertical sliding
               slidesPerView={1}
               spaceBetween={30}
-              pagination={{ clickable: true }}
+              // pagination={{ clickable: true }}
               onSlideChange={handleSlideChange}
-              modules={[Pagination]}
               className="h-full w-full"
             >
 

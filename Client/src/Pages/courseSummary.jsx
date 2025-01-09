@@ -74,7 +74,15 @@ const CourseSummary = () => {
 
   return (
     <div className="mx-10 my-5 regular3">
-      
+
+      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
+      <Link to="/afterSelectionUpdated">afterSelectionUpdated</Link>
+      </button>
+
+      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
+      <Link to="/applicantPool">applicantPool</Link>
+      </button>
+
       <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
       <Link to="/RecruiterDashboard">RecruiterDashboard</Link>
       </button>

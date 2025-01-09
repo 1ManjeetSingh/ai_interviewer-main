@@ -1,36 +1,54 @@
 import React, { useEffect, useState } from "react";
+import Card1 from '../../assets/Card1.gif';
+import Card2 from '../../assets/Card2.gif';
+import Card3 from '../../assets/Card3.gif';
+import Card4 from '../../assets/Card4.gif';
+import Card5 from '../../assets/Card5.gif';
+import Card6 from '../../assets/Card6.gif';
 
 const Carousel = () => {
   const items = [
     {
       title: "Unique Question Sets",
       description: "Tailored questions for authenticity",
-      icon: "https://s3-alpha-sig.figma.com/img/0ada/0b19/29f4e3cd9705c3665842a066214dad2c?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=SAvxfHBRT6u9bY-ZLDoaa2vbhMFBqzymKHxcKwBZNVnQ-CmXp5GkqyHg~CHtGeMO~-thHK6FvzIrA7FX1IBReW9t7cBN791SsXGKXqCQc-IRdV7NU3RXMxZDzl7bgHh5uvT1jshn6BFeZ3huKDmAwHgD1a-0i44n6xueWoQmG~1a3gOGCrn9LMwJ4In4hb9V-8TqqjWONWZoJOPUKdvl9kP0AeLJHyfhQOnQm~v-CEZUnr8fwbYKLZvUTJn0Tc7QycOy2IOuc-p4zMAk4zs-NWawMZuwMtEZFiO0uDFB9M4z~KBmaiTF8Xu0UZmtkmIIDIHeb6~YUTS1S9M-HO02ag__",
+      icon: Card1,
+      backgroundColor: "#FFD8FF",
+      gradient: "270.94deg, #FFB5FF -4.62%, #FF69B4 85.86%",
     },
     {
       title: "Multilingual Interviews",
       description: "Assess in any language",
-      icon: "https://s3-alpha-sig.figma.com/img/9c7b/c700/7f7ea02700f5dacd86d8ae0cb3f8d7c2?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Kl3L3xAXYlUQlIFDKIwKhoW99mQLByYSWT7iml4u0aGsQ2HapgWb9uK9~7I6R9h4JL~SaYMLsh8ryXrpCWgwR88lBHs29txugvWbqJA0T8QF-VhzAYFpklf6PxE8kVmwszo4fRWQiURfS1Sq8nBzM5C-k17EAj1e1hBVDU8C5aeCfJ0U2pheYuaAEN~nwIeuPOI5X5gkyCJruvsfF~7iK6BvSrxkEWmxvFAk-EyIcNag9Sn~9l6Qx6e72oIvmt~hBHB6Qlw9qj64HvIz28xAtp6NFOpHOJZypQfhnObP~qdIPP7GKYOoGElqAxm6d84Qt0ooRJ1vQnAk0tGnd1R4ng__",
+      icon: Card2,
+      backgroundColor: "#CBDEFF",
+      gradient: "270.65deg, #A0C2FF -5.19%, #6495ED 88.7%",
     },
     {
       title: "Bulk Invitations",
       description: "Invite multiple candidates",
-      icon: "https://s3-alpha-sig.figma.com/img/566b/7ce5/9af10d3068323170cfcefd4a38402623?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YxT8gz66PQqznCmH-y-geinV4Dgjq8RZRkmuoIY9BcdKy71VUibA2UOx23YjN9UyIrTTCusY2JWVzCUa5uH-FMaGdgYzehIQTi3innqHSuy1Txe4dVZ2BPbvMGLKTtF~WM8dt47tGqRERHTf2RIH8B9TZKx~kNWjWuJy3f5kDVlA4NzBGkrdUEOlsN~Mx-zVfXkg2xag71CBBbK8hwY0UYIUkXKXnF6Eeg6vsr2V5K5JdTP4Mb~SwiMIjY6J9ry9lOlZaUh3uuGKPUljVBsZdxY3R2YVf2yqB-6kV0xrgkmFFyum~vVDZS5PDlSwy9mz4KMN0eKXn92bv6HDpKEuZQ__",
+      icon: Card3,
+      backgroundColor: "#E1E1FF",
+      gradient: "270.53deg, #9C9CFF -5.39%, #7B68EE 95.75%",
     },
     {
       title: "Advanced Analytics",
       description: "Insights into performance",
-      icon: "https://s3-alpha-sig.figma.com/img/0ada/0b19/29f4e3cd9705c3665842a066214dad2c?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=SAvxfHBRT6u9bY-ZLDoaa2vbhMFBqzymKHxcKwBZNVnQ-CmXp5GkqyHg~CHtGeMO~-thHK6FvzIrA7FX1IBReW9t7cBN791SsXGKXqCQc-IRdV7NU3RXMxZDzl7bgHh5uvT1jshn6BFeZ3huKDmAwHgD1a-0i44n6xueWoQmG~1a3gOGCrn9LMwJ4In4hb9V-8TqqjWONWZoJOPUKdvl9kP0AeLJHyfhQOnQm~v-CEZUnr8fwbYKLZvUTJn0Tc7QycOy2IOuc-p4zMAk4zs-NWawMZuwMtEZFiO0uDFB9M4z~KBmaiTF8Xu0UZmtkmIIDIHeb6~YUTS1S9M-HO02ag__",
+      icon: Card4,
+      backgroundColor: "#FFE8D4",
+      gradient: "271.03deg, #FFD1A9 -6.14%, #FF8C42 90.21%",
     },
     {
       title: "Custom Questions",
       description: "Fully customizable interviews",
-      icon: "https://s3-alpha-sig.figma.com/img/9c7b/c700/7f7ea02700f5dacd86d8ae0cb3f8d7c2?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Kl3L3xAXYlUQlIFDKIwKhoW99mQLByYSWT7iml4u0aGsQ2HapgWb9uK9~7I6R9h4JL~SaYMLsh8ryXrpCWgwR88lBHs29txugvWbqJA0T8QF-VhzAYFpklf6PxE8kVmwszo4fRWQiURfS1Sq8nBzM5C-k17EAj1e1hBVDU8C5aeCfJ0U2pheYuaAEN~nwIeuPOI5X5gkyCJruvsfF~7iK6BvSrxkEWmxvFAk-EyIcNag9Sn~9l6Qx6e72oIvmt~hBHB6Qlw9qj64HvIz28xAtp6NFOpHOJZypQfhnObP~qdIPP7GKYOoGElqAxm6d84Qt0ooRJ1vQnAk0tGnd1R4ng__",
+      icon: Card5,
+      backgroundColor: "#ECD2FF",
+      gradient: "270.68deg, #D59BFF -4.16%, #8A2BE2 99.98%",
     },
     {
       title: "Secure Data",
       description: "Built with privacy in mind",
-      icon: "https://s3-alpha-sig.figma.com/img/566b/7ce5/9af10d3068323170cfcefd4a38402623?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YxT8gz66PQqznCmH-y-geinV4Dgjq8RZRkmuoIY9BcdKy71VUibA2UOx23YjN9UyIrTTCusY2JWVzCUa5uH-FMaGdgYzehIQTi3innqHSuy1Txe4dVZ2BPbvMGLKTtF~WM8dt47tGqRERHTf2RIH8B9TZKx~kNWjWuJy3f5kDVlA4NzBGkrdUEOlsN~Mx-zVfXkg2xag71CBBbK8hwY0UYIUkXKXnF6Eeg6vsr2V5K5JdTP4Mb~SwiMIjY6J9ry9lOlZaUh3uuGKPUljVBsZdxY3R2YVf2yqB-6kV0xrgkmFFyum~vVDZS5PDlSwy9mz4KMN0eKXn92bv6HDpKEuZQ__",
+      icon: Card6,
+      backgroundColor: "#DCFFFF",
+      gradient: "270.74deg, #99FFFF -4.72%, #00CED1 91.2%",
     },
   ];
 
@@ -69,8 +87,8 @@ const Carousel = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center px-4 sm:w-5/6 bg-none h-[30vh]">
-      <div className="relative w-5/6 mx-auto overflow-hidden">
+    <div className="flex flex-col items-center justify-center px-4 sm:w-[90%] bg-none ">
+      <div className="relative  mx-auto overflow-hidden">
         {/* AfterSelection Items */}
         <div
           className="flex transition-transform duration-500"
@@ -84,14 +102,34 @@ const Carousel = () => {
               className="w-full sm:w-1/2 md:w-1/3 flex-shrink-0 px-4"
               style={{ minWidth: `${100 / cardsPerSlide}%` }} // Adjusting the width based on cardsPerSlide
             >
-              <div className="flex flex-col items-center justify-center bg-white border-[1px] border-[#B9B9B9]  shadow-[0px_0px_8px_#C9FFFC] rounded-[30px] h-[25vh]">
-                <img
-                  src={item.icon} // Using the image URL here
-                  alt={item.title}
-                  className="w-[15vh] h-[15vh] pb-[2vh]"
-                />
-                <p className=" text-gray-600 text-center text-[1.8vh] leading-[2vh]">{item.title}</p>
-                <h3 className="text-center text-gray-600 mt-[1vh] font-bold text-[1.8vh] max-w-[65%] leading-[2vh]">{item.description}</h3>
+              <div className="flex flex-col items-center gap-[24px] justify-center bg-white border-[1.24px] border-[#B9B9B9]  rounded-[32px] p-[16px]">
+                <figure
+                  className={`w-full h-[170px] flex justify-center items-center rounded-[24px] shadow-[0px_0px_4px_0px_#00000040_inset]`}
+                  style={{
+                    backgroundColor: item.backgroundColor,
+                  }}
+                >
+                  <img
+                    src={item.icon} // Using the image URL here
+                    alt={item.title}
+                    className="w-[150px]"
+                  />
+                </figure>
+                <div className="flex flex-col gap-[12px]">
+                  <h3 className=" text-[#6F6F6F] text-center text-[22px] leading-[2vh]">
+                    {item.title}
+                  </h3>
+                  <p
+                    className="text-center text-transparent  font-bold text-[24px] leading-[29px] h-[60px]"
+                    style={{
+                      backgroundImage: `linear-gradient(${item.gradient})`,
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    {item.description}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
@@ -106,10 +144,11 @@ const Carousel = () => {
             <button
               key={index}
               onClick={() => setCurrentIndex(index * cardsPerSlide)}
-              className={`p-[1vh] rounded-full ${currentIndex / cardsPerSlide === index
-                ? "bg-black"
-                : "bg-gray-300"
-                }`}
+              className={`p-[1vh] rounded-full ${
+                currentIndex / cardsPerSlide === index
+                  ? "bg-black"
+                  : "bg-gray-300"
+              }`}
             ></button>
           ))}
       </div>

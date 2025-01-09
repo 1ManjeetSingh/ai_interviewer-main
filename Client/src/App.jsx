@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ApplicantPool from './Pages/applicantsPool'
+import ApplicantPool from './Pages/ApplicantPool'
 import AiInterview from "./Pages/aiInterview";
 import NonTechnical from './Pages/non_technical';
 import ApplicantResult from './Pages/applicantResult';
@@ -16,11 +16,13 @@ import RecruiterDashboardElements from "./Pages/recruiterDashboardElements";
 import DummyInterface from "./Pages/DummyInterface";
 import PostJobMain from "./Pages/postJobMain";
 import JobPostUpdater from "./Pages/JobPostUpdater";
+import AfterSelectionUpdated from "./Pages/AfterSelectionUpdated";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/afterSelectionUpdated" element={<AfterSelectionUpdated />} />
         <Route path="/applicantPool" element={<ApplicantPool />} />
         <Route path="/aiInterview" element={<AiInterview />} />
         <Route path="/aiTechnical" element={<AiTechnical />} />
@@ -39,6 +41,7 @@ const App = () => {
         <Route path="/postJobMain" element={<PostJobMain />} />
         <Route path="/" element={<CourseSummary />} />
         <Route path="/jobpost_updater" element={<JobPostUpdater />} />
+
       </Routes>
     </BrowserRouter>
   )

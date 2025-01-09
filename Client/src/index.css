@@ -191,15 +191,6 @@
   .trending-slider-control {
     @apply relative flex items-center justify-center top-4;
   }
-
-  .swiper-pagination-bullet {
-    @apply h-[10px] w-[10px];
-    margin: 5px 10px !important;
-  }
-
-  .swiper-pagination-bullet-active {
-    background-color: #343434 !important;
-  }  
 }
 
 .view-more-btn:hover {
@@ -231,9 +222,6 @@
   }
   .slide-meta {
       top: 239px;
-  }
-  .swiper-pagination{
-      margin-left: 10px;
   }
 
 }
@@ -401,6 +389,24 @@ table td:last-child {
   position: relative;
   overflow: hidden;
   margin-bottom: 8px;
+}
+
+/* applicant-pool page css */
+
+.grid-container {
+  display: grid;
+  gap: 1.25rem; /* Assuming Tailwind's gap-5 equivalent is 1.25rem */
+  width: 100%;
+  padding-left: 1.25rem; /* Assuming Tailwind's ps-5 equivalent */
+}
+
+.grid-container.skill-active:not(.is-animating) {
+  grid-template-columns: repeat(8, minmax(0, 1fr)); /* 8-column grid */
+}
+
+.grid-container:not(.skill-active),
+.grid-container.is-animating {
+  grid-template-columns: repeat(7, minmax(0, 1fr)); /* 7-column grid */
 }
 
 /* applicant pool ended */
