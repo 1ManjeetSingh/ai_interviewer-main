@@ -48,7 +48,55 @@ const PostJobMain = () => {
         'linear-gradient(94deg, #420167 -0.62%, #241C70 16.07%, #063678 29.18%, #2061F8 62.03%, #2D79F5 84.23%, #0FB3D4 100%)',
     ];
 
-    const [jobCards, setJobCards] = useState({});
+    const [jobCards, setJobCards] = useState({
+        "Software Engineer" : {
+            postedDate: "10-Jan-2025",
+            companyName: "Amazon",
+            role: "Software Engineer",
+            detail: ["Full-Time", "On-site", "Health Insurance", "Paid Time Off"],
+            skills: ["JavaScript", "ReactJS", "NodeJS", "MongoDB"],
+            currentStatus: {
+                "Candidates Applied": 15,
+                "Completed Interview": 5,
+            }
+        },
+        
+        "Data Scientist" : {
+            postedDate: "05-Jan-2025",
+            companyName: "Google",
+            role: "Data Scientist",
+            detail: ["Full-Time", "Remote", "Gym Membership", "Stock Options"],
+            skills: ["Python", "Machine Learning", "Data Analysis", "TensorFlow"],
+            currentStatus: {
+                "Candidates Applied": 30,
+                "Completed Interview": 12,
+            }
+        },
+        
+        "UI/UX Designer" : {
+            postedDate: "02-Jan-2025",
+            companyName: "Meta",
+            role: "UI/UX Designer",
+            detail: ["Contract", "Hybrid", "Work from Home Allowance"],
+            skills: ["Figma", "Sketch", "Adobe XD", "Prototyping"],
+            currentStatus: {
+                "Candidates Applied": 10,
+                "Completed Interview": 3,
+            }
+        },
+        
+        "DevOps Engineer" : {
+            postedDate: "15-Dec-2024",
+            companyName: "Microsoft",
+            role: "DevOps Engineer",
+            detail: ["Full-Time", "On-site", "401(k) Match", "Flexible Hours"],
+            skills: ["AWS", "Docker", "Kubernetes", "CI/CD"],
+            currentStatus: {
+                "Candidates Applied": 20,
+                "Completed Interview": 8,
+            }
+        },
+    });
     const navigate = useNavigate();
 
     const fetchJobPosts = async () => {
@@ -83,7 +131,7 @@ const PostJobMain = () => {
                     };
                 });
 
-                setJobCards(jobData);
+                // setJobCards(jobData);
             }
         } catch (error) {
             console.error('Error fetching job posts:', error);

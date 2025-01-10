@@ -11,13 +11,19 @@ from flask import Flask, request, jsonify
 import google.generativeai as genai
 import json
 from flask_cors import CORS
+from dotenv import load_dotenv
+import os
+
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
+load_dotenv()
+
+google_api_key = os.getenv("GOOGLE_API_KEY")
+
 
 # Configure the Google Generative AI model
-GOOGLE_API_KEY = 'AIzaSyDvWHOj66I_JTJYy2o_0Ayt6QYyMftqHxw'
-genai.configure(api_key=GOOGLE_API_KEY)
+genai.configure(api_key=google_api_key)
 
 def generate_job_description(job_title, position):
     """
