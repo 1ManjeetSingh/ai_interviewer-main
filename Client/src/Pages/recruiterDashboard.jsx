@@ -48,7 +48,7 @@ const RecruiterDashboard = () => {
         console.log("response.data : ", response.data);
         console.log(typeof response, typeof response.data);
 
-        const jobs = JSON.parse(response.data);
+        const jobs = response.data;
         const jobData = {};
 
         // Transform fetched data into jobCards format
