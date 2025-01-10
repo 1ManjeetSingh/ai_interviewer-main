@@ -104,6 +104,8 @@ const PostJobMain = () => {
             const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/jobs_posted`);
 
             if (response.status === 200) {
+                console.log(Array.isArray(response.data)); // This will log true if it's an array.
+                console.log(typeof(response),typeof(response.data))
                 const jobs = response.data;
                 const jobData = {};
 
@@ -131,7 +133,7 @@ const PostJobMain = () => {
                     };
                 });
 
-                // setJobCards(jobData);
+                setJobCards(jobData);
             }
         } catch (error) {
             console.error('Error fetching job posts:', error);

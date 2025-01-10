@@ -61,7 +61,7 @@ const RecruiterDashboard = () => {
         });
 
         if (Object.keys(jobData).length) {
-          // setJobCards(jobData);
+          setJobCards(jobData);
         }
       }
     } catch (error) {
