@@ -546,7 +546,6 @@ const PostJobMain = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                withCredentials: false  // Ensure credentials are not included (if not needed)
             });
 
             const data = res.data;
