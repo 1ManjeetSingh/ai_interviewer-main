@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import Select from "react-select";
@@ -84,6 +85,7 @@ const AfterSelectionUpdated = () => {
   const [selected, setSelected] = useState("nonTechnical");
   const [secondTabSelected, setSecondTabSelected] = useState("airounds");
   const inputRef = useRef(null);
+  const navigate = useNavigate();
 
   const focusInput = () => {
     if (inputRef.current) {
@@ -815,7 +817,14 @@ const AfterSelectionUpdated = () => {
           {/* ///////////Difficulty Card///////// */}
 
           <div className="flex w-full justify-end px-[4vw] pt-[3vh] pb-[10vh]">
-            <div className=" ButtonsCta h-[5vh] px-[20px] py-[24px] rounded-[30px] justify-center items-center gap-4 inline-flex hover:cursor-pointer bg-gradient-btn">
+            <div
+              onClick={() => {
+                if (secondTabSelected === "manualrounds") {
+                  navigate("/ManualSkills");
+                }
+              }}
+              className=" ButtonsCta h-[5vh] px-[20px] py-[24px] rounded-[30px] justify-center items-center gap-4 inline-flex hover:cursor-pointer bg-gradient-btn"
+            >
               <div className="flex Text items-center text-center text-white text-2xl font-semibold gap-1">
                 {secondTabSelected === "airounds" ? (
                   <>

@@ -987,7 +987,7 @@ const RecruiterDashboard = () => {
           {/* <---------------- Score Graph -----------------> */}
 
           <div
-            className="min-h-[540px] w-full max-w-[50vw] py-[2vw] bg-white/30 rounded-[32px] shadow-[0px_0.5vw_1.5vw_0px_rgba(0,0,0,0.25)] border border-[#d388ff] backdrop-blur-lg flex-col justify-start items-start gap-[3vh] inline-flex"
+            className="min-h-[540px] w-[50vw] py-[2vw] bg-white/30 rounded-[32px] shadow-[0px_0.5vw_1.5vw_0px_rgba(0,0,0,0.25)] border border-[#d388ff] backdrop-blur-lg flex-col justify-start items-start gap-[3vh] inline-flex"
             style={{ paddingInline: "clamp(10px,3vw,40px)" }}
           >
             <div className="self-stretch justify-between items-start inline-flex">
@@ -1056,7 +1056,7 @@ const RecruiterDashboard = () => {
                 {/* <div className="w-[3vw] h-[3vw] flex-col justify-center items-center gap-[1vw] inline-flex" /> */}
               </div>
             </div>
-            <div className="w-[100%] h-[350px] py-[2vh] bg-none rounded-[24px] shadow-[0px_0.5vw_1.5vw_0px_rgba(0,0,0,0.25)] border border-[#dcffff] flex-col justify-center items-center flex shrink">
+            <div className="w-[100%] h-full py-[2vh] bg-none rounded-[24px] shadow-[0px_0.5vw_1.5vw_0px_rgba(0,0,0,0.25)] border border-[#dcffff] flex-col justify-center items-center flex shrink">
               {/* responsive bar code place here */}
               {roundsWithGraph.includes(
                 jobCards[Object.keys(jobCards)[activeIndex]].isActive
@@ -1299,11 +1299,11 @@ const RecruiterDashboard = () => {
           </div>
         </div>
 
-        <div className="flex justify-center items-center my-[3vh] gap-12 w-[100%]">
+        <div style={{alignItems: 'center'}} className="flex justify-center my-[3vh] gap-12 w-[100%]">
           {/* <------------------ Scheduled Interview------------------> */}
 
           <div
-            className="w-full max-w-[50vw] p-[2vw] bg-white/30 rounded-[32px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.25)] backdrop-blur-lg flex-col justify-center items-end gap-6 inline-flex flex-grow"
+            className="w-[50vw] p-[2vw] bg-white/30 rounded-[32px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.25)] backdrop-blur-lg flex-col justify-center items-end gap-6 inline-flex flex-grow"
             style={{
               border:
                 "0.5px solid var(--Gradients-Gradient-Blue-to-pink, #D388FF)",
@@ -1349,7 +1349,7 @@ const RecruiterDashboard = () => {
           {/* <------------- AI summary --------------> */}
 
           <div
-            className="w-[35vw] min-w-[360px] px-[32px] py-[36px]"
+            className="w-[35vw] px-[32px] py-[36px]"
             style={{
               height: "100%",
               background:
@@ -1452,6 +1452,7 @@ const RecruiterDashboard = () => {
               </svg>
             </div>
           </div>
+
         </div>
       </div>
     </div>

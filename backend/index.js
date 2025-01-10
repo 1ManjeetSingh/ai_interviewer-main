@@ -1,6 +1,7 @@
 import express from 'express';
 import connectDB from './config/db.js';
 import alljobspostedRoute from './routes/alljobsposted.js';
+import updateSkillsRoute from './routes/updateSkills.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -25,6 +26,7 @@ connectDB()
     .then(() => {
         app.use('/api/alljobsposted', alljobspostedRoute);
 
+        app.use('/api/skills', updateSkillsRoute);
         // Start server
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);

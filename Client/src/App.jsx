@@ -17,11 +17,14 @@ import DummyInterface from "./Pages/DummyInterface";
 import PostJobMain from "./Pages/postJobMain";
 import JobPostUpdater from "./Pages/JobPostUpdater";
 import AfterSelectionUpdated from "./Pages/AfterSelectionUpdated";
+import Skills from "./Pages/Skills";
+
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/ManualSkills" element={<Skills />} />
       <Route path="/afterSelectionUpdated" element={<AfterSelectionUpdated />} />
         <Route path="/applicantPool" element={<ApplicantPool />} />
         <Route path="/aiInterview" element={<AiInterview />} />

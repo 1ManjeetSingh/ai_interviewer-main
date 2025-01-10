@@ -1,28 +1,6 @@
 // models/jobPost.js
 import mongoose from 'mongoose';
 
-const depthOfRoundSchema = new mongoose.Schema({
-    id: {
-      type: Number,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    expectationTitle: {
-      type: String,
-      required: true,
-    },
-    expectationDescription: {
-      type: String,
-      required: true,
-    },
-  });
 
 const jobPostedSchema = new mongoose.Schema({
     jobTitle: {
@@ -47,7 +25,7 @@ const jobPostedSchema = new mongoose.Schema({
         // trim: true,
     },
     mainSkills: {
-        type: [String],  // Array of strings for skills
+        type: [String],
         required: true,
         default: []
     },
@@ -61,7 +39,6 @@ const jobPostedSchema = new mongoose.Schema({
             required: true,
         }
     }],
-
     salaryRange: {
         minSalary: {
             type: Number,
@@ -111,9 +88,14 @@ const jobPostedSchema = new mongoose.Schema({
           },
     },
     depthOfRound: {
-        type: [depthOfRoundSchema],
-        // required: true,
-        default: []
+      aiInterview: {
+        type: Number,
+        default: 30
+    },
+    aiTechnical: {
+        type: Number,
+        default: 50
+    }
     },
     goalOfRound: {
         type: String,
