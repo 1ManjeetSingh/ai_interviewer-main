@@ -539,7 +539,7 @@ const PostJobMain = () => {
     const handleGenerate = async (title, position) => {
         setDescriptionLoading(true);
         try {
-            const res = await axios.post('http://127.0.0.1:5000/generate_job_description', {
+            const res = await axios.post(`${import.meta.env.VITE_AI_SERVER_BASE_URL}/generate_job_description`, {
                 job_title: title,
                 position: position
             }, {
