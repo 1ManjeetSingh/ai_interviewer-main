@@ -38,7 +38,7 @@ const customComponents = {
 
 const PostJobMain = () => {
     // context data
-    const { jobCards, setJobCards, fetchJobPosts } = useJobContext();
+    const { jobCards, setJobCards, fetchJobPosts, dataCollection, setDataCollection, fetchTranscript, conversationId, setConversationId, conversation, postJobCard } = useJobContext();
 
     // company Cards variables
     const gradients = [
