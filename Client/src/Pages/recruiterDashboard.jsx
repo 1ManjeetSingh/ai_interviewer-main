@@ -104,21 +104,10 @@ const RecruiterDashboard = () => {
   };
 
   const [jobCards, setJobCards] = useState({
-    "Post Jobs Here": {
-      postedOn: "1th Jan 2025",
-      progress: {
-        jobPosted: 0,
-        applicantsApplied: 0,
-        selectionComplete: 0,
-        aiInterviewRound: 0,
-        aiTechnicalRound: 0,
-        shortlistedCandidates: 0,
-      },
-    },
-    "Sales Manager": {
+   "Sales Manager": {
       postedOn: "12th Dec 2024",
       progress: {
-        jobPosted: 1,
+        jobPosted: 0,
         applicantsApplied: 0,
         selectionComplete: 0,
         aiInterviewRound: 0,
@@ -130,7 +119,7 @@ const RecruiterDashboard = () => {
       postedOn: "12th Dec 2024",
       progress: {
         jobPosted: 1,
-        applicantsApplied: 1560,
+        applicantsApplied: 0,
         selectionComplete: 0,
         aiInterviewRound: 0,
         aiTechnicalRound: 0,
@@ -142,7 +131,7 @@ const RecruiterDashboard = () => {
       progress: {
         jobPosted: 1,
         applicantsApplied: 1301,
-        selectionComplete: 1,
+        selectionComplete: 0,
         aiInterviewRound: 0,
         aiTechnicalRound: 0,
         shortlistedCandidates: 0,
@@ -154,7 +143,7 @@ const RecruiterDashboard = () => {
         jobPosted: 1,
         applicantsApplied: 1278,
         selectionComplete: 1,
-        aiInterviewRound: 1,
+        aiInterviewRound: 0,
         aiTechnicalRound: 0,
         shortlistedCandidates: 0,
       },
@@ -166,7 +155,7 @@ const RecruiterDashboard = () => {
         applicantsApplied: 1278,
         selectionComplete: 1,
         aiInterviewRound: 1,
-        aiTechnicalRound: 1,
+        aiTechnicalRound: 0,
         shortlistedCandidates: 0,
       },
     },
@@ -211,16 +200,6 @@ const RecruiterDashboard = () => {
   const pointColors = ["#D388FF", "#FE52B0", "#6ED6F5", "#FF0F7B", "#063678"];
 
   const scores = {
-    "Ai Engineer": {
-      aiNonTechnicalRoundAndInterview: {
-        "Kunal P.": 97,
-        "Muskan M.": 96,
-        "Gautam K.": 91,
-        "Payal R.": 90,
-        "Kunal M.": 84,
-        "Rahul V.": 83,
-      },
-    },
     "Sr. Account Manager": {
       aiTechnicalRoundAndInterview: {
         "Kunal P.": 98,
@@ -239,14 +218,6 @@ const RecruiterDashboard = () => {
       },
     },
     "Marketing Manager": {
-      aiTechnicalRoundAndInterview: {
-        "Ananya B.": 97,
-        "Rohit S.": 94,
-        "Sneha T.": 91,
-        "Ishaan D.": 88,
-        "Varun K.": 83,
-        "Tanya M.": 79,
-      },
       aiNonTechnicalRoundAndInterview: {
         "Simran P.": 96,
         "Aarav G.": 88,
@@ -449,8 +420,14 @@ const RecruiterDashboard = () => {
   };
 
   const [isSpeaking, setIsSpeaking] = useState(false); // Track speaking state
+  const [aiVoice, setAiVoice] = useState(null);
 
   // Function to handle text-to-speech
+  useEffect(()=>{
+    const voices = window.speechSynthesis.getVoices();
+    setAiVoice(voices[4]);
+  },[aiVoice])
+
   const handleTextToSpeech = () => {
     if (!window.speechSynthesis) {
       alert("Speech Synthesis not supported in this browser.");
@@ -459,8 +436,7 @@ const RecruiterDashboard = () => {
 
     const utterance = new SpeechSynthesisUtterance(summaryText.join(" "));
 
-    const voices = window.speechSynthesis.getVoices();
-    utterance.voice = voices[4];
+    utterance.voice = aiVoice;
 
     // Disable button during speech
     if (!isSpeaking) {
@@ -1163,16 +1139,16 @@ const RecruiterDashboard = () => {
                   width="32"
                   height="32"
                   viewBox="0 0 1024 1024" id="VolumeOff">
-                  <path d="M672.52 568.35 728.87 512l-56.35-56.35 49.5-49.5 56.35 56.35 56.35-56.35 49.5 49.5L827.87 512l56.35 56.35-49.5 49.5-56.35-56.35-56.35 56.35zM536.33 814.5 323.71 662H201.27c-28.53 0-51.74-23.21-51.74-51.74V413.74c0-28.53 23.21-51.74 51.74-51.74h122.44l212.62-152.5c9.9-7.1 22.79-8.05 33.63-2.49 10.84 5.57 17.57 16.59 17.57 28.78v552.42c0 12.19-6.73 23.21-17.57 28.78-4.69 2.4-9.75 3.59-14.8 3.59-6.62 0-13.21-2.05-18.83-6.08z" fill="#ffffff" class="color000000 svgShape"></path>
+                  <path d="M672.52 568.35 728.87 512l-56.35-56.35 49.5-49.5 56.35 56.35 56.35-56.35 49.5 49.5L827.87 512l56.35 56.35-49.5 49.5-56.35-56.35-56.35 56.35zM536.33 814.5 323.71 662H201.27c-28.53 0-51.74-23.21-51.74-51.74V413.74c0-28.53 23.21-51.74 51.74-51.74h122.44l212.62-152.5c9.9-7.1 22.79-8.05 33.63-2.49 10.84 5.57 17.57 16.59 17.57 28.78v552.42c0 12.19-6.73 23.21-17.57 28.78-4.69 2.4-9.75 3.59-14.8 3.59-6.62 0-13.21-2.05-18.83-6.08z" fill="#ffffff" className="color000000 svgShape"></path>
                 </svg> : <svg xmlns="http://www.w3.org/2000/svg" onClick={handleTextToSpeech}
                   className={`rounded`}
                   width="32"
                   height="32"
                   viewBox="0 0 24 24" id="volume">
-                  <g fill="#ffffff" class="color000000 svgShape">
-                    <g fill="#ffffff" class="color000000 svgShape">
-                      <path d="M18.28 8.37a1 1 0 1 0-1.56 1.26 4 4 0 0 1 0 4.74A1 1 0 0 0 17.5 16a1 1 0 0 0 .78-.37 6 6 0 0 0 0-7.26z" fill="#ffffff" class="color000000 svgShape"></path>
-                      <path d="M19.64 5.23a1 1 0 1 0-1.28 1.54A6.8 6.8 0 0 1 21 12a6.8 6.8 0 0 1-2.64 5.23 1 1 0 0 0-.13 1.41A1 1 0 0 0 19 19a1 1 0 0 0 .64-.23A8.75 8.75 0 0 0 23 12a8.75 8.75 0 0 0-3.36-6.77zM15 3.12a1 1 0 0 0-1 0L7.52 7.57h-5a1 1 0 0 0-1 1v6.86a1 1 0 0 0 1 1h5l6.41 4.4a1.06 1.06 0 0 0 .57.17 1 1 0 0 0 1-1V4a1 1 0 0 0-.5-.88zm-1.47 15L8.4 14.6a1 1 0 0 0-.57-.17H3.5V9.57h4.33a1 1 0 0 0 .57-.17l5.1-3.5z" fill="#ffffff" class="color000000 svgShape"></path>
+                  <g fill="#ffffff" className="color000000 svgShape">
+                    <g fill="#ffffff" className="color000000 svgShape">
+                      <path d="M18.28 8.37a1 1 0 1 0-1.56 1.26 4 4 0 0 1 0 4.74A1 1 0 0 0 17.5 16a1 1 0 0 0 .78-.37 6 6 0 0 0 0-7.26z" fill="#ffffff" className="color000000 svgShape"></path>
+                      <path d="M19.64 5.23a1 1 0 1 0-1.28 1.54A6.8 6.8 0 0 1 21 12a6.8 6.8 0 0 1-2.64 5.23 1 1 0 0 0-.13 1.41A1 1 0 0 0 19 19a1 1 0 0 0 .64-.23A8.75 8.75 0 0 0 23 12a8.75 8.75 0 0 0-3.36-6.77zM15 3.12a1 1 0 0 0-1 0L7.52 7.57h-5a1 1 0 0 0-1 1v6.86a1 1 0 0 0 1 1h5l6.41 4.4a1.06 1.06 0 0 0 .57.17 1 1 0 0 0 1-1V4a1 1 0 0 0-.5-.88zm-1.47 15L8.4 14.6a1 1 0 0 0-.57-.17H3.5V9.57h4.33a1 1 0 0 0 .57-.17l5.1-3.5z" fill="#ffffff" className="color000000 svgShape"></path>
                     </g>
                   </g>
                 </svg>}

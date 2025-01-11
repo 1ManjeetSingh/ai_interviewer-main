@@ -80,55 +80,11 @@ const CourseSummary = () => {
       </button>
 
       <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/applicantPool">applicantPool</Link>
-      </button>
-
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
       <Link to="/RecruiterDashboard">RecruiterDashboard</Link>
       </button>
 
       <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
       <Link to="/postJobMain">Post Job Main</Link>
-      </button>
-      
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/applicantResult">applicantResult</Link>
-      </button>
-
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/technical">technical</Link>
-      </button>
-
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/non_technical">non_technical</Link>
-      </button>
-
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/LoaderWithIcons">LoaderWithIcons</Link>
-      </button>
-
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/userDashboard">userDashboard</Link>
-      </button>
-      
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/aiInterview">aiInterview</Link>
-      </button>
-
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/aiTechnical">aiTechnical</Link>
-      </button>
-
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/applicant">applicant</Link>
-      </button>
-
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/dummyInterface">DummyInterface</Link>
-      </button>
-
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/kalangiElements">Recruiter DashBoard Elements</Link>
       </button>
 
       <div>

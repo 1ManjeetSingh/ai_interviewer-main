@@ -185,8 +185,8 @@ const PostJobMain = () => {
         }),
         option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isSelected ? "#46AEF5" : "#FFF",
-            color: state.isSelected ? "#FFFFFF" : "#6F6F6F",
+            backgroundColor: state.isFocused ? "#46AEF5" : "#FFF",
+            color: state.isFocused ? "#FFF" : "#6F6F6F",
             fontWeight: "400",
             padding: "10px 20px",
             cursor: "pointer",
@@ -260,8 +260,8 @@ const PostJobMain = () => {
         }),
         option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isSelected ? "#46AEF5" : "#FFF",
-            color: state.isSelected ? "#FFFFFF" : "#6F6F6F",
+            backgroundColor: state.isFocused ? "#46AEF5" : "#FFF",
+            color: state.isFocused ? "#FFFFFF" : "#6F6F6F",
             borderBottom: "0.2px solid #C9C9C9",
             fontWeight: "400",
             padding: "10px 20px",
