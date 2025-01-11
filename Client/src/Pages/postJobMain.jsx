@@ -14,7 +14,7 @@ import { useJobContext } from '../Context/LaiylaJobPostContext';
 const customDropdownIndicator = (props) => {
     const { selectProps } = props;
     const isOpen = selectProps.menuIsOpen;
-    
+
     return (
         <components.DropdownIndicator {...props}>
             {isOpen ? (
@@ -456,16 +456,50 @@ const PostJobMain = () => {
         } catch (error) {
             console.error('Error fetching job description:', error);
 
-            if (error.response) {
-                // Server responded with a status code other than 2xx
-                toast.error(`Failed to generate job description: ${error.response.data.error || 'Unknown error'}`);
-            } else if (error.request) {
-                // Request made but no response received
-                toast.error('No response from the server. Please check the connection.');
-            } else {
-                // Other errors
-                toast.error('Request failed. Please try again.');
-            }
+            // if (error.response) {
+            //     toast.error(`Failed to generate job description: ${error.response.data.error || 'Unknown error'}`);
+            // } else if (error.request) {
+            //     toast.error('No response from the server. Please check the connection.');
+            // } else {
+            //     toast.error('Request failed. Please try again.');
+            // }
+
+            // temprary remove after video production
+            setJobDescription("Job Title and Level: Front End Developer Intern\n\nJob Overview/Summary:\n\nWe are seeking a motivated and eager Front End Developer Intern to join our team and contribute to the creation and maintenance of our web-based applications. As an intern, you will gain hands-on experience in front-end development and collaborate with experienced engineers to build user-friendly and visually appealing interfaces. This role is an excellent opportunity for aspiring developers to develop their technical skills and gain valuable industry experience.\n\nYour primary responsibilities will include working on various aspects of the front-end development lifecycle, including designing and implementing UI elements, optimizing performance, and ensuring cross-browser compatibility. You will work closely with designers and back-end developers to ensure a seamless user experience. This internship is a perfect stepping stone for individuals with a passion for front-end development and a desire to build their skills in a dynamic and supportive environment.\n\nKey Responsibilities:\n\n- Create and maintain responsive and user-friendly front-end interfaces using HTML, CSS, and JavaScript\n- Implement and optimize UI elements, including buttons, forms, and interactive components\n- Ensure cross-browser compatibility and adherence to industry best practices\n- Collaborate with designers and back-end developers to bridge the gap between UX and functionality\n- Stay up-to-date on the latest front-end development trends and technologies\n\nRequired Qualifications:\n\n- Pursuing a Bachelor's degree in Computer Science, Information Technology, or a related field\n- Strong understanding of front-end development principles and technologies (HTML, CSS, JavaScript)\n- Proficiency in at least one front-end JavaScript framework (e.g., React, Angular)\n- Willingness to learn new technologies and adapt to changing industry trends\n- Excellent communication and interpersonal skills with a passion for collaborating and sharing knowledge\n\nPreferred Qualifications:\n\n- Experience with design principles and user experience optimization\n- Understanding of responsive design and adaptive layouts\n- Knowledge of version control systems (e.g., Git)\n- Experience with CSS preprocessors (e.g., Sass, Less)\n- Strong problem-solving and debugging abilities\n\nCompany Culture and Values:\n\nAt [company name], we believe in fostering an inclusive and collaborative work environment where every individual feels valued and respected. Our team is committed to excellence, innovation, and delivering exceptional results. We strive to create a workplace where our employees can thrive both professionally and personally. We offer a competitive salary and benefits package, as well as opportunities for growth and development. We are confident that you will find our culture to be motivating, supportive, and fulfilling.")
+            setMainSkills([
+                "Front-End Development",
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "UI Design",
+                "Cross-Browser Compatibility",
+                "Responsive Design",
+                "JavaScript Frameworks (React/Angular)",
+                "UX Optimization",
+                "Adaptive Layouts",
+                "CSS Preprocessors (Sass/Less)",
+                "Version Control (Git)",
+                "Problem-Solving",
+                "Debugging",
+                "Communication"
+            ]);
+            setSubSkills([
+                "Front-End Development",
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "UI Design",
+                "Cross-Browser Compatibility",
+                "Communication",
+                "JavaScript Frameworks (React/Angular)",
+                "UX Optimization",
+                "Adaptive Layouts",
+                "CSS Preprocessors (Sass/Less)",
+                "Version Control (Git)",
+                "Problem-Solving",
+                "Debugging"
+            ]);
+
         } finally {
             setDescriptionLoading(false);
         }
