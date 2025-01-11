@@ -49,7 +49,7 @@ const PostJobMain = () => {
     ];
 
     const [jobCards, setJobCards] = useState({
-        "Software Engineer" : {
+        "Software Engineer": {
             postedDate: "10-Jan-2025",
             companyName: "Amazon",
             role: "Software Engineer",
@@ -60,8 +60,8 @@ const PostJobMain = () => {
                 "Completed Interview": 5,
             }
         },
-        
-        "Data Scientist" : {
+
+        "Data Scientist": {
             postedDate: "05-Jan-2025",
             companyName: "Google",
             role: "Data Scientist",
@@ -72,8 +72,8 @@ const PostJobMain = () => {
                 "Completed Interview": 12,
             }
         },
-        
-        "UI/UX Designer" : {
+
+        "UI/UX Designer": {
             postedDate: "02-Jan-2025",
             companyName: "Meta",
             role: "UI/UX Designer",
@@ -84,8 +84,8 @@ const PostJobMain = () => {
                 "Completed Interview": 3,
             }
         },
-        
-        "DevOps Engineer" : {
+
+        "DevOps Engineer": {
             postedDate: "15-Dec-2024",
             companyName: "Microsoft",
             role: "DevOps Engineer",
@@ -104,9 +104,6 @@ const PostJobMain = () => {
             const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/jobs_posted`);
 
             if (response.status === 200) {
-                console.log("response : ", response);
-                console.log("response.data : ",response.data);
-                console.log(typeof(response),typeof(response.data));
 
                 const jobs = response.data;
                 const jobData = {};
@@ -137,7 +134,7 @@ const PostJobMain = () => {
 
                 if (Object.keys(jobData).length) {
                     setJobCards(jobData);
-                  }
+                }
             }
         } catch (error) {
             console.error('Error fetching job posts:', error);
@@ -299,8 +296,8 @@ const PostJobMain = () => {
         }),
         option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isFocused ? "#46AEF5" : "#FFF",
-            color: state.isSelected ? "#1E1E1E" : "#6F6F6F",
+            backgroundColor: state.isSelected ? "#46AEF5" : "#FFF",
+            color: state.isSelected ? "#FFFFFF" : "#6F6F6F",
             fontWeight: "400",
             padding: "10px 20px",
             cursor: "pointer",
@@ -374,8 +371,9 @@ const PostJobMain = () => {
         }),
         option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isFocused ? "#46AEF5" : "#FFF",
-            color: state.isSelected ? "#1E1E1E" : "#6F6F6F",
+            backgroundColor: state.isSelected ? "#46AEF5" : "#FFF",
+            color: state.isSelected ? "#FFFFFF" : "#6F6F6F",
+            borderBottom: "0.2px solid #C9C9C9",
             fontWeight: "400",
             padding: "10px 20px",
             cursor: "pointer",
@@ -505,11 +503,19 @@ const PostJobMain = () => {
         }
     };
 
+    const hadleRemoveFromMainSkill = (skillToRemove) => () => {
+        setMainSkills((prevSkills) => prevSkills.filter((skill) => skill !== skillToRemove));
+    };
+
     const handleAddSubSkill = (e) => {
         if (e.key === 'Enter' && skillInput2.trim() !== '') {
             setSubSkills([...subSkills, skillInput2.trim()]);
             setSkillInput2('');  // Clear input after adding
         }
+    };
+
+    const hadleRemoveFromSubSkill = (skillToRemove) => () => {
+        setSubSkills((prevSkills) => prevSkills.filter((skill) => skill !== skillToRemove));
     };
 
     // <----------------- Saving Job Post Values ------------------->
@@ -741,9 +747,9 @@ const PostJobMain = () => {
         const handleNavigate = () => {
             // Navigate to the page with the postId as a query parameter
             navigate(`/jobpost_updater?postId=${postId}`);
-          };
-        
-          return handleNavigate;
+        };
+
+        return handleNavigate;
     }
 
     return (
@@ -840,9 +846,9 @@ const PostJobMain = () => {
                         </div>
                     </div>
 
-                    <div onClick={toggleDialogFirstComponent} className=" ButtonsCta h-[5vh] px-4 rounded-[30px] justify-center items-center gap-4 inline-flex hover:cursor-pointer bg-question_gradient">
-                        <div className="flex Text items-center text-center text-white text-[2vh] font-regular gap-1">
-                            <svg style={{ width: 'clamp(14px,1.8vh,1.8vh)', height: 'clamp(14px,1.8vh,1.8vh)' }} viewBox="0 0 19 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <div onClick={toggleDialogFirstComponent} className=" ButtonsCta h-[5vh] px-5 py-1 rounded-[30px] justify-center items-center gap-4 inline-flex hover:cursor-pointer bg-question_gradient">
+                        <div className="flex Text items-center text-center text-white font-regular gap-1" style={{ fontSize: 'clamp(14px,1.8vh,24px)' }}>
+                            <svg style={{ width: 'clamp(14px,1.8vh,22px)', height: 'clamp(14px,1.8vh,22px)' }} viewBox="0 0 19 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.39632 5.41047C9.57676 4.92282 10.2665 4.92282 10.4469 5.41047L11.974 9.53725C12.1442 9.9972 12.5068 10.3598 12.9668 10.53L17.0935 12.0571C17.5812 12.2375 17.5812 12.9273 17.0935 13.1077L12.9668 14.6347C12.5068 14.8049 12.1442 15.1676 11.974 15.6275L10.4469 19.7543C10.2665 20.242 9.57676 20.242 9.39632 19.7543L7.86927 15.6275C7.69907 15.1676 7.33643 14.8049 6.87649 14.6347L2.7497 13.1077C2.26205 12.9273 2.26205 12.2375 2.7497 12.0571L6.87649 10.53C7.33643 10.3598 7.69907 9.9972 7.86927 9.53725L9.39632 5.41047Z" fill="white" />
                                 <path d="M16.4871 14.1125C16.5773 13.8687 16.9222 13.8687 17.0124 14.1125L17.3128 14.9244C17.3412 15.001 17.4016 15.0615 17.4783 15.0898L18.2901 15.3903C18.534 15.4805 18.534 15.8253 18.2901 15.9156L17.4783 16.216C17.4016 16.2443 17.3412 16.3048 17.3128 16.3814L17.0124 17.1933C16.9222 17.4371 16.5773 17.4371 16.4871 17.1933L16.1867 16.3814C16.1583 16.3048 16.0979 16.2443 16.0212 16.216L15.2094 15.9156C14.9656 15.8253 14.9656 15.4805 15.2094 15.3902L16.0212 15.0898C16.0979 15.0615 16.1583 15.001 16.1867 14.9244L16.4871 14.1125Z" fill="white" />
                                 <path d="M4.25289 1.41963C4.43334 0.931975 5.12306 0.931977 5.30351 1.41963L5.89951 3.03031C5.95625 3.18362 6.07713 3.3045 6.23044 3.36123L7.84112 3.95724C8.32877 4.13768 8.32877 4.82741 7.84112 5.00786L6.23044 5.60386C6.07713 5.66059 5.95625 5.78147 5.89951 5.93479L5.30351 7.54547C5.12306 8.03312 4.43334 8.03312 4.25289 7.54547L3.65689 5.93479C3.60015 5.78147 3.47927 5.66059 3.32596 5.60386L1.71528 5.00786C1.22763 4.82741 1.22763 4.13768 1.71528 3.95724L3.32596 3.36123C3.47928 3.3045 3.60015 3.18362 3.65689 3.03031L4.25289 1.41963Z" fill="white" />
@@ -977,7 +983,7 @@ const PostJobMain = () => {
                             {/* new job post */}
                             <div className="w-full py-[6.97px] px-[12.97px] bg-[#FAFAFA] rounded-[11.11px] border border-[#B9B9B9] flex-col justify-center items-start gap-[12.97px] flex">
                                 <input
-                                    className='justify-start px-2 w-full text-[#353535] py-[0.5vh] text-[2vh] leading-[18px] bg-[#FAFAFA] focus:outline-none focus:text-[#353535]'
+                                    className='justify-start px-2 w-full text-[#353535] py-[0.5vh] text-lg font-[400] leading-[18px] bg-[#FAFAFA] focus:outline-none focus:text-[#353535]'
                                     type="text"
                                     name="jobTitle"
                                     value={jobTitle}
@@ -1062,7 +1068,7 @@ const PostJobMain = () => {
                         <div className="flex w-full justify-end pt-4 pb-6 gap-8">
                             <button
                                 type="submit"
-                                className="h-[48.28px] px-5 rounded-[30px] shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] border border-[#0071db] justify-center items-center gap-2 inline-flex"
+                                className="h-[48.28px] px-5 rounded-[30px] border border-[#0071db] justify-center items-center gap-2 inline-flex"
                                 onClick={handleSaveJob}
                             >
                                 <div className="text-center text-[#0071db] text-xl font-semibold font-['SF UI Text'] leading-tight cursor-pointer">Save</div>
@@ -1070,11 +1076,14 @@ const PostJobMain = () => {
                             <button
                                 type="submit"
                                 onClick={handleFirstToSecondComponent}
-                                className="ButtonsCta w-[260.14px] h-[48.28px] px-4 rounded-[30px] justify-center items-center gap-3 inline-flex hover:cursor-pointer bg-question_gradient"
+                                className="ButtonsCta h-[48.28px] px-6 rounded-[30px] justify-start items-center gap-3 inline-flex hover:cursor-pointer bg-question_gradient"
                             >
-                                <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.2829 5.92125C10.4804 5.38759 11.2352 5.38759 11.4327 5.92125L13.1038 10.4374C13.29 10.9408 13.6869 11.3376 14.1902 11.5239L18.7064 13.195C19.2401 13.3925 19.2401 14.1473 18.7064 14.3448L14.1902 16.0159C13.6869 16.2022 13.29 16.599 13.1038 17.1024L11.4327 21.6185C11.2352 22.1522 10.4804 22.1522 10.2829 21.6185L8.61177 17.1024C8.42551 16.599 8.02866 16.2022 7.52531 16.0159L3.00914 14.3448C2.47548 14.1473 2.47548 13.3925 3.00914 13.195L7.52531 11.5239C8.02866 11.3376 8.42551 10.9408 8.61177 10.4374L10.2829 5.92125Z" fill="white" />
-                                    <path d="M18.0428 15.4443C18.1415 15.1774 18.5189 14.9265 18.7858 15.0253L20.5615 15.5968C21.1061 15.7908 21.1061 16.5039 20.5615 16.6979L18.7858 17.2694C18.5189 17.3681 18.1415 17.1173 18.0428 16.8503L17.2515 14.7538C17.1532 14.4867 17.4663 14.1758 17.7466 14.2535L19.1897 14.6061L18.0428 15.4443Z" fill="white" />
+                                <svg style={{ width: '20px', height: '20px' }} viewBox="0 0 19 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.39632 5.41047C9.57676 4.92282 10.2665 4.92282 10.4469 5.41047L11.974 9.53725C12.1442 9.9972 12.5068 10.3598 12.9668 10.53L17.0935 12.0571C17.5812 12.2375 17.5812 12.9273 17.0935 13.1077L12.9668 14.6347C12.5068 14.8049 12.1442 15.1676 11.974 15.6275L10.4469 19.7543C10.2665 20.242 9.57676 20.242 9.39632 19.7543L7.86927 15.6275C7.69907 15.1676 7.33643 14.8049 6.87649 14.6347L2.7497 13.1077C2.26205 12.9273 2.26205 12.2375 2.7497 12.0571L6.87649 10.53C7.33643 10.3598 7.69907 9.9972 7.86927 9.53725L9.39632 5.41047Z" fill="white" />
+                                    <path d="M16.4871 14.1125C16.5773 13.8687 16.9222 13.8687 17.0124 14.1125L17.3128 14.9244C17.3412 15.001 17.4016 15.0615 17.4783 15.0898L18.2901 15.3903C18.534 15.4805 18.534 15.8253 18.2901 15.9156L17.4783 16.216C17.4016 16.2443 17.3412 16.3048 17.3128 16.3814L17.0124 17.1933C16.9222 17.4371 16.5773 17.4371 16.4871 17.1933L16.1867 16.3814C16.1583 16.3048 16.0979 16.2443 16.0212 16.216L15.2094 15.9156C14.9656 15.8253 14.9656 15.4805 15.2094 15.3902L16.0212 15.0898C16.0979 15.0615 16.1583 15.001 16.1867 14.9244L16.4871 14.1125Z" fill="white" />
+                                    <path d="M4.25289 1.41963C4.43334 0.931975 5.12306 0.931977 5.30351 1.41963L5.89951 3.03031C5.95625 3.18362 6.07713 3.3045 6.23044 3.36123L7.84112 3.95724C8.32877 4.13768 8.32877 4.82741 7.84112 5.00786L6.23044 5.60386C6.07713 5.66059 5.95625 5.78147 5.89951 5.93479L5.30351 7.54547C5.12306 8.03312 4.43334 8.03312 4.25289 7.54547L3.65689 5.93479C3.60015 5.78147 3.47927 5.66059 3.32596 5.60386L1.71528 5.00786C1.22763 4.82741 1.22763 4.13768 1.71528 3.95724L3.32596 3.36123C3.47928 3.3045 3.60015 3.18362 3.65689 3.03031L4.25289 1.41963Z" fill="white" />
+                                    <path d="M14.4904 3.73547L15.0625 5.28173C15.1476 5.51171 15.329 5.69303 15.5589 5.77812L17.1052 6.35029L15.5589 6.92246C15.329 7.00756 15.1476 7.18888 15.0625 7.41885L14.4904 8.96511L13.9182 7.41885C13.8331 7.18888 13.6518 7.00756 13.4218 6.92246L11.8755 6.35029L13.4218 5.77812C13.6518 5.69303 13.8331 5.51171 13.9182 5.28173L14.4904 3.73547Z" fill="white" />
+                                    <path d="M4.78244 15.9258C4.97954 15.7563 5.28118 15.9234 5.24192 16.1804L5.03428 17.5396C5.02194 17.6204 5.04551 17.7025 5.09881 17.7645L5.99545 18.8069C6.16499 19.004 5.99784 19.3056 5.74084 19.2664L4.38166 19.0587C4.30086 19.0464 4.2187 19.0699 4.15673 19.1232L3.11436 20.0199C2.91727 20.1894 2.61562 20.0223 2.65488 19.7653L2.86252 18.4061C2.87487 18.3253 2.85129 18.2431 2.79799 18.1812L1.90136 17.1388C1.73182 16.9417 1.89897 16.6401 2.15597 16.6793L3.51515 16.887C3.59595 16.8993 3.67811 16.8757 3.74007 16.8224L4.78244 15.9258Z" fill="white" />
                                 </svg>
                                 <div className="text-white text-xl font-semibold font-['SF UI Text'] leading-tight">Create Job Post with AI</div>
                             </button>
@@ -1112,7 +1121,7 @@ const PostJobMain = () => {
                 <div className="w-full p-9 bg-white rounded-[12.92px] shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] flex-col justify-start items-center gap-12 flex">
 
                     {/* AI Description */}
-                    <div className="w-full h-[35vh] p-8 relative rounded-[6px] overflow-hidden flex flex-col gap-4 overflow-hidden" style={{
+                    <div className={`w-full p-8 relative rounded-[6px] overflow-hidden flex flex-col gap-4 overflow-hidden`} style={{
                         background: 'linear-gradient(135deg, rgba(0, 45, 191, 0.30) -1.89%, rgba(67, 150, 247, 0.24) 45.88%, rgba(255, 155, 210, 0.42) 76.85%, rgba(201, 255, 252, 0.42) 108.11%)'
                     }}>
                         <div className="w-fit px-[10.77px] py-[4.77px] bg-white/20 rounded-md flex-col justify-center items-start gap-[10.77px] inline-flex">
@@ -1149,41 +1158,60 @@ const PostJobMain = () => {
                                     </defs>
                                 </svg>
 
-                                <div className="text-[#1e1e1e] text-xl font-bold font-['SF UI  Text'] leading-normal">Generating AI Description</div>                        </div>
+                                <div className="text-[#1e1e1e] text-xl font-bold font-['SF UI  Text'] leading-normal">{jobDescription.length > 0 ? `AI Description` : `Generating AI Description...`}</div>                        </div>
                         </div>
                         <div className="overflow-y-auto">
-                            <textarea
+                            {jobDescription.length > 0 ? (<textarea
                                 className="flex w-full text-[#6f6f6f] text-lg font-normal font-['SF UI Text'] leading-normal bg-transparent outline-none pr-2 border-box"
                                 value={jobDescription}
                                 onChange={(e) => setJobDescription(e.target.value)}  // Handle state change
                                 rows={10}
                                 placeholder="Enter job description..."  // Optional for better UX
-                            ></textarea>
+                            ></textarea>)
+                                :
+                                (<div className="opacity-100">
+                                    <div className="loading-rectangle opacity-50 mt-3"></div>
+                                    <div className="loading-rectangle opacity-50"></div>
+                                    <div className="loading-rectangle opacity-50"></div>
+                                </div>)}
                         </div>
                     </div>
-
-                    {!descriptionLoading && <div className='flex flex-col w-full gap-8'>
+                    {jobDescription.length > 0 && (<div className='flex flex-col w-full gap-8'>
                         <div className='flex flex-col w-full gap-4'>
                             <h1 className='text-xl'>Main Skills</h1>
                             <div className='flex gap-4 mt-4 flex-wrap'>
                                 {mainSkills.map((skill, index) => (
                                     <div
                                         key={index}
-                                        className="h-10 px-5 py-3 bg-white rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] justify-center items-center gap-2 inline-flex"
+                                        onClick={hadleRemoveFromMainSkill(skill)}
+                                        className="h-10 px-5 py-3 cursor-default bg-white rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] border-2 border-[#0072dc] justify-center items-center gap-2 inline-flex"
                                     >
                                         <div className="text-[#161616] text-base font-medium font-['Inter'] leading-none">
                                             {skill}
                                         </div>
                                     </div>
                                 ))}
-                                <input
-                                    type="text"
-                                    value={skillInput}
-                                    onChange={(e) => setSkillInput(e.target.value)}
-                                    onKeyDown={handleAddMainSkill}  // Listen for Enter key
-                                    placeholder="Add Skill and press Enter"
-                                    className="h-10 px-5 py-3 bg-white outline-none border border-[#46AEF1] rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] text-[#161616] text-base font-medium font-['Inter'] leading-none"
-                                />
+                                <div className='h-10 px-1 py-3 bg-white rounded-xl shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] border border-[#b9b9b9] justify-center items-center gap-2 inline-flex'>
+                                    <input
+                                        type="text"
+                                        value={skillInput}
+                                        onChange={(e) => setSkillInput(e.target.value)}
+                                        onKeyDown={handleAddMainSkill}  // Listen for Enter key
+                                        placeholder="Search"
+                                        className="w-[140px] pl-2 py-2 bg-white rounded-lg outline-none text-[#161616] text-base font-medium font-['Inter'] leading-none"
+                                    />
+
+                                    <svg className='mr-2' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_384_4478)">
+                                            <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_384_4478">
+                                                <rect width="16" height="16" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                         <div className='flex flex-col w-full gap-4'>
@@ -1192,24 +1220,37 @@ const PostJobMain = () => {
                                 {subSkills.map((skill, index) => (
                                     <div
                                         key={index}
-                                        className="h-10 px-5 py-3 bg-white rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] justify-center items-center gap-2 inline-flex"
+                                        onClick={hadleRemoveFromSubSkill(skill)}
+                                        className="h-10 px-5 py-3 cursor-default bg-white rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] border-2 border-[#0072dc] justify-center items-center gap-2 inline-flex"
                                     >
                                         <div className="text-[#161616] text-base font-medium font-['Inter'] leading-none">
                                             {skill}
                                         </div>
                                     </div>
                                 ))}
-                                <input
-                                    type="text"
-                                    value={skillInput2}
-                                    onChange={(e) => setSkillInput2(e.target.value)}
-                                    onKeyDown={handleAddSubSkill}  // Listen for Enter key
-                                    placeholder="Add Skill and press Enter"
-                                    className="h-10 px-5 py-3 bg-white outline-none border border-[#46AEF1] rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] text-[#161616] text-base font-medium font-['Inter'] leading-none"
-                                />
+                                <div className='h-10 px-1 py-3 bg-white rounded-xl shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] border border-[#b9b9b9] justify-center items-center gap-2 inline-flex'>
+                                    <input
+                                        type="text"
+                                        value={skillInput2}
+                                        onChange={(e) => setSkillInput2(e.target.value)}
+                                        onKeyDown={handleAddSubSkill}  // Listen for Enter key
+                                        placeholder="Search"
+                                        className="w-[140px] pl-2 py-2 bg-white rounded-lg outline-none text-[#161616] text-base font-medium font-['Inter'] leading-none"
+                                    />
+                                    <svg className='mr-2' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_384_4478)">
+                                            <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_384_4478">
+                                                <rect width="16" height="16" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
-                    </div>}
+                    </div>)}
 
                     <div className='w-full flex justify-end'>
                         <div onClick={handleSecondToThirdComponent} className="h-[43.06px] px-[17.22px] bg-[#0071db] rounded-[32.30px] border-2 border-[#0071db] justify-center items-center gap-[4.31px] inline-flex cursor-pointer">
@@ -1284,13 +1325,23 @@ const PostJobMain = () => {
                                     </defs>
                                 </svg>
 
-                                <div className="text-[#1e1e1e] text-lg font-medium font-['SF Pro Display'] leading-tight">Generating AI Description</div>
+                                <div className="text-[#1e1e1e] text-lg font-medium font-['SF Pro Display'] leading-tight">AI Description</div>
                             </div>
                         </div>
                         <div>
-                            <div className="custom-scrollbar border-box pr-4 w-[100%] h-[80px] text-[#6f6f6f] text-lg font-normal font-['SF UI Text']" style={{ overflowY: 'scroll' }}>
-                                Innovatech Solutions is a cutting-edge technology firm dedicated to revolutionizing the way businesses operate. Founded in 2023, we specialize in developing innovative software solutions that streamline processes and enhance productivity. Our team of experts is passionate about harnessing the power of artificial intelligence and machine learning to create tools that empower organizations to thrive in a competitive landscape. At Innovatech, we believe in a future where technology and creativity go hand in hand, driving success for our clients across various industries.<br />
-                                At Innovatech Solutions, we’re all about shaking things up in the tech world! Since 2023, we’ve been crafting cool software that helps businesses run smoother and get more done. Our awesome team loves using AI and machine learning to whip up tools that help companies stand out in today’s fast-paced market. We’re all about blending tech with creativity to help our clients succeed in all sorts of industries.</div>
+                        {jobDescription.length > 0 ? (<textarea
+                                className="flex w-full text-[#6f6f6f] text-lg font-normal font-['SF UI Text'] leading-normal bg-transparent outline-none pr-2 border-box"
+                                value={jobDescription}
+                                onChange={(e) => setJobDescription(e.target.value)}  // Handle state change
+                                rows={5}
+                                placeholder="Enter job description..."  // Optional for better UX
+                            ></textarea>)
+                                :
+                                (<div className="opacity-100">
+                                    <div className="loading-rectangle opacity-50 mt-3"></div>
+                                    <div className="loading-rectangle opacity-50"></div>
+                                    <div className="loading-rectangle opacity-50"></div>
+                                </div>)}    
                         </div>
                     </div>
 
@@ -1300,12 +1351,12 @@ const PostJobMain = () => {
                             <div className='w-full flex gap-4'>
                                 <div className="w-full px-3 py-1 bg-[#F5F5F5] border border-[#B9B9B9] rounded-[10px] justify-start items-center gap-4 inline-flex">
                                     <div className="w-full justify-start items-center gap-4 flex bg-[#F5F5F5]">
-                                        <input value={minSalary} onChange={(e) => setMinSalary(e.target.value)} type="number" placeholder='MIN' className="h-12 focus:outline-none bg-[#F5F5F5] grow basis-0 text-[#6f6f6f] text-lg font-medium font-['SF UI Text']" />
+                                        <input value={minSalary} onChange={(e) => setMinSalary(e.target.value)} type="number" placeholder='Minimum value' className="h-12 focus:outline-none bg-[#F5F5F5] grow basis-0 text-[#6f6f6f] text-lg font-medium font-['SF UI Text']" />
                                     </div>
                                 </div>
                                 <div className="w-full px-3 py-1 bg-[#F5F5F5] border border-[#B9B9B9] rounded-[10px] justify-start items-center gap-4 inline-flex">
                                     <div className="w-full justify-start items-center gap-4 flex bg-[#F5F5F5]">
-                                        <input value={maxSalary} onChange={(e) => setMaxSalary(e.target.value)} type="number" placeholder='MAX' className="h-12 focus:outline-none bg-[#F5F5F5] grow basis-0 text-[#6f6f6f] text-lg font-medium font-['SF UI Text']" />
+                                        <input value={maxSalary} onChange={(e) => setMaxSalary(e.target.value)} type="number" placeholder='Maximum value' className="h-12 focus:outline-none bg-[#F5F5F5] grow basis-0 text-[#6f6f6f] text-lg font-medium font-['SF UI Text']" />
                                     </div>
                                 </div>
                             </div>
@@ -1393,7 +1444,8 @@ const PostJobMain = () => {
                         </div>
                         <div className="h-10 justify-start items-center gap-6 inline-flex">
                             {Object.entries(companies).map(([name, data]) => (
-                                <div key={name} onClick={() => handleSelectedComponies(name)} className={`p-2 bg-neutral-100 rounded justify-start items-center gap-2 flex cursor-pointer w-[120px] shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] ${selectedCompany.includes(name) ? 'border border-[#0072DC]' : ''}`}>
+
+                                <div key={name} onClick={() => handleSelectedComponies(name)} className={`h-9 p-2 bg-neutral-100 rounded-lg shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] justify-center items-center gap-2 inline-flex cursor-default ${selectedCompany.includes(name) ? 'border border-[#0072DC]' : ''}`}>
                                     <div className="w-6 h-6 justify-center items-center flex">
                                         <img className="w-6 h-6 rounded" src={data.icon} alt={name} />
                                     </div>

@@ -257,5 +257,43 @@ router.put('/job_posted/:id', async (req, res) => {
     }
 });
 
+router.put("/update_jobSkills/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { mainSkills, subSkills, depthOfRound, goalOfRound } = req.body;
+  
+      const updatedJobPost = await JobPosted.findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            mainSkills,
+            subSkills,
+            depthOfRound,
+            goalOfRound,
+          },
+        },
+        { new: true, runValidators: true }
+      );
+  
+      if (!updatedJobPost) {
+        return res.status(404).json({
+          success: false,
+          message: "Job post not found",
+        });
+      }
+  
+      res.status(200).json({
+        success: true,
+        message: "Job post updated successfully",
+        job: updatedJobPost,
+      });
+    } catch (error) {
+      console.error("Error updating job post:", error);
+      res.status(500).json({
+        success: false,
+        message: "Server Error",
+      });
+    }
+  });
 
 export default router;

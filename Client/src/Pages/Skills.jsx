@@ -12,6 +12,7 @@ import { toast, ToastContainer } from 'react-toastify';
 const Skills = () => {
   // State to track the current section
 
+  const [jobPostId, setJobPostId] = useState('677f71706c9878b52b493adb')
   const [selectedId, setSelectedId] = useState(2);
   const [recomendedSelectedId, setRecomendedSelectedId] = useState(1);
   // State to track the selected skill
@@ -59,11 +60,12 @@ const Skills = () => {
   useEffect(() => {
     setDepthOfRound(
       {
+        level : selectedId,
         aiInterview: aiRoundDurations.find(item => item.selected)?.label,
         aiTechnical: techRoundDurations.find(item => item.selected)?.label
       }
     )
-  }, [aiRoundDurations, techRoundDurations]);
+  }, [selectedId,aiRoundDurations, techRoundDurations]);
 
 
   const handleSkillSelection = (skillValue) => {
@@ -310,18 +312,14 @@ const Skills = () => {
     if (currentIndex < sections.length - 1) {
       setActiveSection(sections[currentIndex + 1]);
     } else {
-      // if (jobPostId) {
-      console.log("JobPost ID:", jobPostId);  // Log the value of jobPostId
-      handleFinish(); // Pass the jobPostId here
-      // } else {
-      //   alert("Job post ID is missing!");
-      // }
+      if (jobPostId) {
+      console.log("JobPost ID:", jobPostId);
+      handleFinish(jobPostId);
+      } else {
+        alert("Job post ID is missing!");
+      }
     }
   };
-
-
-
-
 
   // Content for each section
   const sectionContent = {
@@ -1662,9 +1660,7 @@ const Skills = () => {
     ),
   };
 
-  const [jobPostId, setJobPostId] = useState('6781436fd5e164049ac181d3');
-
-  const handleFinish = async () => {
+  const handleFinish = async (Id) => {
 
     if (!selectedSkills || selectedSkills.length === 0) {
       toast.error("Please select main skills.");
@@ -1681,7 +1677,7 @@ const Skills = () => {
     console.log("Payload to send:", payload); // Log the payload
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/skills/update_skills`, payload);
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/update_jobSkills/${Id}`, payload);
 
       if (response.status === 200) {
         toast.success("successful.");

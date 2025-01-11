@@ -43,9 +43,9 @@ const JobPostUpdater = () => {
         const handleNavigate = () => {
             // Navigate to the page with the postId as a query parameter
             navigate(`/applicantPool`);
-          };
-        
-          return handleNavigate;
+        };
+
+        return handleNavigate;
     }
 
     const [searchParams] = useSearchParams('');
@@ -159,6 +159,7 @@ const JobPostUpdater = () => {
         setDropdownState((prev) => ({ ...prev, [key]: false }));
     };
 
+
     const customStyles = {
         control: (provided) => ({
             ...provided,
@@ -167,7 +168,7 @@ const JobPostUpdater = () => {
             color: "#F5F5F5",
             height: "36px",
             width: "full",
-            minWidth: "300px",
+            minWidth: "320px",
             fontWeight: "400",
             boxShadow: "none",
             display: "flex",
@@ -179,10 +180,10 @@ const JobPostUpdater = () => {
                 borderColor: "#F5F5F5",
             },
         }),
-        // input: (provided) => ({
-        //     ...provided,
-        //     caretColor: "transparent", 
-        // }),
+        input: (provided) => ({
+            ...provided,
+            caretColor: "transparent",
+        }),
         dropdownIndicator: (provided, state) => ({
             ...provided,
             width: "20px",
@@ -205,7 +206,7 @@ const JobPostUpdater = () => {
             top: "auto",
             left: "auto",
             fontSize: "18px",
-            maxWidth: "300px",
+            maxWidth: "320px",
             maxHeight: "300px",
             overflowY: "auto",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
@@ -224,8 +225,9 @@ const JobPostUpdater = () => {
         }),
         option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isFocused ? "#46AEF5" : "#FFF",
-            color: state.isSelected ? "#1E1E1E" : "#6F6F6F",
+            backgroundColor: state.isSelected ? "#46AEF5" : "#FFF",
+            color: state.isSelected ? "#FFFFFF" : "#6F6F6F",
+            borderBottom: "0.2px solid #C9C9C9",
             fontWeight: "400",
             padding: "10px 20px",
             cursor: "pointer",
@@ -234,6 +236,7 @@ const JobPostUpdater = () => {
             },
         }),
     };
+
 
 
     //<----------- Second Element Variables -------------->
@@ -300,6 +303,14 @@ const JobPostUpdater = () => {
         }
     };
 
+    const hadleRemoveFromMainSkill = (skillToRemove) => () => {
+        setMainSkills((prevSkills) => prevSkills.filter((skill) => skill !== skillToRemove));
+    };
+
+    const hadleRemoveFromSubSkill = (skillToRemove) => () => {
+        setSubSkills((prevSkills) => prevSkills.filter((skill) => skill !== skillToRemove));
+    };
+
 
     const [currentTab, setCurrentTab] = useState("jobInfo");
 
@@ -317,7 +328,7 @@ const JobPostUpdater = () => {
         experience: "2 years",
     };
 
-    const handleUpdateJobPost = async() => {
+    const handleUpdateJobPost = async () => {
 
         const updated_data = {
             jobTitle: title,
@@ -326,7 +337,7 @@ const JobPostUpdater = () => {
             workplaceType: workplaceOption,
             jobDescription,
             mainSkills,
-            subSkills : subSkills.map(element => ({
+            subSkills: subSkills.map(element => ({
                 name: element,
                 level: "Beginner"
             })),
@@ -551,7 +562,7 @@ const JobPostUpdater = () => {
                                             </defs>
                                         </svg>
 
-                                        <div className="text-[#1e1e1e] text-xl font-bold font-['SF UI  Text'] leading-normal">Generating AI Description</div>                        </div>
+                                        <div className="text-[#1e1e1e] text-xl font-bold font-['SF UI  Text'] leading-normal">AI Description</div>                        </div>
                                 </div>
                                 <div className="overflow-y-auto">
                                     <textarea
@@ -566,49 +577,76 @@ const JobPostUpdater = () => {
 
                             <div className='flex flex-col w-full gap-8'>
                                 <div className='flex flex-col w-full gap-4'>
-                                    <h1 className='text-2xl font-bold'>Main Skills</h1>
+                                    <h1 className='text-xl'>Main Skills</h1>
                                     <div className='flex gap-4 mt-4 flex-wrap'>
                                         {mainSkills.map((skill, index) => (
                                             <div
                                                 key={index}
-                                                className="h-10 px-5 py-3 bg-white rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] justify-center items-center gap-2 inline-flex"
+                                                onClick={hadleRemoveFromMainSkill(skill)}
+                                                className="h-10 px-5 py-3 cursor-default bg-white rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] border-2 border-[#0072dc] justify-center items-center gap-2 inline-flex"
                                             >
                                                 <div className="text-[#161616] text-base font-medium font-['Inter'] leading-none">
                                                     {skill}
                                                 </div>
                                             </div>
                                         ))}
-                                        <input
-                                            type="text"
-                                            value={skillInput}
-                                            onChange={(e) => setSkillInput(e.target.value)}
-                                            onKeyDown={handleAddMainSkill}  // Listen for Enter key
-                                            placeholder="Add Skill and press Enter"
-                                            className="h-10 px-5 py-3 bg-white outline-none border border-[#46AEF1] rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] text-[#161616] text-base font-medium font-['Inter'] leading-none"
-                                        />
+                                        <div className='h-10 px-1 py-3 bg-white rounded-xl shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] border border-[#b9b9b9] justify-center items-center gap-2 inline-flex'>
+                                            <input
+                                                type="text"
+                                                value={skillInput}
+                                                onChange={(e) => setSkillInput(e.target.value)}
+                                                onKeyDown={handleAddMainSkill}  // Listen for Enter key
+                                                placeholder="Search"
+                                                className="w-[140px] pl-2 py-2 bg-white rounded-lg outline-none text-[#161616] text-base font-medium font-['Inter'] leading-none"
+                                            />
+
+                                            <svg className='mr-2' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <g clip-path="url(#clip0_384_4478)">
+                                                    <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_384_4478">
+                                                        <rect width="16" height="16" fill="white" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className='flex flex-col w-full gap-4'>
-                                    <h1 className='text-2xl font-bold'>Sub Skills</h1>
+                                    <h1 className='text-xl'>Sub Skills</h1>
                                     <div className='flex gap-4 mt-4 flex-wrap'>
                                         {subSkills.map((skill, index) => (
                                             <div
                                                 key={index}
-                                                className="h-10 px-5 py-3 bg-white rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] justify-center items-center gap-2 inline-flex"
+                                                onClick={hadleRemoveFromSubSkill(skill)}
+                                                className="h-10 px-5 py-3 cursor-default bg-white rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] border-2 border-[#0072dc] justify-center items-center gap-2 inline-flex"
                                             >
                                                 <div className="text-[#161616] text-base font-medium font-['Inter'] leading-none">
                                                     {skill}
                                                 </div>
                                             </div>
                                         ))}
-                                        <input
-                                            type="text"
-                                            value={skillInput2}
-                                            onChange={(e) => setSkillInput2(e.target.value)}
-                                            onKeyDown={handleAddSubSkill}  // Listen for Enter key
-                                            placeholder="Add Skill and press Enter"
-                                            className="h-10 px-5 py-3 bg-white outline-none border border-[#46AEF1] rounded-3xl shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] text-[#161616] text-base font-medium font-['Inter'] leading-none"
-                                        />
+                                        <div className='h-10 px-1 py-3 bg-white rounded-xl shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] border border-[#b9b9b9] justify-center items-center gap-2 inline-flex'>
+                                            <input
+                                                type="text"
+                                                value={skillInput2}
+                                                onChange={(e) => setSkillInput2(e.target.value)}
+                                                onKeyDown={handleAddSubSkill}  // Listen for Enter key
+                                                placeholder="Search"
+                                                className="w-[140px] pl-2 py-2 bg-white rounded-lg outline-none text-[#161616] text-base font-medium font-['Inter'] leading-none"
+                                            />
+                                            <svg className='mr-2' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <g clip-path="url(#clip0_384_4478)">
+                                                    <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" />
+                                                </g>
+                                                <defs>
+                                                    <clipPath id="clip0_384_4478">
+                                                        <rect width="16" height="16" fill="white" />
+                                                    </clipPath>
+                                                </defs>
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -621,12 +659,12 @@ const JobPostUpdater = () => {
                                     <div className='w-full flex gap-4'>
                                         <div className="w-full px-3 py-1 bg-[#F5F5F5] border border-[#B9B9B9] rounded-[10px] justify-start items-center gap-4 inline-flex">
                                             <div className="w-full justify-start items-center gap-4 flex bg-[#F5F5F5]">
-                                                <input value={minSalary} onChange={(e) => setMinSalary(e.target.value)} type="number" placeholder='MIN' className="h-12 focus:outline-none bg-[#F5F5F5] grow basis-0 text-[#6f6f6f] text-lg font-medium font-['SF UI Text']" />
+                                                <input value={minSalary} onChange={(e) => setMinSalary(e.target.value)} type="number" placeholder='Minimum value' className="h-12 focus:outline-none bg-[#F5F5F5] grow basis-0 text-[#6f6f6f] text-lg font-medium font-['SF UI Text']" />
                                             </div>
                                         </div>
                                         <div className="w-full px-3 py-1 bg-[#F5F5F5] border border-[#B9B9B9] rounded-[10px] justify-start items-center gap-4 inline-flex">
                                             <div className="w-full justify-start items-center gap-4 flex bg-[#F5F5F5]">
-                                                <input value={maxSalary} onChange={(e) => setMaxSalary(e.target.value)} type="number" placeholder='MAX' className="h-12 focus:outline-none bg-[#F5F5F5] grow basis-0 text-[#6f6f6f] text-lg font-medium font-['SF UI Text']" />
+                                                <input value={maxSalary} onChange={(e) => setMaxSalary(e.target.value)} type="number" placeholder='Maximum value' className="h-12 focus:outline-none bg-[#F5F5F5] grow basis-0 text-[#6f6f6f] text-lg font-medium font-['SF UI Text']" />
                                             </div>
                                         </div>
                                     </div>
@@ -712,9 +750,10 @@ const JobPostUpdater = () => {
                                     <div className="text-[#1e1e1e] text-2xl font-semibold font-['SF UI  Text'] leading-normal">Job Portals</div>
                                     <div className="text-[#6f6f6f] text-base font-normal font-['SF UI  Text']">Select any 2 platforms for posting jobs for free</div>
                                 </div>
-                                <div className="h-10 justify-start items-start gap-6 inline-flex">
+                                <div className="h-10 justify-start items-center gap-6 inline-flex">
                                     {Object.entries(companies).map(([name, data]) => (
-                                        <div key={name} onClick={() => handleSelectedComponies(name)} className={`p-2 bg-neutral-100 rounded justify-start items-center gap-2 flex cursor-pointer ${selectedCompany.includes(name) ? 'border border-[#0072DC] shadow-[0px_0px_8px_0px_rgba(120,127,252,0.40)]' : 'shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)]'}`}>
+
+                                        <div key={name} onClick={() => handleSelectedComponies(name)} className={`h-9 p-2 bg-neutral-100 rounded-lg shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] justify-center items-center gap-2 inline-flex cursor-default ${selectedCompany.includes(name) ? 'border border-[#0072DC]' : ''}`}>
                                             <div className="w-6 h-6 justify-center items-center flex">
                                                 <img className="w-6 h-6 rounded" src={data.icon} alt={name} />
                                             </div>

@@ -7,7 +7,7 @@ import image1 from "../assets/image1.png";
 import image2 from "../assets/Aspireit.png";
 import image3 from "../assets/Ellipse 1872.svg";
 import image4 from "../assets/Type=Layila.svg";
-import googleMeet from "../assets/google-meet.png";
+import googleMeet from "../assets/google-meet.svg";
 import zoom from "../assets/zoom.svg";
 import { useConversation } from "@11labs/react";
 import Spline from "@splinetool/react-spline";
@@ -44,9 +44,6 @@ const RecruiterDashboard = () => {
       );
 
       if (response.status === 200) {
-        console.log("response : ", response);
-        console.log("response.data : ", response.data);
-        console.log(typeof response, typeof response.data);
 
         const jobs = response.data;
         const jobData = {};
@@ -80,8 +77,7 @@ const RecruiterDashboard = () => {
   const postJobCard = async () => {
     try {
       const response = await axios.post(
-        `${
-          import.meta.env.VITE_BACKEND_BASE_URL
+        `${import.meta.env.VITE_BACKEND_BASE_URL
         }/api/alljobsposted/upload_job_posted_laiyla`,
         jobPost
       );
@@ -143,8 +139,7 @@ const RecruiterDashboard = () => {
       if (error.response) {
         // Server responded with a status code other than 2xx
         alert(
-          `Failed to generate job description: ${
-            error.response.data.error || "Unknown error"
+          `Failed to generate job description: ${error.response.data.error || "Unknown error"
           }`
         );
       } else if (error.request) {
@@ -238,12 +233,17 @@ const RecruiterDashboard = () => {
     yesterdaysProgress: [
       "Your job posting for Software Engineer attracted 392 applicants in just 12 days.",
       "You reviewed 85 candidate profiles and scheduled 5 interviews yesterday.",
+      "Your job posting for Software Engineer attracted 392 applicants in just 12 days.",
+      "You reviewed 85 candidate profiles and scheduled 5 interviews yesterday.",
     ],
     todaysGoals: [
       "Review applications for Software Engineer (392 pending)",
       "Post a new job for Marketing Manager.",
       "Schedule AI Interview",
-    ],
+      "Review applications for Software Engineer (392 pending)",
+      "Post a new job for Marketing Manager.",
+      "Schedule AI Interview",
+    ]
   };
   // 2nd
   const [activeIndex, setActiveIndex] = useState(0); // Track active index
@@ -492,9 +492,8 @@ const RecruiterDashboard = () => {
   const textToShow = {
     jobPosted:
       "Your opportunity has gone live AI is spreading the word to top talent !",
-    applicantsApplied: `Exciting news! ${
-      jobCards[Object.keys(jobCards)[activeIndex]].applicantsApplied
-    } eager candidates are vying for this roleAI is analyzing their potential.`,
+    applicantsApplied: `Exciting news! ${jobCards[Object.keys(jobCards)[activeIndex]].applicantsApplied
+      } eager candidates are vying for this roleAI is analyzing their potential.`,
     selectionComplete:
       "The first cut is in AI has curated the most promising applicants for the next stage.",
   };
@@ -612,7 +611,7 @@ const RecruiterDashboard = () => {
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? "#C3C3EA" : "#EBEBEB",
+      backgroundColor: state.isSelected ? "#C3C3EA" : state.isFocused ? "#E3E3EA" : "#EBEBEB",
       color: state.isSelected ? "#1E1E1E" : "#6F6F6F",
       fontWeight: "400",
       padding: "10px 20px",
@@ -633,6 +632,9 @@ const RecruiterDashboard = () => {
     }
 
     const utterance = new SpeechSynthesisUtterance(summaryText.join(" "));
+
+    const voices = window.speechSynthesis.getVoices();
+      utterance.voice = voices[4];
 
     // Disable button during speech
     setIsSpeaking(true);
@@ -660,8 +662,63 @@ const RecruiterDashboard = () => {
     );
   };
 
+  const suggestions = [
+    {
+      name: "Brooklyn Simmons",
+      department: "Design",
+      title: "UI Designer",
+      completionDate: "19/11/24",
+      postDate: "12/11/24",
+      timing: "Low",
+    },
+    {
+      name: "Ralph Edwards",
+      department: "Development",
+      title: "Front-end",
+      completionDate: "19/11/24",
+      postDate: "31/11/24",
+      timing: "High",
+    },
+    {
+      name: "Cody Fisher",
+      department: "Design",
+      title: "Motion Designer",
+      completionDate: "19/11/24",
+      postDate: "5/12/24",
+      timing: "High",
+    },
+  ];
+
+  const headers = [
+    "Employee Name",
+    "Department",
+    "Job Title",
+    "Completion Date",
+    "Job Post Date",
+    "Market Timing",
+  ];
+
+  const desc = [
+    {
+      num: '95%',
+      text: 'Cost saved per hire',
+      grad: 'linear-gradient(319deg, #D388FF 5.96%, #4B94F6 95.49%)',
+    },
+    {
+      num: '132',
+      text: 'Work hours saved this month',
+      grad: 'linear-gradient(90deg, #B054F6 0%, #FE52B0 100%)',
+
+    },
+    {
+      num: '1',
+      text: ' HRs required to manage the pipeline',
+      grad: 'linear-gradient(90deg, #2890FA 0%, #6ED6F5 100%)',
+    }
+  ]
+
   return (
-    <div className="main-container min-h-[100vh] bg-[#F2F2F2] pb-8">
+    <div className="main-container min-h-[100vh] bg-[#F2F2F2] pb-24">
       <ToastContainer
         position="top-center" // Moves the toast to mid-top
         autoClose={2000}
@@ -689,11 +746,10 @@ const RecruiterDashboard = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 22 22"
                 fill="none"
-                className={`w-[3vh] h-[3vh] shrink-0 rounded-full mr-1 ${
-                  isFocused1
+                className={`w-[3vh] h-[3vh] shrink-0 rounded-full mr-1 ${isFocused1
                     ? "transform scale-110 transition-transform duration-300"
                     : ""
-                }`}
+                  }`}
               >
                 <path
                   d="M9.49996 2.75C8.16495 2.75 6.85991 3.14588 5.74989 3.88757C4.63986 4.62927 3.7747 5.68347 3.26381 6.91686C2.75292 8.15026 2.61925 9.50745 2.8797 10.8168C3.14015 12.1262 3.78302 13.3289 4.72702 14.2729C5.67102 15.2169 6.87375 15.8598 8.18311 16.1202C9.49248 16.3807 10.8497 16.247 12.0831 15.7361C13.3165 15.2252 14.3707 14.3601 15.1124 13.25C15.854 12.14 16.2499 10.835 16.2499 9.49996C16.2498 7.70979 15.5386 5.99298 14.2728 4.72714C13.0069 3.46131 11.2901 2.75011 9.49996 2.75Z"
@@ -772,25 +828,25 @@ const RecruiterDashboard = () => {
       </div>
 
       <div className="flex flex-col items-center mt-[3vh] px-[6vw]">
+
+        {/* Header Details */}
+        <div className='flex justify-center gap-12 w-[100%] h-[100%]' style={{ width: '100%', gap: 25, height: '100%', paddingBottom: 24, justifyContent: 'space-between', alignItems: 'center', display: 'flex', }}>
+          {desc.map((data, index) => (
+            <div key={index} style={{ fontFamily: 'SF UI Text', paddingLeft: 32, paddingRight: 32, paddingTop: 24, paddingBottom: 24, background: 'white', boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)', borderRadius: 32, border: '0.50px #D388FF solid', justifyContent: 'flex-start', alignItems: 'center', gap: 20, display: 'flex', }}>
+              <div style={{ background: data.grad, fontSize: 40, fontFamily: 'SF UI Text  !important', fontWeight: '700', lineHeight: 'auto', wordWrap: 'break-word', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', }}>
+                {data.num}
+              </div>
+              <div style={{ flex: '1 1 0', height: 28, paddingTop: 4, paddingBottom: 4, justifyContent: 'center', alignItems: 'center', gap: 8, display: 'flex', }}>
+                <div style={{ flex: '1 1 0', background: data.grad, fontSize: 20, fontFamily: 'SF UI Text !important', fontWeight: '700', lineHeight: 'auto', wordWrap: 'break-word', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', }} >   {data.text} </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+
         <div
           className="overflow-hidden"
-          style={{
-            width: "100%",
-            height: 320,
-            paddingLeft: 56,
-            paddingRight: 56,
-            paddingTop: 40,
-            paddingBottom: 40,
-            background:
-              "linear-gradient(302deg, #5C9AFF 0%, #154DD1 75%), linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%)",
-            boxShadow: "0px 0px 24px rgba(211, 136, 255, 0.45)",
-            borderRadius: 32,
-            border: "1px #DCFFFF solid",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-            gap: 40,
-            display: "inline-flex",
-          }}
+          style={{ width: "100%", height: 320, paddingLeft: 56, paddingRight: 56, paddingTop: 40, paddingBottom: 40, background: "linear-gradient(302deg, #5C9AFF 0%, #154DD1 75%), linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%)", boxShadow: "0px 0px 24px rgba(211, 136, 255, 0.45)", borderRadius: 32, border: "1px #DCFFFF solid", justifyContent: "flex-start", alignItems: "flex-start", gap: 40, display: "inline-flex", }}
         >
           {/* Yesterday's Progress Section */}
           <div
@@ -825,7 +881,7 @@ const RecruiterDashboard = () => {
                 alignItems: "flex-start",
                 gap: 12,
                 display: "flex",
-                overflowY: "scroll",
+                overflowY: "auto",
                 paddingRight: 20,
                 boxSizing: "border-box",
               }}
@@ -916,7 +972,7 @@ const RecruiterDashboard = () => {
                 alignItems: "flex-start",
                 gap: 12,
                 display: "flex",
-                overflowY: "scroll",
+                overflowY: "auto",
                 paddingRight: 20,
                 boxSizing: "border-box",
               }}
@@ -1008,14 +1064,14 @@ const RecruiterDashboard = () => {
                   </div>
                 </div>
                 <div className="self-stretch flex-col justify-start items-start gap-[0.5vh] flex">
-                  <div className="self-stretch justify-start items-center inline-flex">
+                  <div className="self-stretch justify-start items-center inline-flex whitespace-nowrap">
                     <div className="py-[0.5vh] justify-center items-center gap-[1vw] flex">
-                      <div className="text-center text-[#6f6f6f] text-2xl font-normal font-['SF UI Text'] leading-[2.8vh]">
+                      <div className="text-center text-[#6f6f6f] text-2xl font-normal font-[400] font-['SF UI Text'] leading-[2.8vh]">
                         Job designation&nbsp;
                       </div>
                     </div>
                     <div className="py-[0.5vh] justify-center items-center gap-[1vw] flex">
-                      <div className="text-center text-[#6f6f6f] text-2xl font-normal font-['SF UI Text'] leading-[2.8vh]">
+                      <div className="text-center text-[#6f6f6f] text-2xl font-normal  font-[400] font-['SF UI Text'] leading-[2.8vh]">
                         :&nbsp;
                       </div>
                     </div>
@@ -1034,7 +1090,7 @@ const RecruiterDashboard = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="text-center text-[#6f6f6f] text-2xl font-normal font-['SF UI Text'] leading-[2.5vh]">
+                  <div className="text-center text-[#6f6f6f] text-xl font-[400] font-['SF UI Text'] leading-[2.5vh]">
                     Posted On :{" "}
                     {jobCards[Object.keys(jobCards)[activeIndex]].postedOn}
                   </div>
@@ -1122,7 +1178,7 @@ const RecruiterDashboard = () => {
                   >
                     {
                       textToShow[
-                        jobCards[Object.keys(jobCards)[activeIndex]].isActive
+                      jobCards[Object.keys(jobCards)[activeIndex]].isActive
                       ]
                     }
                   </div>
@@ -1174,7 +1230,7 @@ const RecruiterDashboard = () => {
                     <div className="h-[102px] flex-col justify-start items-start gap-4 flex">
                       <div className="self-stretch h-[60px] flex-col justify-start items-start flex">
                         <div className="p-1 justify-start items-center gap-2 inline-flex">
-                          <div className="text-center text-[#6f6f6f] text-base font-normal font-['SF UI Text'] uppercase leading-none tracking-wide">
+                          <div className="text-center text-[#6f6f6f] text-lg font-normal font-[400] font-['SF UI Text'] uppercase leading-none tracking-wide">
                             Progress Report for
                           </div>
                         </div>
@@ -1198,20 +1254,8 @@ const RecruiterDashboard = () => {
                       </div>
                       <div className="self-stretch px-1 justify-start items-center inline-flex">
                         <div className="py-1 justify-center items-center gap-2 flex">
-                          <div className="text-center text-[#6f6f6f] text-lg font-normal font-['SF UI Text'] leading-[18px]">
-                            Posted on
-                          </div>
-                        </div>
-                        <div className="p-1 justify-center items-center gap-2 flex">
-                          <div className="text-center text-[#6f6f6f] text-lg font-normal font-['SF UI Text'] leading-[18px]">
-                            :
-                          </div>
-                        </div>
-                        <div className="justify-start items-center gap-1 flex">
-                          <div className="py-1 justify-center items-center gap-2 flex">
-                            <div className="text-center text-[#6f6f6f] text-lg font-normal font-['SF UI Text'] leading-[18px]">
-                              {job?.postedOn || "1 Jan 2025"}
-                            </div>
+                          <div className="text-center text-[#6f6f6f] text-xl font-normal font-[400] font-['SF UI Text'] leading-[18px]">
+                            Posted on : {job?.postedOn || "1 Jan 2025"}
                           </div>
                         </div>
                       </div>
@@ -1226,8 +1270,8 @@ const RecruiterDashboard = () => {
                           job?.progress?.[key] !== 0
                             ? "completed"
                             : isActive
-                            ? "active"
-                            : "pending";
+                              ? "active"
+                              : "pending";
 
                         return (
                           <div
@@ -1242,39 +1286,38 @@ const RecruiterDashboard = () => {
                                     .isActive === key
                                     ? gradients[gradientIndex]
                                     : status === "pending"
-                                    ? "#D7D7FE"
-                                    : gradients[gradientIndex],
+                                      ? "#D7D7FE"
+                                      : gradients[gradientIndex],
                                 boxShadow:
                                   status === "completed"
                                     ? `0px 2px 12px 0px ${pointColors[activeIndex]}`
                                     : status === "pending"
-                                    ? ""
-                                    : `0px 2px 12px 0px ${pointColors[activeIndex]}`,
+                                      ? ""
+                                      : `0px 2px 12px 0px ${pointColors[activeIndex]}`,
                               }}
                             />
                             <div
-                              className={`text-center text-xl font-['SF UI Text'] leading-tight ${
-                                status === "completed"
-                                  ? "text-[#7D7DA4]"
+                              className={`text-center text-xl font-['SF UI Text'] leading-tight ${status === "completed"
+                                  ? "text-[#7D7DA4] font-[400]"
                                   : status === "pending"
-                                  ? "text-[#C3C3EA]"
-                                  : ""
-                              }`}
+                                    ? "text-[#C3C3EA] font-[400]"
+                                    : "font-bold"
+                                }`}
                               style={
                                 status === "active"
                                   ? {
-                                      backgroundImage: gradients[gradientIndex],
-                                      backgroundClip: "text",
-                                      WebkitBackgroundClip: "text",
-                                      WebkitTextFillColor: "transparent",
-                                      transition: "background-image 0.5s ease",
-                                      fontWeight: "bold",
-                                    }
-                                  : {}
+                                    backgroundImage: gradients[gradientIndex],
+                                    backgroundClip: "text",
+                                    WebkitBackgroundClip: "text",
+                                    WebkitTextFillColor: "transparent",
+                                    transition: "background-image 0.5s ease",
+                                  }
+                                  : {
+                                  }
                               }
                             >
                               {key === "applicantsApplied" &&
-                              job?.progress?.applicantsApplied !== 0
+                                job?.progress?.applicantsApplied !== 0
                                 ? `${job?.progress?.applicantsApplied}`
                                 : ""}
                               &nbsp;{label}
@@ -1299,7 +1342,7 @@ const RecruiterDashboard = () => {
           </div>
         </div>
 
-        <div style={{alignItems: 'center'}} className="flex justify-center my-[3vh] gap-12 w-[100%]">
+        <div style={{ alignItems: 'center' }} className="flex justify-center my-[3vh] gap-12 w-[100%]">
           {/* <------------------ Scheduled Interview------------------> */}
 
           <div
@@ -1418,11 +1461,10 @@ const RecruiterDashboard = () => {
               <button className="bg-none" disabled={isSpeaking}>
                 <svg
                   onClick={handleTextToSpeech}
-                  className={`rounded ${
-                    isSpeaking
+                  className={`rounded ${isSpeaking
                       ? "cursor-not-allowed transform scale-110 transition-transform duration-200"
                       : ""
-                  }`}
+                    }`}
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
@@ -1454,6 +1496,51 @@ const RecruiterDashboard = () => {
           </div>
 
         </div>
+
+        {/*  suggestions */}
+        <div style={{ width: '100%', padding: 32, background: 'linear-gradient(302deg, #5C9AFF 0%, #154DD1 75%), linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%)', boxShadow: '0px 0px 24px rgba(211, 136, 255, 0.45)', borderRadius: 32, border: '1px #DCFFFF solid', display: 'flex', flexDirection: 'column', gap: 24, }}>
+          <h1 style={{ color: 'white', fontSize: 24, lineHeight: '24px', fontFamily: 'SF UI Text', fontWeight: '700', }}>
+            Suggestions
+          </h1>
+
+          {/* Headers */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', }}>
+            {headers.map((header, index) => (
+              <div key={index} style={{ flex: 1, textAlign: 'center', color: '#A5A5CC', fontSize: 18, fontWeight: '600', }}   >
+                {header}
+              </div>))
+            }
+          </div>
+
+          {suggestions.map((item, index) => (
+            <div key={index} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px', background: 'rgba(255, 255, 255, 0.20)', boxShadow: '0px 2px 12px rgba(0, 0, 0, 0.25)', borderRadius: 8, backdropFilter: 'blur(16px)', marginBottom: '', }} >
+              <div style={{ flex: 1, color: '#DCFFFF', fontSize: 18, fontWeight: '400', paddingLeft: '16px' }}   >
+                {item.name}
+              </div>
+              <div style={{ flex: 1, textAlign: 'center', color: 'white', fontSize: 16, fontWeight: '400', }}   >
+                {item.department}
+              </div>
+              <div style={{ flex: 1, textAlign: 'center', color: 'white', fontSize: 16, fontWeight: '400', }}   >
+                {item.title}
+              </div>
+              <div style={{ flex: 1, textAlign: 'center', color: 'white', fontSize: 16, fontWeight: '400', }}   >
+                {item.completionDate}
+              </div>
+              <div style={{ flex: 1, textAlign: 'center', color: 'white', fontSize: 16, fontWeight: '400', }}   >
+                {item.postDate}
+              </div>
+              <div style={{ flex: 1, textAlign: 'center', color: 'white', fontSize: 16, fontWeight: '400', }}   >
+                {item.timing}
+              </div>
+            </div>
+          ))}
+
+          <div className="self-end w-fit p-5 mt-4 px-5 bg-[#0071db] rounded-[32px] shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] justify-center items-center gap-2 inline-flex">
+            <div className="text-center text-white text-[18px] font-normal font-['SF UI  Text'] leading-[18px] cursor-pointer">Schedule</div>
+          </div>
+
+        </div>
+
       </div>
     </div>
   );

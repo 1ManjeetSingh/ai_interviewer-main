@@ -88,6 +88,10 @@ const jobPostedSchema = new mongoose.Schema({
           },
     },
     depthOfRound: {
+      level: {
+        type: Number,
+        default: 2
+      },
       aiInterview: {
         type: Number,
         default: 30
@@ -102,10 +106,6 @@ const jobPostedSchema = new mongoose.Schema({
         default: "",
         // required: true,
         trim: true,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
     },
 }, { timestamps: true });  // Add timestamps to track createdAt and updatedAt automatically
 
