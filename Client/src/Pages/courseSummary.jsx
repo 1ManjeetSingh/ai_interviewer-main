@@ -90,10 +90,6 @@ const CourseSummary = () => {
       <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
       <Link to="/postJobMain">Post Job Main</Link>
       </button>
-
-      <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
-      <Link to="/afterSelection">afterSelection</Link>
-      </button>
       
       <button className="border border-black p-2 rounded-lg m-4 leading-[24px]">
       <Link to="/applicantResult">applicantResult</Link>

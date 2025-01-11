@@ -30,7 +30,7 @@ const ProfileSection = ({ data }) => {
                 >
                   <img src="./aiicon.png" alt="ai icon" />
                   <span
-                    style={{ position: "relative", zIndex: 2 }}
+                    style={{ position: "relative", zIndex: 99 }}
                     className="text-[14px] text-transparent bg-clip-text bg-button-text"
                   >
                     AI Summary
