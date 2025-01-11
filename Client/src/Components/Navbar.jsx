@@ -3,11 +3,13 @@ import image1 from "../assets/image1.png"
 import image2 from '../assets/Aspireit.png';
 import image3 from '../assets/Ellipse 1872.svg';
 import image4 from '../assets/Type=Layila.svg';
-import { toast, ToastContainer } from 'react-toastify';
+import {toast, ToastContainer} from 'react-toastify';
 import { useJobContext } from '../Context/LaiylaJobPostContext';
+import Spline from "@splinetool/react-spline";
+
 
 function Navbar() {
-    const { dataCollection, setDataCollection, fetchTranscript, conversationId, setConversationId,
+    const { dataCollection, setDataCollection, fetchTranscript, conversationId, setConversationId, 
         conversation, jobPost, setJobPost, postJobCard, handleGenerateDescription, getTranscriptData } = useJobContext();
     const [searchPhrase, setSearchPhrase] = useState('');
     const [isFocused1, setisFocused1] = useState(false);
@@ -31,62 +33,62 @@ function Navbar() {
 
     useEffect(() => {
         if (jobPost.jobDescription.length > 0) {
-            setTimeout(() => {
-                postJobCard();
-            }, 1000);
+          setTimeout(() => {
+            postJobCard();
+          }, 1000);
         }
-    }, [jobPost]);
-
-    useEffect(() => {
+      }, [jobPost]);
+      
+      useEffect(() => {
         const mappedData = {
-            jobTitle: dataCollection?.["Job title"]?.value || "",
-            designation: dataCollection?.["Designation"]?.value || "",
-            jobType: dataCollection?.["Job type"]?.value || "",
-            workplaceType: dataCollection?.["workplace type"]?.value || "",
+          jobTitle: dataCollection?.["Job title"]?.value || "",
+          designation: dataCollection?.["Designation"]?.value || "",
+          jobType: dataCollection?.["Job type"]?.value || "",
+          workplaceType: dataCollection?.["workplace type"]?.value || "",
         };
-
+    
         setJobPost((prev) => ({ ...prev, ...mappedData }));
-    }, [dataCollection]);
+      }, [dataCollection]);
 
     // Laiyla Variables
     const [liylaStatus, setLiylaStatus] = useState(false);
 
-
-    const toggleLiylaStatus = async () => {
+      
+      const toggleLiylaStatus = async () => {
         if (!liylaStatus) {
-            const Id = await conversation.startSession({
-                agentId: import.meta.env.VITE_APP_ELEVENLABS,
-            });
-
-            console.log("11 labs activated: ", Id);
-            setConversationId(Id);
+          const Id = await conversation.startSession({
+            agentId: import.meta.env.VITE_APP_ELEVENLABS,
+          });
+    
+          console.log("11 labs activated: ", Id);
+          setConversationId(Id);
         } else {
-            await conversation.endSession();
+          await conversation.endSession();
         }
         setLiylaStatus((prev) => !prev);
-    };
-
-    useEffect(() => {
+      };
+    
+      useEffect(() => {
         const handlePageClick = async () => {
-            if (liylaStatus) {
-                setLiylaStatus(false);
-                await conversation.endSession();
-
-                setTimeout(() => {
-                    getTranscriptData();
-                }, 10000);
-
-                console.log("11 labs deactivated due to page click");
-            }
+          if (liylaStatus) {
+            setLiylaStatus(false);
+            await conversation.endSession();
+    
+            setTimeout(() => {
+              getTranscriptData();
+            }, 10000);
+    
+            console.log("11 labs deactivated due to page click");
+          }
         };
-
+    
         document.addEventListener("click", handlePageClick);
-
+    
         return () => {
-            document.removeEventListener("click", handlePageClick);
+          document.removeEventListener("click", handlePageClick);
         };
-    }, [liylaStatus, conversation]);
-
+      }, [liylaStatus, conversation]);
+    
 
 
     return (
