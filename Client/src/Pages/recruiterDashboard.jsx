@@ -82,16 +82,16 @@ const RecruiterDashboard = () => {
     todaysGoals: [
       {
         text: "Review applications for Software Engineer (392 pending)",
-        icon: "./yesterday_progress_1.svg"
+        icon: "./todays_goal_1.svg"
       }, {
         text: "Post new job openings for UI/UX Designer and Data Scientist roles.",
-        icon: "./yesterday_progress_2.svg"
+        icon: "./todays_goal_2.svg"
       }, {
         text: "Schedule AI technical interviews for shortlisted Data Scientist candidates.",
-        icon: "./yesterday_progress_3.svg"
+        icon: "./todays_goal_3.svg"
       }, {
         text: "Generate a comprehensive report on hiring activity for this week.",
-        icon: "./yesterday_progress_4.svg"
+        icon: "./todays_goal_4.svg"
       },
     ]
   };
