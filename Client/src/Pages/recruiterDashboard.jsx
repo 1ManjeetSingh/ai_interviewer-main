@@ -16,6 +16,7 @@ import { fetchTranscript } from "../webhooks/apiService";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Pagination } from "swiper/modules";
+import { useJobContext } from "../Context/LaiylaJobPostContext";
 
 const RecruiterDashboard = () => {
   const [liylaStatus, setLiylaStatus] = useState(false);
@@ -51,7 +52,7 @@ const RecruiterDashboard = () => {
         // Transform fetched data into jobCards format
         jobs.forEach((job) => {
           jobData[job.jobTitle] = {
-            postedOn: new Date(job.date).toLocaleDateString("en-GB", {
+            postedOn: new Date(job.createdAt).toLocaleDateString("en-GB", {
               day: "numeric",
               month: "short",
               year: "numeric",
@@ -61,7 +62,7 @@ const RecruiterDashboard = () => {
         });
 
         if (Object.keys(jobData).length) {
-          setJobCards(jobData);
+          // setJobCards(jobData);
         }
       }
     } catch (error) {
@@ -227,22 +228,42 @@ const RecruiterDashboard = () => {
     setJobPost((prev) => ({ ...prev, ...mappedData }));
   }, [dataCollection]);
 
+
   // main Varibles to change all
   // 1st
   const progress = {
     yesterdaysProgress: [
-      "Your job posting for Software Engineer attracted 392 applicants in just 12 days.",
-      "You reviewed 85 candidate profiles and scheduled 5 interviews yesterday.",
-      "Your job posting for Software Engineer attracted 392 applicants in just 12 days.",
-      "You reviewed 85 candidate profiles and scheduled 5 interviews yesterday.",
+      {
+        text: "The platform sourced 2500 candidates across LinkedIn, Naukri, and Indeed for the Software Engineer role.",
+        icon: "./yesterday_progress_1.svg"
+      },
+      {
+        text: "Conducted AI screening for 500 candidates, filtering them based on technical and soft skills.",
+        icon: "./yesterday_progress_2.svg"
+      },
+      {
+        text: "Completed AI interviews for 200 candidates, covering technical and behavioral rounds.",
+        icon: "./yesterday_progress_3.svg"
+      },
+      {
+        text: "Recommended Top 20 candidates for the Software Engineer role after an in-depth AI analysis.",
+        icon: "./yesterday_progress_4.svg"
+      }
     ],
     todaysGoals: [
-      "Review applications for Software Engineer (392 pending)",
-      "Post a new job for Marketing Manager.",
-      "Schedule AI Interview",
-      "Review applications for Software Engineer (392 pending)",
-      "Post a new job for Marketing Manager.",
-      "Schedule AI Interview",
+      {
+        text: "Review applications for Software Engineer (392 pending)",
+        icon: "./yesterday_progress_1.svg"
+      }, {
+        text: "Post new job openings for UI/UX Designer and Data Scientist roles.",
+        icon: "./yesterday_progress_2.svg"
+      }, {
+        text: "Schedule AI technical interviews for shortlisted Data Scientist candidates.",
+        icon: "./yesterday_progress_3.svg"
+      }, {
+        text: "Generate a comprehensive report on hiring activity for this week.",
+        icon: "./yesterday_progress_4.svg"
+      },
     ]
   };
   // 2nd
@@ -340,9 +361,12 @@ const RecruiterDashboard = () => {
   };
   // 4th
   const [summaryText, setSummaryText] = useState([
-    "You have posted 15 jobs last week, your applicants growth is up by 35%.",
-    "Your premium accounts expiring soon in 5 days.",
-    "Content writer AI interview is yet to be scheduled.",
+    "Job Posted: Successfully posted the Software Engineer role.",
+    "AI Screening: Software Engineer: Completed for 500 candidates; 200 moved to the next stage. Marketing Manager: Screening will begin once applications are received.",
+    "AI Interviews: Software Engineer: Conducted for 50 shortlisted candidates. Marketing Manager: No interviews scheduled yet.",
+    "Technical Round: Software Engineer: Evaluated 20 candidates in AI technical assessments.",
+    "Shortlisted Candidates: Software Engineer: Finalized the top 20 candidates for review.",
+    "All tasks are progressing well across roles, and we are on track to meet hiring goals.",
   ]);
 
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -380,7 +404,6 @@ const RecruiterDashboard = () => {
   const scores = {
     "Ai Engineer": {
       aiNonTechnicalRoundAndInterview: {
-        postedOn: "12th Dec 2024",
         "Kunal P.": 97,
         "Muskan M.": 96,
         "Gautam K.": 91,
@@ -391,7 +414,6 @@ const RecruiterDashboard = () => {
     },
     "Sr. Account Manager": {
       aiTechnicalRoundAndInterview: {
-        postedOn: "12th Dec 2024",
         "Kunal P.": 98,
         "Muskan M.": 95,
         "Gautam K.": 90,
@@ -400,7 +422,6 @@ const RecruiterDashboard = () => {
         "Rahul V.": 80,
       },
       aiNonTechnicalRoundAndInterview: {
-        postedOn: "13th Dec 2024",
         "Aman S.": 95,
         "Riya T.": 89,
         "Vikas J.": 85,
@@ -410,7 +431,6 @@ const RecruiterDashboard = () => {
     },
     "Marketing Manager": {
       aiTechnicalRoundAndInterview: {
-        postedOn: "12th Dec 2024",
         "Ananya B.": 97,
         "Rohit S.": 94,
         "Sneha T.": 91,
@@ -419,7 +439,6 @@ const RecruiterDashboard = () => {
         "Tanya M.": 79,
       },
       aiNonTechnicalRoundAndInterview: {
-        postedOn: "13th Dec 2024",
         "Simran P.": 96,
         "Aarav G.": 88,
         "Nikita L.": 87,
@@ -429,7 +448,6 @@ const RecruiterDashboard = () => {
     },
     "Software Developer": {
       aiTechnicalRoundAndInterview: {
-        postedOn: "12th Dec 2024",
         "Divya R.": 99,
         "Aditya K.": 97,
         "Priya J.": 92,
@@ -438,7 +456,6 @@ const RecruiterDashboard = () => {
         "Arjun V.": 81,
       },
       aiNonTechnicalRoundAndInterview: {
-        postedOn: "13th Dec 2024",
         "Harsh T.": 94,
         "Pooja D.": 91,
         "Naman V.": 87,
@@ -454,8 +471,8 @@ const RecruiterDashboard = () => {
     { label: "Job Posted", key: "jobPosted" },
     { label: "Applicants Applied", key: "applicantsApplied" },
     { label: "Selection Complete", key: "selectionComplete" },
-    { label: "Ai Interview Round", key: "aiInterviewRound" },
-    { label: "Ai Technical Round", key: "aiTechnicalRound" },
+    { label: "AI Interview Round", key: "aiInterviewRound" },
+    { label: "AI Technical Round", key: "aiTechnicalRound" },
     { label: "Shortlisted Candidates", key: "shortlistedCandidates" },
   ];
 
@@ -491,18 +508,18 @@ const RecruiterDashboard = () => {
 
   const textToShow = {
     jobPosted:
-      "Your opportunity has gone live AI is spreading the word to top talent !",
-    applicantsApplied: `Exciting news! ${jobCards[Object.keys(jobCards)[activeIndex]].applicantsApplied
-      } eager candidates are vying for this roleAI is analyzing their potential.`,
+      "Your job has been successfully posted! Check out the dashboard or the Job Posting screen to track applications in real time.",
+    applicantsApplied: `New applicants are rolling in! Review the profiles directly on your dashboard to start shortlisting.`,
     selectionComplete:
-      "The first cut is in AI has curated the most promising applicants for the next stage.",
+      "The selection process is complete! The top candidates have been identified for the next steps—check them out on the dashboard.",
+    shortlistedCandidates:
+      "Shortlisting complete! The top candidates are ready for your review—find them highlighted on the dashboard."
   };
 
   // <------------ Imp --------------->
   const roundsWithGraph = [
     "aiInterviewRound",
     "aiTechnicalRound",
-    "shortlistedCandidates",
   ];
 
   const [openSelect, setOpenSelect] = useState(false);
@@ -634,23 +651,22 @@ const RecruiterDashboard = () => {
     const utterance = new SpeechSynthesisUtterance(summaryText.join(" "));
 
     const voices = window.speechSynthesis.getVoices();
-      utterance.voice = voices[4];
+    utterance.voice = voices[4];
 
     // Disable button during speech
-    setIsSpeaking(true);
+    if (!isSpeaking) {
+      setIsSpeaking(true);
+      window.speechSynthesis.speak(utterance); // Start speaking
+    } else {
+      window.speechSynthesis.cancel(); // Stop the speech if already speaking
+      setIsSpeaking(false);
+    }
 
     // Re-enable after speech ends
     utterance.onend = () => {
       setIsSpeaking(false);
     };
 
-    // Handle errors
-    utterance.onerror = () => {
-      alert("Error during speech synthesis.");
-      setIsSpeaking(false);
-    };
-
-    window.speechSynthesis.speak(utterance);
   };
 
   // Function to handle copy-to-clipboard
@@ -747,8 +763,8 @@ const RecruiterDashboard = () => {
                 viewBox="0 0 22 22"
                 fill="none"
                 className={`w-[3vh] h-[3vh] shrink-0 rounded-full mr-1 ${isFocused1
-                    ? "transform scale-110 transition-transform duration-300"
-                    : ""
+                  ? "transform scale-110 transition-transform duration-300"
+                  : ""
                   }`}
               >
                 <path
@@ -891,7 +907,7 @@ const RecruiterDashboard = () => {
                   key={index}
                   style={{
                     alignSelf: "stretch",
-                    paddingLeft: 20,
+                    paddingLeft: 16,
                     paddingRight: 20,
                     paddingTop: 12,
                     paddingBottom: 12,
@@ -906,21 +922,7 @@ const RecruiterDashboard = () => {
                   }}
                 >
                   <div style={{ width: 32, height: 32, position: "relative" }}>
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 32 32"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g id="Medal ">
-                        <path
-                          id="Vector"
-                          d="M16 8.63605C22.6275 8.63605 28 13.8662 28 20.318C28 26.7698 22.6275 32 16 32C9.37258 32 4 26.7698 4 20.318C4 13.8662 9.37258 8.63605 16 8.63605ZM16 13.7469L14.0162 17.6599L9.58038 18.2874L12.7902 21.3333L12.0325 25.6342L16 23.6036L19.9675 25.6342L19.2099 21.3333L22.4197 18.2874L17.9838 17.6599L16 13.7469ZM17.5 1.33334L25 1.3348V5.71555L22.9549 7.37667C21.2958 6.52995 19.4537 5.97672 17.5016 5.78782L17.5 1.33334ZM14.5 1.33334L14.4995 5.7877C12.5476 5.97641 10.7057 6.52944 9.04661 7.37591L7 5.71555V1.3348L14.5 1.33334Z"
-                          fill="#C8F5F5"
-                        />
-                      </g>
-                    </svg>
+                    <img src={item.icon} alt="" />
                   </div>
                   <div
                     className="font-['SF UI  Text'] text-[2vh]"
@@ -932,7 +934,7 @@ const RecruiterDashboard = () => {
                       wordWrap: "break-word",
                     }}
                   >
-                    {item}
+                    {item.text}
                   </div>
                 </div>
               ))}
@@ -1007,18 +1009,7 @@ const RecruiterDashboard = () => {
                     <div
                       style={{ width: 32, height: 32, position: "relative" }}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="33"
-                        height="32"
-                        viewBox="0 0 33 32"
-                        fill="none"
-                      >
-                        <path
-                          d="M16.4993 2.66663C9.15268 2.66663 3.16602 8.65329 3.16602 16C3.16602 23.3466 9.15268 29.3333 16.4993 29.3333C23.846 29.3333 29.8327 23.3466 29.8327 16C29.8327 8.65329 23.846 2.66663 16.4993 2.66663ZM22.2994 20.76C22.1127 21.08 21.7793 21.2533 21.4327 21.2533C21.2593 21.2533 21.086 21.2133 20.926 21.1066L16.7927 18.64C15.766 18.0266 15.006 16.68 15.006 15.4933V10.0266C15.006 9.47996 15.4593 9.02663 16.006 9.02663C16.5527 9.02663 17.006 9.47996 17.006 10.0266V15.4933C17.006 15.9733 17.406 16.68 17.8193 16.92L21.9527 19.3866C22.4327 19.6666 22.5927 20.28 22.2994 20.76Z"
-                          fill="#C3C3EA"
-                        />
-                      </svg>
+                      <img src={goal.icon} alt="" />
                     </div>
                   </div>
                   <div
@@ -1031,7 +1022,7 @@ const RecruiterDashboard = () => {
                       wordWrap: "break-word",
                     }}
                   >
-                    {goal}
+                    {goal.text}
                   </div>
                 </div>
               ))}
@@ -1298,10 +1289,10 @@ const RecruiterDashboard = () => {
                             />
                             <div
                               className={`text-center text-xl font-['SF UI Text'] leading-tight ${status === "completed"
-                                  ? "text-[#7D7DA4] font-[400]"
-                                  : status === "pending"
-                                    ? "text-[#C3C3EA] font-[400]"
-                                    : "font-bold"
+                                ? "text-[#7D7DA4] font-[400]"
+                                : status === "pending"
+                                  ? "text-[#C3C3EA] font-[400]"
+                                  : "font-bold"
                                 }`}
                               style={
                                 status === "active"
@@ -1346,13 +1337,13 @@ const RecruiterDashboard = () => {
           {/* <------------------ Scheduled Interview------------------> */}
 
           <div
-            className="w-[50vw] p-[2vw] bg-white/30 rounded-[32px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.25)] backdrop-blur-lg flex-col justify-center items-end gap-6 inline-flex flex-grow"
+            className="w-[50vw] h-[36vh] p-[2vw] bg-white/30 rounded-[32px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.25)] backdrop-blur-lg flex-col justify-center items-end gap-6 inline-flex flex-grow"
             style={{
               border:
                 "0.5px solid var(--Gradients-Gradient-Blue-to-pink, #D388FF)",
             }}
           >
-            <div className="self-stretch h-48 flex-col justify-center items-center gap-6 flex">
+            <div className="self-stretch flex-col justify-center items-center gap-6 flex">
               <div className="self-stretch h-9 flex-col justify-start items-start flex">
                 <div className="self-stretch h-9 flex-col justify-start items-start flex">
                   <div className="p-1 justify-start items-center gap-2 inline-flex">
@@ -1362,12 +1353,12 @@ const RecruiterDashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="self-stretch h-[132px] py-1 flex-col justify-start items-start gap-3 flex">
+              <div className="self-stretch h-[14vh] overflow-y-auto py-1 flex-col justify-start items-start gap-3 flex">
                 {Object.entries(schedule).map(([type, meetings]) =>
                   meetings.map((meeting, index) => (
                     <div
                       key={index}
-                      className="self-stretch px-5 py-2 bg-white/30 rounded-xl shadow-[0px_2px_12px_0px_rgba(0,0,0,0.25)] border border-[#dcffff] justify-start items-center gap-4 inline-flex"
+                      className="w-full px-4 py-2 bg-white/30 rounded-xl shadow-[0px_2px_12px_0px_rgba(0,0,0,0.10)] border border-[#dcffff] justify-start items-center gap-4 inline-flex"
                     >
                       <img
                         className="w-10 h-10 rounded-full shadow-[0px_0px_8px_0px_rgba(0,0,0,0.40)] border-box"
@@ -1382,7 +1373,7 @@ const RecruiterDashboard = () => {
                 )}
               </div>
             </div>
-            <div className="h-14 px-5 bg-[#0071db] rounded-[32px] shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] justify-center items-center gap-2 inline-flex">
+            <div className="h-14 p-5 bg-[#0071db] rounded-[32px] shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)] justify-center items-center gap-2 inline-flex">
               <div className="text-center text-white text-[18px] font-normal font-['SF UI  Text'] leading-[18px] cursor-pointer">
                 Continue
               </div>
@@ -1392,22 +1383,21 @@ const RecruiterDashboard = () => {
           {/* <------------- AI summary --------------> */}
 
           <div
-            className="w-[35vw] px-[32px] py-[36px]"
+            className="w-[35vw] h-[36vh] px-[32px] py-[36px]"
             style={{
-              height: "100%",
               background:
                 "linear-gradient(302deg, #5C9AFF 0%, #154DD1 75%), linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.10) 100%)",
               boxShadow: "0px 0px 24px rgba(211, 136, 255, 0.45)",
               borderRadius: 32,
               border: "1px #DCFFFF solid",
-              justifyContent: "flex-start",
+              justifyContent: "center",
               alignItems: "flex-start",
               gap: 12,
               display: "flex",
               flexDirection: "column",
             }}
           >
-            <div className="self-stretch flex-col justify-start items-start gap-6 flex">
+            <div className="self-stretch flex-col justify-start items-start gap-4 flex">
               <div className=" justify-start items-center gap-1 inline-flex">
                 <div className="w-8 h-8 pl-1 pr-[2.67px] pt-[1.33px] pb-[1.44px] justify-center items-center flex">
                   <div className="w-[25.33px] h-[29.23px] relative flex items-center justify-center">
@@ -1448,9 +1438,9 @@ const RecruiterDashboard = () => {
                   </div>
                 </div>
               </div>
-              <ul className="self-stretch text-white font-normal font-['SF UI  Text'] leading-normal list-disc list-inside">
+              <ul className="self-stretch h-[17vh] overflow-y-auto custom-scrollbar-sm text-white font-normal font-['SF UI  Text'] leading-normal list-disc list-outside pl-7 pr-3">
                 {summaryText.map((text, index) => (
-                  <li key={index} className="text-xl text-justify">
+                  <li key={index} className="text-xl font-[400] text-justify my-2">
                     {text}
                   </li>
                 ))}
@@ -1458,24 +1448,25 @@ const RecruiterDashboard = () => {
             </div>
             <div className="self-stretch justify-end items-center gap-4 inline-flex">
               {/* text to speech ai summary */}
-              <button className="bg-none" disabled={isSpeaking}>
-                <svg
-                  onClick={handleTextToSpeech}
-                  className={`rounded ${isSpeaking
-                      ? "cursor-not-allowed transform scale-110 transition-transform duration-200"
-                      : ""
-                    }`}
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13.2696 1.07212C13.5606 1.19493 13.7643 1.45693 13.8166 1.76136L13.8298 1.91667V22.0833C13.8298 22.4525 13.6083 22.7858 13.2678 22.9287C12.976 23.0511 12.6457 23.0131 12.3914 22.8368L12.2712 22.7373L6.9075 17.4664H3.74925C2.32021 17.4664 1.14581 16.3758 1.01259 14.9813L1 14.7165V9.23666C1 7.80723 2.09034 6.63251 3.48448 6.49925L3.74925 6.48667H6.90977L12.2739 1.26006C12.5379 1.00288 12.9301 0.928848 13.2696 1.07212ZM18.8476 2.94183L19.0063 3.04963L19.1855 3.20467C19.3008 3.30831 19.4599 3.45844 19.6483 3.65411C20.0246 4.04496 20.5205 4.62088 21.0154 5.37482C22.0059 6.88386 23 9.12045 23 12.0074C23 14.8945 22.0057 17.1278 21.0147 18.6335C20.5196 19.3857 20.0235 19.9599 19.647 20.3495L19.3881 20.6079L19.0458 20.9177L18.9854 20.9674C18.5886 21.2818 18.0108 21.216 17.6965 20.8192C17.4178 20.4672 17.4389 19.9737 17.7242 19.6473L17.961 19.4319C18.0464 19.3555 18.1738 19.2361 18.3292 19.0754C18.6406 18.7531 19.0616 18.267 19.4839 17.6256C20.3272 16.3439 21.1672 14.4558 21.1672 12.0074C21.1672 9.55885 20.3272 7.66678 19.4832 6.38099C19.1313 5.84477 18.7801 5.4165 18.4924 5.10129L18.1823 4.77812L17.8444 4.46753C17.4491 4.15208 17.3829 3.57493 17.698 3.17906C17.9782 2.82701 18.4648 2.7362 18.8476 2.94183ZM17.0162 6.60831L17.1987 6.73616L17.4437 6.96668L17.5427 7.07051C17.7508 7.29496 18.0191 7.62375 18.2849 8.06095C18.8191 8.94008 19.3362 10.248 19.3362 11.9973C19.3362 13.7466 18.8191 15.0559 18.2852 15.9363C18.0198 16.3741 17.7515 16.7038 17.5437 16.9287L17.3575 17.1199L17.2287 17.2391L17.1558 17.3009L17.0395 17.3537C16.7968 17.4509 16.2294 17.6094 15.8679 17.157C15.5884 16.8072 15.6065 16.3157 15.8879 15.988L16.1343 15.7511L16.1974 15.6846C16.334 15.5369 16.5248 15.3045 16.7181 14.9855C17.1023 14.3522 17.5033 13.3678 17.5033 11.9973C17.5033 10.6269 17.1023 9.64456 16.7187 9.01331C16.5737 8.7748 16.4302 8.585 16.3101 8.44301L16.1355 8.25074L16.0099 8.13157C15.6164 7.81766 15.5517 7.24198 15.8666 6.84602C16.1467 6.49385 16.6332 6.40284 17.0162 6.60831Z"
-                    fill="white"
-                  />
-                </svg>
+              <button className="bg-none">
+                {isSpeaking ? <svg xmlns="http://www.w3.org/2000/svg" onClick={handleTextToSpeech}
+                  className={`rounded`}
+                  width="32"
+                  height="32"
+                  viewBox="0 0 1024 1024" id="VolumeOff">
+                  <path d="M672.52 568.35 728.87 512l-56.35-56.35 49.5-49.5 56.35 56.35 56.35-56.35 49.5 49.5L827.87 512l56.35 56.35-49.5 49.5-56.35-56.35-56.35 56.35zM536.33 814.5 323.71 662H201.27c-28.53 0-51.74-23.21-51.74-51.74V413.74c0-28.53 23.21-51.74 51.74-51.74h122.44l212.62-152.5c9.9-7.1 22.79-8.05 33.63-2.49 10.84 5.57 17.57 16.59 17.57 28.78v552.42c0 12.19-6.73 23.21-17.57 28.78-4.69 2.4-9.75 3.59-14.8 3.59-6.62 0-13.21-2.05-18.83-6.08z" fill="#ffffff" class="color000000 svgShape"></path>
+                </svg> : <svg xmlns="http://www.w3.org/2000/svg" onClick={handleTextToSpeech}
+                  className={`rounded`}
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24" id="volume">
+                  <g fill="#ffffff" class="color000000 svgShape">
+                    <g fill="#ffffff" class="color000000 svgShape">
+                      <path d="M18.28 8.37a1 1 0 1 0-1.56 1.26 4 4 0 0 1 0 4.74A1 1 0 0 0 17.5 16a1 1 0 0 0 .78-.37 6 6 0 0 0 0-7.26z" fill="#ffffff" class="color000000 svgShape"></path>
+                      <path d="M19.64 5.23a1 1 0 1 0-1.28 1.54A6.8 6.8 0 0 1 21 12a6.8 6.8 0 0 1-2.64 5.23 1 1 0 0 0-.13 1.41A1 1 0 0 0 19 19a1 1 0 0 0 .64-.23A8.75 8.75 0 0 0 23 12a8.75 8.75 0 0 0-3.36-6.77zM15 3.12a1 1 0 0 0-1 0L7.52 7.57h-5a1 1 0 0 0-1 1v6.86a1 1 0 0 0 1 1h5l6.41 4.4a1.06 1.06 0 0 0 .57.17 1 1 0 0 0 1-1V4a1 1 0 0 0-.5-.88zm-1.47 15L8.4 14.6a1 1 0 0 0-.57-.17H3.5V9.57h4.33a1 1 0 0 0 .57-.17l5.1-3.5z" fill="#ffffff" class="color000000 svgShape"></path>
+                    </g>
+                  </g>
+                </svg>}
               </button>
 
               {/* copy ai summary */}
