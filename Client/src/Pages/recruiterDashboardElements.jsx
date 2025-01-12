@@ -2,10 +2,11 @@
 import { React, useState, useEffect, useRef } from 'react';
 import ElevenLabsEmbed from '../webhooks/ElevenLabsEmbed';
 import { fetchTranscript } from '../webhooks/apiService';
-
-//  second element import
-import linkedIn from '../assets/linkedIn.png';
-import ziprecruiter from '../assets/ziprecruiter.png';
+import linkedIn from '../assets/companies/linkedIn.png';
+import ziprecruiter from '../assets/companies/ziprecruiter.png';
+import naukari from '../assets/companies/naukari.png';
+import glassdoor from '../assets/companies/glassdoor.png';
+import foundit from '../assets/companies/foundit.png';
 import Select, { components } from 'react-select';
 import JobDescriptionGenerator from '../Components/JobDescriptionGenerator';
 
@@ -223,24 +224,23 @@ const RecruiterDashboardElements = () => {
         }
     };
 
-    const companies = {
-        LinkedIn: {
-            icon: linkedIn
-        },
-        'Naukri.com': {
-            icon: "https://s3-alpha-sig.figma.com/img/5331/9b58/6f6c04300fc1ee80583629773cb036fd?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jGmE2xbPMYmmU020YKvyCmu7pkwFzK2rXN6a4F1wTv6d2lHWKjX94OdniyAEMyIOyKUQSBuMYp-PLNm8phXinvtA~DMLI5Qvs0yIJGH75aI~DGqrFKSoDitziwitaTt--7h7nrMV4VPqOWwJT5BcC6adPDQhoZ8wlpUG~rCG8ImYn0oSdeHvCN~E4iPrN8Zhd3tWE4WDhH1qRkRxMESgvTvuqv8K9N9mhXhpRsQMq-USOKiHr9J8gP0FP8Jks0WKZLPbKmWbb-8cOCjPPZ8-yM4en7Pdhegcht5aDn4iPkvMRSjgobHyC2K4Z7z3X8qIj54g6XfgkxGyCtcLMy~KYw__"
-        },
-        Glassdoor: {
-            icon: "https://s3-alpha-sig.figma.com/img/9831/46f1/9bddbe0da9db67153b96427e939e87c6?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=N3-RtXhk4oe7QlWmA5wcRoAUYhz3uoIPZhy6aj1OV7ff4OsEXpLfaHQ8fbYH8S~vqFIWTS7g45cy8oOFfp4wVG48xy9hpF9~HdDEKA6fp9GsYqexk6boLJN0foiKxpczQPoPvjD45HYHqQwb1wbASSzJNe8nnHk2g0-JNNFSL4Xvijn~a3zpEU1hWs~cebjVDf-q0VKTZoQ-pjsmodflJR8ZbHfkkTbmpk2u-TQAqWakTLr4j-j5kBbHBaIR5fkl9M2bggCXVSeeNFJbY3UbTYwpvoEPRfmIwDoO7bKwvmU4GPOdYY0IOSx7lt05z3HpDIvbIDanSGFn2x52fCnyEw__"
-        },
-        Foundit: {
-            icon: "https://s3-alpha-sig.figma.com/img/30ba/6c8b/2fad2a15f0b8708429659322fdec1b9f?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HEzWApeISkA2BuTCfbcJ0N6Wl5-0-fYykTa8JDyoNGhSFLkbDvYuvxgDxPJlcM8CerKUeAo5YuCdFaJjVOcCxjXfjQqeeycdNz0mWaBgaM40E0TGeqRnOvQKdkDYJ~Gs08-wM4F5uSSHsL~VHmQXMqN6TQim5PV4L3Cb57W8lCL6WtDM~D9wlCgtLoEc19PUsfjsbs891i9KjSJLfTV3mkXH8qkSVxIMNG4NmY-Ux8LxHCv0niZRk3xZu2m5rarrEuoDzcmE09b~D7TvZIkANggc5sIigSUj4hWDP3rFgK2wVJHpaUFw6af1n-G7n1laIgl8GL34DyQ8FnulGhEmBQ__"
-        },
-        Ziprecruiter: {
-            icon: ziprecruiter
+     const companies = {
+            'LinkedIn': {
+                icon: linkedIn
+            },
+            'Naukri.com': {
+                icon: naukari
+            },
+            'Glassdoor': {
+                icon: glassdoor
+            },
+            'Foundit': {
+                icon: foundit
+            },
+            'Ziprecruiter': {
+                icon: ziprecruiter
+            }
         }
-    }
-
     const [selectedCompany, setSelectedCompany] = useState([]);
 
     const handleSelectedComponies = (company) => {

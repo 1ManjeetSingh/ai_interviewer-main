@@ -1,8 +1,11 @@
 import { React, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import linkedIn from '../assets/linkedIn.png';
-import ziprecruiter from '../assets/ziprecruiter.png';
+import linkedIn from '../assets/companies/linkedIn.png';
+import ziprecruiter from '../assets/companies/ziprecruiter.png';
+import naukari from '../assets/companies/naukari.png';
+import glassdoor from '../assets/companies/glassdoor.png';
+import foundit from '../assets/companies/foundit.png';
 import AmazonLogo from '../assets/LogoAma.svg';
 import Select, { components } from 'react-select';
 import { Dialog } from '@mui/material';
@@ -38,7 +41,9 @@ const customComponents = {
 
 const PostJobMain = () => {
     // context data
-    const { jobCards, setJobCards, fetchJobPosts, jobPost, setJobPost } = useJobContext();
+    const { jobCards, setJobCards, fetchJobPosts, jobPost, setJobPost
+     } = useJobContext();
+
     // Fetch job posts on component mount
     useEffect(() => {
         fetchJobPosts();
@@ -313,13 +318,13 @@ const PostJobMain = () => {
             icon: linkedIn
         },
         'Naukri.com': {
-            icon: "https://s3-alpha-sig.figma.com/img/5331/9b58/6f6c04300fc1ee80583629773cb036fd?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=jGmE2xbPMYmmU020YKvyCmu7pkwFzK2rXN6a4F1wTv6d2lHWKjX94OdniyAEMyIOyKUQSBuMYp-PLNm8phXinvtA~DMLI5Qvs0yIJGH75aI~DGqrFKSoDitziwitaTt--7h7nrMV4VPqOWwJT5BcC6adPDQhoZ8wlpUG~rCG8ImYn0oSdeHvCN~E4iPrN8Zhd3tWE4WDhH1qRkRxMESgvTvuqv8K9N9mhXhpRsQMq-USOKiHr9J8gP0FP8Jks0WKZLPbKmWbb-8cOCjPPZ8-yM4en7Pdhegcht5aDn4iPkvMRSjgobHyC2K4Z7z3X8qIj54g6XfgkxGyCtcLMy~KYw__"
+            icon: naukari
         },
         'Glassdoor': {
-            icon: "https://s3-alpha-sig.figma.com/img/9831/46f1/9bddbe0da9db67153b96427e939e87c6?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=N3-RtXhk4oe7QlWmA5wcRoAUYhz3uoIPZhy6aj1OV7ff4OsEXpLfaHQ8fbYH8S~vqFIWTS7g45cy8oOFfp4wVG48xy9hpF9~HdDEKA6fp9GsYqexk6boLJN0foiKxpczQPoPvjD45HYHqQwb1wbASSzJNe8nnHk2g0-JNNFSL4Xvijn~a3zpEU1hWs~cebjVDf-q0VKTZoQ-pjsmodflJR8ZbHfkkTbmpk2u-TQAqWakTLr4j-j5kBbHBaIR5fkl9M2bggCXVSeeNFJbY3UbTYwpvoEPRfmIwDoO7bKwvmU4GPOdYY0IOSx7lt05z3HpDIvbIDanSGFn2x52fCnyEw__"
+            icon: glassdoor
         },
         'Foundit': {
-            icon: "https://s3-alpha-sig.figma.com/img/30ba/6c8b/2fad2a15f0b8708429659322fdec1b9f?Expires=1736121600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HEzWApeISkA2BuTCfbcJ0N6Wl5-0-fYykTa8JDyoNGhSFLkbDvYuvxgDxPJlcM8CerKUeAo5YuCdFaJjVOcCxjXfjQqeeycdNz0mWaBgaM40E0TGeqRnOvQKdkDYJ~Gs08-wM4F5uSSHsL~VHmQXMqN6TQim5PV4L3Cb57W8lCL6WtDM~D9wlCgtLoEc19PUsfjsbs891i9KjSJLfTV3mkXH8qkSVxIMNG4NmY-Ux8LxHCv0niZRk3xZu2m5rarrEuoDzcmE09b~D7TvZIkANggc5sIigSUj4hWDP3rFgK2wVJHpaUFw6af1n-G7n1laIgl8GL34DyQ8FnulGhEmBQ__"
+            icon: foundit
         },
         'Ziprecruiter': {
             icon: ziprecruiter
@@ -339,15 +344,6 @@ const PostJobMain = () => {
             }
         });
     };
-
-    useEffect(() => {
-        console.log("selectedCompany :", selectedCompany);
-    }, [selectedCompany])
-
-    // Dialog Flow Variables
-    const [openFirstComponent, setOpenFirstComponent] = useState(false);
-    const [openSecondComponent, setOpenSecondComponent] = useState(false);
-    const [openThirdComponent, setOpenThirdComponent] = useState(false);
 
     const toggleDialogFirstComponent = () => {
         setOpenFirstComponent(!openFirstComponent);
@@ -483,6 +479,12 @@ const PostJobMain = () => {
             setDescriptionLoading(false);
         }
     };
+
+    
+      // Dialog Flow Variables
+      const [openFirstComponent, setOpenFirstComponent] = useState(false);
+      const [openSecondComponent, setOpenSecondComponent] = useState(false);
+      const [openThirdComponent, setOpenThirdComponent] = useState(false);
 
     const handleFirstToSecondComponent = async (event) => {
         event.preventDefault();
@@ -1021,8 +1023,8 @@ const PostJobMain = () => {
                                     />
 
                                     <svg className='mr-2' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g clip-path="url(#clip0_384_4478)">
-                                            <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" />
+                                        <g clipPath="url(#clip0_384_4478)">
+                                            <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" strokeWidth="1.2" strokeMiterlimit="10" strokeLinecap="round" />
                                         </g>
                                         <defs>
                                             <clipPath id="clip0_384_4478">
@@ -1057,8 +1059,8 @@ const PostJobMain = () => {
                                         className="w-[140px] pl-2 py-2 bg-white rounded-lg outline-none text-[#161616] text-base font-medium font-['Inter'] leading-none"
                                     />
                                     <svg className='mr-2' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g clip-path="url(#clip0_384_4478)">
-                                            <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" />
+                                        <g clipPath="url(#clip0_384_4478)">
+                                            <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" strokeWidth="1.2" strokeMiterlimit="10" strokeLinecap="round" />
                                         </g>
                                         <defs>
                                             <clipPath id="clip0_384_4478">
