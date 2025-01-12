@@ -16,42 +16,13 @@ import { fetchTranscript } from "../webhooks/apiService";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Pagination } from "swiper/modules";
-import { useJobContext } from "../Context/LaiylaJobPostContext";
 import Navbar from "../Components/Navbar";
+import { useJobContext } from "../Context/LaiylaJobPostContext";
 
 const RecruiterDashboard = () => {
 
-  const fetchJobPosts = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/jobs_posted`
-      );
+  const { jobCards, setJobCards, jobPost, setJobPost, fetchJobPosts } = useJobContext();
 
-      if (response.status === 200) {
-
-        const jobs = response.data;
-        const jobData = {};
-
-        // Transform fetched data into jobCards format
-        jobs.forEach((job) => {
-          jobData[job.jobTitle] = {
-            postedOn: new Date(job.createdAt).toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            }),
-            progress: job.Progress,
-          };
-        });
-
-        if (Object.keys(jobData).length) {
-          // setJobCards(jobData);
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching job posts:", error);
-    }
-  };
 
   // Fetch job posts on component mount
   useEffect(() => {
@@ -60,8 +31,7 @@ const RecruiterDashboard = () => {
 
   // main Varibles to change all
   // 1st
-  const progress = {
-    yesterdaysProgress: [
+const [yesterdaysProgress, setYesterdaysProgress] = useState([
       {
         text: "The platform sourced 2500 candidates across LinkedIn, Naukri, and Indeed for the Software Engineer role.",
         icon: "./yesterday_progress_1.svg"
@@ -78,8 +48,9 @@ const RecruiterDashboard = () => {
         text: "Recommended Top 20 candidates for the Software Engineer role after an in-depth AI analysis.",
         icon: "./yesterday_progress_4.svg"
       }
-    ],
-    todaysGoals: [
+    ]);
+
+    const [todaysGoals, setTodaysGoals] = useState([
       {
         text: "Review applications for Software Engineer (392 pending)",
         icon: "./todays_goal_1.svg"
@@ -93,8 +64,9 @@ const RecruiterDashboard = () => {
         text: "Generate a comprehensive report on hiring activity for this week.",
         icon: "./todays_goal_4.svg"
       },
-    ]
-  };
+    ]);
+
+
   // 2nd
   const [activeIndex, setActiveIndex] = useState(0); // Track active index
   const gradientIndex = activeIndex % 5;
@@ -102,75 +74,6 @@ const RecruiterDashboard = () => {
   const handleSlideChange = (swiper) => {
     setActiveIndex(swiper.activeIndex); // Update active index
   };
-
-  const [jobCards, setJobCards] = useState({
-   "Sales Manager": {
-      postedOn: "12th Dec 2024",
-      progress: {
-        jobPosted: 0,
-        applicantsApplied: 0,
-        selectionComplete: 0,
-        aiInterviewRound: 0,
-        aiTechnicalRound: 0,
-        shortlistedCandidates: 0,
-      },
-    },
-    "Data Scientist": {
-      postedOn: "12th Dec 2024",
-      progress: {
-        jobPosted: 1,
-        applicantsApplied: 0,
-        selectionComplete: 0,
-        aiInterviewRound: 0,
-        aiTechnicalRound: 0,
-        shortlistedCandidates: 0,
-      },
-    },
-    "Ai Engineer": {
-      postedOn: "12th Dec 2024",
-      progress: {
-        jobPosted: 1,
-        applicantsApplied: 1301,
-        selectionComplete: 0,
-        aiInterviewRound: 0,
-        aiTechnicalRound: 0,
-        shortlistedCandidates: 0,
-      },
-    },
-    "Marketing Manager": {
-      postedOn: "12th Dec 2024",
-      progress: {
-        jobPosted: 1,
-        applicantsApplied: 1278,
-        selectionComplete: 1,
-        aiInterviewRound: 0,
-        aiTechnicalRound: 0,
-        shortlistedCandidates: 0,
-      },
-    },
-    "Sr. Account Manager": {
-      postedOn: "12th Dec 2024",
-      progress: {
-        jobPosted: 1,
-        applicantsApplied: 1278,
-        selectionComplete: 1,
-        aiInterviewRound: 1,
-        aiTechnicalRound: 0,
-        shortlistedCandidates: 0,
-      },
-    },
-    "Software Developer": {
-      postedOn: "12th Dec 2024",
-      progress: {
-        jobPosted: 1,
-        applicantsApplied: 1278,
-        selectionComplete: 1,
-        aiInterviewRound: 1,
-        aiTechnicalRound: 1,
-        shortlistedCandidates: 0,
-      },
-    },
-  });
 
   // 3rd
   const schedule = {
@@ -245,7 +148,7 @@ const RecruiterDashboard = () => {
     },
   };
 
-  const [role, setRole] = useState(Object.keys(jobCards)[0]);
+  const [role, setRole] = useState(jobCards[0].jobTitle);
 
   const roundsList = [
     { label: "Job Posted", key: "jobPosted" },
@@ -281,9 +184,9 @@ const RecruiterDashboard = () => {
   };
 
   // Dynamically update rounds with active state
-  Object.keys(jobCards).forEach((role) => {
-    const lastActiveRound = markLastActive(jobCards[role].progress);
-    jobCards[role].isActive = lastActiveRound;
+  jobCards.map((role) => {
+    const lastActiveRound = markLastActive(role.progress);
+    role.isActive = lastActiveRound;
   });
 
   const textToShow = {
@@ -319,10 +222,10 @@ const RecruiterDashboard = () => {
   useEffect(() => {
     if (
       roundsWithGraph.includes(
-        jobCards[Object.keys(jobCards)[activeIndex]].isActive
+        jobCards[activeIndex].isActive
       )
     ) {
-      setCurrentScore(scores[Object.keys(jobCards)[activeIndex]][option]);
+      setCurrentScore(scores[jobCards[activeIndex].jobTitle][option]);
     }
   }, [activeIndex, option]);
 
@@ -587,7 +490,7 @@ const RecruiterDashboard = () => {
                 boxSizing: "border-box",
               }}
             >
-              {progress.yesterdaysProgress.map((item, index) => (
+              {yesterdaysProgress.map((item, index) => (
                 <div
                   key={index}
                   style={{
@@ -664,7 +567,7 @@ const RecruiterDashboard = () => {
                 boxSizing: "border-box",
               }}
             >
-              {progress.todaysGoals.map((goal, index) => (
+              {todaysGoals.map((goal, index) => (
                 <div
                   key={index}
                   style={{
@@ -762,13 +665,13 @@ const RecruiterDashboard = () => {
                           transition: "background-image 0.5s ease", // Smooth transition for background image
                         }}
                       >
-                        {Object.keys(jobCards)[activeIndex]}
+                        {jobCards[activeIndex].jobTitle}
                       </div>
                     </div>
                   </div>
                   <div className="text-center text-[#6f6f6f] text-xl font-[400] font-['SF UI Text'] leading-[2.5vh]">
                     Posted On :{" "}
-                    {jobCards[Object.keys(jobCards)[activeIndex]].postedOn}
+                    {jobCards[activeIndex].postedOn}
                   </div>
                 </div>
               </div>
@@ -781,7 +684,7 @@ const RecruiterDashboard = () => {
                   value={options.find((option) => option.value === option)} // Ensure value fallback to first option
                   isDisabled={
                     !roundsWithGraph.includes(
-                      jobCards[Object.keys(jobCards)[activeIndex]].isActive
+                      jobCards[activeIndex].isActive
                     )
                   }
                 />
@@ -791,7 +694,7 @@ const RecruiterDashboard = () => {
             <div className="w-[100%] h-full py-[2vh] bg-none rounded-[24px] shadow-[0px_0.5vw_1.5vw_0px_rgba(0,0,0,0.25)] border border-[#dcffff] flex-col justify-center items-center flex shrink">
               {/* responsive bar code place here */}
               {roundsWithGraph.includes(
-                jobCards[Object.keys(jobCards)[activeIndex]].isActive
+                jobCards[activeIndex].isActive
               ) ? (
                 <ResponsiveLine
                   data={lineData}
@@ -854,7 +757,7 @@ const RecruiterDashboard = () => {
                   >
                     {
                       textToShow[
-                      jobCards[Object.keys(jobCards)[activeIndex]].isActive
+                      jobCards[activeIndex].isActive
                       ]
                     }
                   </div>
@@ -898,11 +801,11 @@ const RecruiterDashboard = () => {
               onSlideChange={handleSlideChange}
               className="h-full w-full"
             >
-              {Object.keys(jobCards).map((jobKey, index) => {
-                const job = jobCards[jobKey];
+              {jobCards.map((job, index) => {
+                // const job = jobCards[index];
 
                 return (
-                  <SwiperSlide key={index}>
+                  <SwiperSlide key={job.postId || index}>
                     <div className="h-[102px] flex-col justify-start items-start gap-4 flex">
                       <div className="self-stretch h-[60px] flex-col justify-start items-start flex">
                         <div className="p-1 justify-start items-center gap-2 inline-flex">
@@ -923,7 +826,7 @@ const RecruiterDashboard = () => {
                                 fontSize: "clamp(28px,4vh,36px)",
                               }}
                             >
-                              {jobKey}
+                              {jobCards[activeIndex].jobTitle}
                             </div>
                           </div>
                         </div>
@@ -940,8 +843,7 @@ const RecruiterDashboard = () => {
                     <div className="px-4 pb-8 flex-col mb-auto justify-start items-start gap-10 inline-flex mt-14 relative">
                       {roundsList.map(({ label, key }) => {
                         const isActive =
-                          jobCards[Object.keys(jobCards)[activeIndex]]
-                            .isActive === key;
+                          jobCards[activeIndex].isActive === key;
                         const status =
                           job?.progress?.[key] !== 0
                             ? "completed"
@@ -958,8 +860,7 @@ const RecruiterDashboard = () => {
                               className={`w-[18px] h-[18px] relative rounded-[100px]`}
                               style={{
                                 background:
-                                  jobCards[Object.keys(jobCards)[activeIndex]]
-                                    .isActive === key
+                                  jobCards[activeIndex].isActive === key
                                     ? gradients[gradientIndex]
                                     : status === "pending"
                                       ? "#D7D7FE"
@@ -1039,10 +940,10 @@ const RecruiterDashboard = () => {
                 </div>
               </div>
               <div className="self-stretch h-[14vh] overflow-y-auto py-1 flex-col justify-start items-start gap-3 flex">
-                {Object.entries(schedule).map(([type, meetings]) =>
-                  meetings.map((meeting, index) => (
-                    <div
-                      key={index}
+                  {Object.entries(schedule).map(([type, meetings]) =>
+                    meetings.map((meeting, index) => (
+                      <div
+                        key={index}
                       className="w-full px-4 py-2 bg-white/30 rounded-xl shadow-[0px_2px_12px_0px_rgba(0,0,0,0.10)] border border-[#dcffff] justify-start items-center gap-4 inline-flex"
                     >
                       <img

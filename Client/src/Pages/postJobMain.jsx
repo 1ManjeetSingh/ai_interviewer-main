@@ -38,7 +38,11 @@ const customComponents = {
 
 const PostJobMain = () => {
     // context data
-    const { jobCards, setJobCards, fetchJobPosts } = useJobContext();
+    const { jobCards, setJobCards, fetchJobPosts, jobPost, setJobPost } = useJobContext();
+    // Fetch job posts on component mount
+    useEffect(() => {
+        fetchJobPosts();
+    }, []);
 
     // company Cards variables
     const gradients = [
@@ -50,30 +54,6 @@ const PostJobMain = () => {
     ];
 
     const navigate = useNavigate();
-
-    // Fetch job posts on component mount
-    useEffect(() => {
-        fetchJobPosts();
-    }, []);
-
-    // main variable 
-    const [jobPost, setJobPost] = useState({
-        jobTitle: '',
-        designation: '',
-        jobType: '',
-        workplaceType: '',
-        jobDescription: '',
-        mainSkills: [],
-        subSkills: [],
-        salaryRange: {},
-        benefits: [],
-        jobPortalsPosting: [],
-    });
-
-    useEffect(() => {
-        console.log(jobPost);
-    }, [jobPost])
-
     const [jobDescription, setJobDescription] = useState("");
     const [mainSkills, setMainSkills] = useState([]);
     const [subSkills, setSubSkills] = useState([]);
@@ -292,7 +272,6 @@ const PostJobMain = () => {
         { value: 'fullTime', label: 'Full-Time' },
         { value: 'partTime', label: 'Part-Time' },
         { value: 'contractual', label: 'Contractual' },
-
     ]
 
     const [jobTitle, setJobTitle] = useState('');
@@ -520,15 +499,6 @@ const PostJobMain = () => {
             workplaceType: workplaceOption,
         };
 
-        // try {
-        // const response = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/upload_job_posted`, jobData);
-
-        // if (response.status === 201) {
-        //     toast.success("Job post created successfully!");
-
-        // const { _id } = response.data.job;
-
-        // Save to state for further updates
         setJobPost((prev) => ({
             ...prev,
             ...jobData,
@@ -539,11 +509,6 @@ const PostJobMain = () => {
 
         toggleDialogFirstComponent();
         toggleDialogSecondComponent();
-        // }
-        // } catch (error) {
-        //     console.error("Error uploading job post:", error);
-        //     toast.error("Failed to upload job post. Please try again.");
-        // }
     };
 
     const handleSecondToThirdComponent = async (event) => {
@@ -560,15 +525,6 @@ const PostJobMain = () => {
             subSkills,
         };
 
-        // try {
-        //     const response = await axios.put(
-        //         `${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/update_job_posted/${jobPost._id}`,
-        //         updatedJobData
-        //     );
-
-        // if (response.status === 200) {
-        //     toast.success("Job post updated successfully!");
-
         setJobPost((prev) => ({
             ...prev,
             ...updatedJobData,
@@ -576,11 +532,6 @@ const PostJobMain = () => {
 
         toggleDialogThirdComponent();
         toggleDialogSecondComponent();
-        //     }
-        // } catch (error) {
-        //     console.error("Error updating job post:", error);
-        //     toast.error("Failed to update job post. Please try again.");
-        // }
     };
 
     const handleThirdComponentPostJob = async (event) => {
@@ -614,15 +565,9 @@ const PostJobMain = () => {
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/upload_job_posted`, jobPost);
 
-            // const response = await axios.put(`${import.meta.env.VITE_BACKEND_BASE_URL}/api/alljobsposted/job_posted/${jobPost._id}`,finalJobData);
 
             if (response.status === 200) {
                 toast.success("Job post saved successfully!");
-
-                // setJobPost((prev) => ({
-                //     ...prev,
-                //     ...finalJobData,
-                // }));
 
                 // Clear the form after saving
                 setJobTitle("");
@@ -745,7 +690,7 @@ const PostJobMain = () => {
                                             <div style={{ width: '100%', height: '100%', justifyContent: 'flex-end', alignItems: 'flex-start', gap: 8, display: 'inline-flex' }}>
                                                 <div style={{ width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 8, display: 'inline-flex' }}>
                                                     <div style={{ width: 'auto', height: '100%', padding: 8, background: 'white', borderRadius: 24, backdropFilter: 'blur(16px)', justifyContent: 'flex-start', alignItems: 'center', gap: 16, display: 'inline-flex', color: '#0072DC', fontSize: 12, fontWeight: '600', wordWrap: 'break-word' }}>
-                                                        {job.postedDate}
+                                                        {job.postedOn}
                                                     </div>
 
                                                     <div style={{ width: '100%', height: '100%', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: 8, display: 'inline-flex' }}>
@@ -754,7 +699,7 @@ const PostJobMain = () => {
                                                                 {job.companyName}
                                                             </div>
                                                             <div style={{ padding: 4, justifyContent: 'flex-start', alignItems: 'center', gap: 8, display: 'inline-flex', background: gradients[gradientIndex], WebkitBackgroundClip: 'text', textAlign: 'center', color: 'transparent', fontSize: 28, fontWeight: '700', wordWrap: 'break-word', lineHeight: 'auto' }}>
-                                                                {job.role}
+                                                                {job.jobTitle}
                                                             </div>
                                                         </div>
                                                     </div>

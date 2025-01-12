@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import image1 from "../assets/image1.png"
 import image2 from '../assets/Aspireit.png';
 import image3 from '../assets/Ellipse 1872.svg';
@@ -11,7 +12,8 @@ import Spline from "@splinetool/react-spline";
 
 function Navbar() {
     const { dataCollection, setDataCollection, fetchTranscript, conversationId, setConversationId, 
-        conversation, jobPost, setJobPost, postJobCard, handleGenerateDescription, getTranscriptData } = useJobContext();
+        conversation, jobPost, setJobPost, handleGenerateDescription, getTranscriptData, fetchJobPosts } = useJobContext();
+
     const [searchPhrase, setSearchPhrase] = useState('');
     const [isFocused1, setisFocused1] = useState(false);
     const inputRef = useRef(null);
@@ -31,6 +33,38 @@ function Navbar() {
             setSearchPhrase('');
         }
     }, [isFocused1]);
+
+    const postJobCard = async () => {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_BASE_URL
+          }/api/alljobsposted/upload_job_posted_laiyla`,
+          jobPost
+        );
+  
+        if (response.status === 200) {
+          toast.success("Job post uploaded.");
+  
+          setJobPost({
+            jobTitle: "",
+            designation: "",
+            jobType: "",
+            workplaceType: "",
+            jobDescription: "",
+            mainSkills: [],
+            subSkills: [],
+            salaryRange: {},
+            benefits: [],
+            jobPortalsPosting: [],
+          });
+          // Optionally, close the dialog after saving
+          fetchJobPosts();
+        }
+      } catch (error) {
+        console.error("Error saving job post:", error);
+        // toast.error("Failed to save job post. Please try again.");
+      }
+    };
 
     useEffect(() => {
         if (jobPost.jobDescription.length > 0) {
