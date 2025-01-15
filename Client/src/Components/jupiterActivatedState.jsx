@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import Picker from "@emoji-mart/react";
-import data from "@emoji-mart/data";
+import EmojiPicker from "emoji-picker-react";
 import Jupiter from "../assets/enlargedJupiter.png";
 import Send from "../assets/Send.svg";
 import WhiteSend from "../assets/whiteSend.svg";
@@ -15,6 +14,8 @@ const JupiterActivatedState = ({ onEnlargedJupiterClick }) => {
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState("");
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const pickerRef = useRef(null);
+    const inputRef = useRef(null);
     const chatEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -52,9 +53,24 @@ const JupiterActivatedState = ({ onEnlargedJupiterClick }) => {
         scrollToBottom();
     }, [messages]);
 
-    const handleSend = (e) => {
-        if (e.key === 'Enter') {
+    const handleSend = () => {
+            if (userInput.trim() === "") return;
 
+            setMessages((prev) => [...prev, { type: "user", text: userInput }]);
+            setUserInput("");
+
+            setTimeout(() => {
+                setMessages((prev) => [
+                    ...prev,
+                    { type: "ai", text: "Here is the AI response to your message!" },
+                ]);
+            }, 1000);
+    };
+
+    const handleSendbyEnter = (e) => {
+
+        if (e.key === 'Enter') {
+            setShowEmojiPicker(false);
             if (userInput.trim() === "") return;
 
             setMessages((prev) => [...prev, { type: "user", text: userInput }]);
@@ -68,6 +84,41 @@ const JupiterActivatedState = ({ onEnlargedJupiterClick }) => {
             }, 1000);
         };
     };
+
+    const handleEmojiClick = (emojiData) => {
+        const { emoji } = emojiData; // Get the selected emoji
+        const input = inputRef.current;
+
+        if (input) {
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+
+            // Insert emoji at the cursor position
+            const newValue =
+                userInput.substring(0, start) + emoji + userInput.substring(end);
+            setUserInput(newValue);
+
+            // Update cursor position after the emoji
+            setTimeout(() => {
+                input.setSelectionRange(start + emoji.length, start + emoji.length);
+                input.focus();
+            }, 0);
+        }
+    };
+
+    // Close the emoji picker if clicking outside of it
+    const handleClickOutside = (event) => {
+        if (pickerRef.current && !pickerRef.current.contains(event.target)) {
+            setShowEmojiPicker(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <div className="h-full mr-10 pl-10">
@@ -147,36 +198,46 @@ const JupiterActivatedState = ({ onEnlargedJupiterClick }) => {
             <div className="relative h-[10%]">
                 <div className="h-full mt-10 flex items-center relative">
                     <input
+                        ref={inputRef}
                         type="text"
                         value={userInput}
                         onChange={(e) => setUserInput(e.target.value)}
-                        onKeyDown={handleSend}
-                        className="h-full w-full rounded-3xl outline-none pl-[45px] bg-[#3E3B41] text-white pr-[40px]"
+                        onKeyDown={handleSendbyEnter}
+                        className="h-[48px] px-[48px] relative flex items-center w-full rounded-[30px] bg-[#3e3b40] text-white backdrop-blur-[20px] shadow-[0.5px_-0.5px_1px_#BA5FFF]"
                         placeholder="Start Typing..."
                     />
                     <img
                         src={Smile}
                         alt="Smile Icon"
-                        className="absolute left-3 cursor-pointer"
+                        className="absolute left-5 cursor-pointer"
                         onClick={() => setShowEmojiPicker((prev) => !prev)}
+                        ref={pickerRef}
                     />
                     <img
                         src={userInput.trim() === "" ? Send : WhiteSend}
                         alt="Send Icon"
-                        className="absolute right-3 cursor-pointer"
+                        className="absolute right-5 cursor-pointer"
                         onClick={handleSend}
                     />
                 </div>
                 {showEmojiPicker && (
-                    <div className="absolute bottom-[calc(100%+10px)] left-0 w-full z-10">
-                        <Picker
-                            data={data}
-                            onEmojiSelect={(emoji) =>
-                                setUserInput((prev) => prev + emoji.native)
-                            }
-                        />
-                    </div>
-                )}
+                    <div
+                        ref={pickerRef}
+                        style={{
+                            position: "absolute",
+                            bottom: "70px",
+                            left: "10px",
+                            zIndex: 10,
+                            backgroundColor: "white",
+                            borderRadius: "8px",
+                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+                            transform: "scale(0.8)", // Scale down to 80% of the original size
+                            transformOrigin: "bottom left", // Adjust origin to ensure it scales from the corner
+                        }}
+                    >
+                        <EmojiPicker onEmojiClick={handleEmojiClick} />
+                    </div>)}
+
             </div>
         </div>
     );

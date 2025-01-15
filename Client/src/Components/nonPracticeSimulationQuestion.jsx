@@ -25,12 +25,21 @@ const NonPracticeSimulationQuestion = ({
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = () => {
-    if (userInput.trim() === "") return;
+  const handleSend = (e) => {
+    if (e.key === 'Enter') {
 
-    setMessages((prev) => [...prev, { text: userInput }]);
-    setUserInput("");
-    onUserMessageSend();
+        if (userInput.trim() === "") return;
+
+        setMessages((prev) => [...prev, { type: "user", text: userInput }]);
+        setUserInput("");
+
+        setTimeout(() => {
+            setMessages((prev) => [
+                ...prev,
+                { type: "ai", text: "Here is the AI response to your message!" },
+            ]);
+        }, 1000);
+    };
   };
 
   return (
@@ -83,6 +92,7 @@ const NonPracticeSimulationQuestion = ({
             type="text"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
+            onKeyDown={handleSend}
             className="h-[50px] w-full rounded-3xl outline-none pl-[45px] bg-[#3E3B41] text-white pr-[40px]"
             placeholder="Start Typing..."
           />
