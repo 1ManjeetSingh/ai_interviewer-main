@@ -10,6 +10,7 @@ import Select, { components } from 'react-select';
 import { LuSearch } from "react-icons/lu";
 import { MdEdit, MdSave } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
+import { useJobContext } from "../Context/LaiylaJobPostContext";
 
 const customDropdownIndicator = (props) => {
     const { selectProps } = props;
@@ -40,14 +41,16 @@ const customComponents = {
 const JobPostUpdater = () => {
 
     const navigate = useNavigate();
-    const handleJobPostDetails = () => {
+    const handleJobPostDetails = (postId) => {
         const handleNavigate = () => {
             // Navigate to the page with the postId as a query parameter
-            navigate(`/applicantPool`);
+            navigate(`/applicantPool?postId=${postId}`);
         };
 
         return handleNavigate;
     }
+
+    const { capitalizeWords } = useJobContext();
 
     const [searchParams] = useSearchParams('');
     const postId = searchParams.get('postId'); // Extract postId from query params
@@ -113,7 +116,7 @@ const JobPostUpdater = () => {
 
         if (jobPost) {
             console.log(jobPost)
-            setTitle(jobPost.jobTitle);
+            setTitle(capitalizeWords(jobPost.jobTitle));
             setJobOption(jobPost.designation.replace(/-./g, match => match.charAt[0].toLowerCase().charAt(1).toUpperCase()).replace(/^([A-Z])/, match => match.toLowerCase()));
             setWorkplaceOption(jobPost.workplaceType.replace(/-./g, match => match.charAt(1).toUpperCase()).replace(/^([A-Z])/, match => match.toLowerCase()));
             setTimingOption(jobPost.jobType.replace(/-./g, match => match.charAt(1).toUpperCase()).replace(/^([A-Z])/, match => match.toLowerCase()));
@@ -394,39 +397,11 @@ const JobPostUpdater = () => {
                                         />{" "}
                                         {jobDetails.location}
                                     </p>
-                                    <div className="flex items-center">
-                                        <img
-                                            className="h-[18px] w-[18px]"
-                                            src="/briefcase.svg"
-                                            alt=""
-                                        />
-                                        <span className="text-[16px] font-medium text-[#747474] ml-[2px]">
-                                            {jobDetails.experience}
-                                        </span>
-                                        <span className="mx-2 h-[15px] border border-l border-[#BCB4B4]"></span>
-                                        <img
-                                            className="h-[18px] w-[18px] mr-1"
-                                            src="/securitytime.svg"
-                                            alt=""
-                                        />
-                                        <span className="text-[16px] font-medium text-[#747474]">
-                                            {jobDetails.jobType}
-                                        </span>
-                                        <span className="mx-2 h-[15px] border border-l border-[#BCB4B4]"></span>
-                                        <img
-                                            className="h-[18px] w-[9px] mr-1"
-                                            src="/rupees.svg"
-                                            alt=""
-                                        />
-                                        <span className="text-[16px] font-medium text-[#747474]">
-                                            {jobDetails.salary}
-                                        </span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div className="flex items-center space-x-4 ">
-                            <button onClick={handleJobPostDetails()} className="p-3 rounded-[10px] border border-[#0072DC] text-[16px] font-medium text-[#0072DC]">
+                            <button onClick={handleJobPostDetails(postId)} className="p-3 rounded-[10px] border border-[#0072DC] text-[16px] font-medium text-[#0072DC]">
                                 View application
                             </button>
                             <button className="p-[12px] rounded-[10px] text-[16px] font-medium bg-[#0072DC] text-white cursor-not-allowed">
@@ -602,8 +577,8 @@ const JobPostUpdater = () => {
                                             />
 
                                             <svg className='mr-2' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <g clip-path="url(#clip0_384_4478)">
-                                                    <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" />
+                                                <g clipPath="url(#clip0_384_4478)">
+                                                    <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" strokeWidth="1.2" strokeMiterlimit="10" strokeLinecap="round" />
                                                 </g>
                                                 <defs>
                                                     <clipPath id="clip0_384_4478">
@@ -638,8 +613,8 @@ const JobPostUpdater = () => {
                                                 className="w-[140px] pl-2 py-2 bg-white rounded-lg outline-none text-[#161616] text-base font-medium font-['Inter'] leading-none"
                                             />
                                             <svg className='mr-2' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <g clip-path="url(#clip0_384_4478)">
-                                                    <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" />
+                                                <g clipPath="url(#clip0_384_4478)">
+                                                    <path d="M11.6353 11.6354L14.6 14.6M7.45774 2C6.3783 2 5.3231 2.32008 4.42558 2.91977C3.52806 3.51946 2.82853 4.37182 2.41545 5.36907C2.00236 6.36632 1.89428 7.46366 2.10487 8.52233C2.31546 9.58101 2.83526 10.5535 3.59854 11.3167C4.36181 12.08 5.33429 12.5998 6.39299 12.8104C7.45168 13.0209 8.54905 12.9129 9.54632 12.4998C10.5436 12.0867 11.396 11.3872 11.9957 10.4897C12.5954 9.59219 12.9155 8.53702 12.9155 7.45761C12.9154 6.01019 12.3403 4.62208 11.3168 3.5986C10.2933 2.57512 8.90519 2.00009 7.45774 2Z" stroke="#6F6F6F" strokeWidth="1.2" strokeMiterlimit="10" strokeLinecap="round" />
                                                 </g>
                                                 <defs>
                                                     <clipPath id="clip0_384_4478">

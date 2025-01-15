@@ -326,9 +326,9 @@ const Skills = () => {
 
     "Main Skills": (
       <>
-        <h1 className="text-2xl font-bold mb-4">Main Skills</h1>
+        <h1 className="text-4xl font-bold mb-6">Main Skills</h1>
         {/* Search Bar */}
-        <div className="relative mb-4">
+        <div className="relative mb-8">
           <input
             type="text"
             placeholder="Search or add skill"
@@ -337,36 +337,36 @@ const Skills = () => {
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setIsSearchFocused(false)}
             onKeyPress={handleKeyPress}
-            className="w-full border rounded-lg px-4 py-2 pr-10"
+            className="w-full h-[36px] border rounded-lg px-4 py-2 pr-10"
           />
           <img
             src={isSearchFocused ? ArrowIcon : Logo}
             alt={isSearchFocused ? "Arrow" : "Search"}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6"
           />
         </div>
         {/* Selected Skills */}
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-3 mb-4">
           {selectedSkills.map((skill) => (
             <div
               key={skill}
               onClick={() => handleRemoveSkill(skill)}
-              className="cursor-pointer border-2 border-[#0072DC] shadow-[0px_0px_8px_rgba(0,0,0,0.4)] flex items-center  rounded-full px-3 py-1 text-sm text-blue-600  gap-2 hover:bg-red-100"
+              className="cursor-pointer border-2 border-[#0072DC] shadow-[0px_0px_8px_rgba(0,0,0,0.4)] flex items-center  rounded-full px-4 py-2 text-md text-blue-600  gap-2 hover:bg-red-100"
             >
               <img src={BlueTick} alt="Tick" className="w-4 h-4" />
-              <span>{skill}</span>
+              <span className="text-[#161616]">{skill}</span>
             </div>
           ))}
         </div>
 
         {/* Suggested Skills */}
-        <h2 className="font-semibold mb-2">Suggested</h2>
+        <h2 className="font-semibold text-lg leading-[48px]">Suggested</h2>
         <div className="flex flex-wrap gap-2 overflow-auto">
           {filteredSkills.map((skill) => (
             <div
               key={skill}
               onClick={() => handleAddSkill(skill)}
-              className="cursor-pointer border rounded-full px-3 py-1 text-sm text-gray-600 hover:bg-blue-100"
+              className="cursor-pointer border rounded-full px-4 py-2 text-md text-gray-600 hover:bg-blue-100"
             >
               {skill}
             </div>
@@ -402,7 +402,7 @@ const Skills = () => {
               style={{
                 alignSelf: "stretch",
                 color: "#1E1E1E",
-                fontSize: 20,
+                fontSize: 24,
                 fontWeight: "700",
                 wordWrap: "break-word",
               }}
@@ -417,16 +417,12 @@ const Skills = () => {
                     key={skill}
                     onClick={() => handleRemoveSkill(skill)}
                     style={{
-                      paddingLeft: 18,
-                      paddingRight: 18,
-                      paddingTop: 4,
-                      paddingBottom: 4,
                       background: "white",
                       boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.40)",
                       borderRadius: 24,
-                      gap: 8,
                       display: "inline-flex",
                     }}
+                    className="px-4 py-2 text-md gap-2"
                   >
                     <span>{skill}</span>
                   </div>
@@ -1699,7 +1695,7 @@ const Skills = () => {
         <div>
           {/* Paragraph Box */}
           <div className="bg-white border rounded-lg shadow-md p-4 mb-6">
-            <p className="text-sm text-gray-600">
+            <p className="text-lg text-gray-600">
               Your selections will shape the AI Interview and Technical Round, dynamically testing both the breadth and depth of candidates' knowledge.
             </p>
           </div>
@@ -1710,7 +1706,7 @@ const Skills = () => {
               <button
                 key={section}
                 onClick={() => setActiveSection(section)}
-                className={`w-full text-left border px-4 py-2 rounded-lg ${activeSection === section ? 'bg-gray-100 font-bold' : ''
+                className={`w-full text-left text-xl border px-4 py-6 rounded-lg ${activeSection === section ? 'bg-gray-100 font-bold' : ''
                   }`}
               >
                 {section}

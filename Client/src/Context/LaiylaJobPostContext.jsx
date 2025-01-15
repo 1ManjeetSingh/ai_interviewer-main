@@ -2,21 +2,24 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from 'axios';
 import { useConversation } from "@11labs/react";
 import { fetchTranscript } from '../webhooks/apiService';
-import {toast, ToastContainer} from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 const JobContext = createContext();
-const capitalizeWords = (str) => {
-  return str
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-};
+
+
 
 export const JobProvider = ({ children }) => {
   const [conversationId, setConversationId] = useState("");
   const [dataCollection, setDataCollection] = useState();
   const conversation = useConversation();
   const [throughLaiyla, setThroughLaiyla] = useState(false);
+
+  const capitalizeWords = (str) => {
+    return str
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
 
   const [jobPost, setJobPost] = useState({
     jobTitle: '',
@@ -185,36 +188,36 @@ export const JobProvider = ({ children }) => {
   ]);
 
   const postJobCard = async () => {
-        try {
-          const response = await axios.post(
-            `${import.meta.env.VITE_BACKEND_BASE_URL
-            }/api/alljobsposted/upload_job_posted_laiyla`,
-            jobPost
-          );
-    
-          if (response.status === 200) {
-            toast.success("Job post uploaded.");
-    
-            setJobPost({
-              jobTitle: "",
-              designation: "",
-              jobType: "",
-              workplaceType: "",
-              jobDescription: "",
-              mainSkills: [],
-              subSkills: [],
-              salaryRange: {},
-              benefits: [],
-              jobPortalsPosting: [],
-            });
-            // Optionally, close the dialog after saving
-            fetchJobPosts();
-          }
-        } catch (error) {
-          console.error("Error saving job post:", error);
-          // toast.error("Failed to save job post. Please try again.");
-        }
-      };
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_BASE_URL
+        }/api/alljobsposted/upload_job_posted_laiyla`,
+        jobPost
+      );
+
+      if (response.status === 200) {
+        toast.success("Job post uploaded.");
+
+        setJobPost({
+          jobTitle: "",
+          designation: "",
+          jobType: "",
+          workplaceType: "",
+          jobDescription: "",
+          mainSkills: [],
+          subSkills: [],
+          salaryRange: {},
+          benefits: [],
+          jobPortalsPosting: [],
+        });
+        // Optionally, close the dialog after saving
+        fetchJobPosts();
+      }
+    } catch (error) {
+      console.error("Error saving job post:", error);
+      // toast.error("Failed to save job post. Please try again.");
+    }
+  };
 
   const fetchJobPosts = async () => {
     try {
@@ -317,7 +320,8 @@ export const JobProvider = ({ children }) => {
     <JobContext.Provider value={{
       jobCards, setJobCards, fetchJobPosts, dataCollection, setDataCollection,
       fetchTranscript, conversationId, setConversationId, conversation, jobPost, setJobPost,
-      handleGenerateDescription, getTranscriptData, throughLaiyla, setThroughLaiyla, postJobCard
+      handleGenerateDescription, getTranscriptData, throughLaiyla, setThroughLaiyla, postJobCard,
+      capitalizeWords
     }}>
       {children}
     </JobContext.Provider>
