@@ -19,6 +19,8 @@ import JobPostUpdater from "./Pages/JobPostUpdater";
 import AfterSelectionUpdated from "./Pages/AfterSelectionUpdated";
 import Skills from "./Pages/Skills";
 import { JobProvider } from "./Context/LaiylaJobPostContext";
+import NonTechnicalPracticeSimulation from "./Pages/nonTechnicalPracticeSimulation";
+import TechnicalPracticeSimulation from "./Pages/technicalPracticeSimulation";
 
 const App = () => {
   return (
@@ -42,6 +44,8 @@ const App = () => {
           <Route path="/applicant" element={<Applicant />} />
           <Route path="/kalangiElements" element={<RecruiterDashboardElements />} />
           <Route path="/dummyInterface" element={<DummyInterface />} />
+          <Route path="/technicalPracticeSimulation" element={<TechnicalPracticeSimulation />} />
+          <Route path="/nontechnicalPracticeSimulation" element={<NonTechnicalPracticeSimulation />} />
           <Route path="/postJobMain" element={<PostJobMain />} />
           <Route path="/" element={<CourseSummary />} />
           <Route path="/jobpost_updater" element={<JobPostUpdater />} />

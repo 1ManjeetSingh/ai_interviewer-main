@@ -445,6 +445,7 @@ const Skills = () => {
                 fontWeight: '700',
                 wordWrap: 'break-word',
                 paddingTop: 5,
+                lineHeight: '56px'
               }}
             >
               Sub Skills
@@ -462,16 +463,14 @@ const Skills = () => {
                 onFocus={() => setInputFocused1(true)}
                 onBlur={() => !searchText1 && setInputFocused1(false)}
                 placeholder="Search"
-                className="w-full p-2 pr-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full h-[36px] border rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <span className="absolute right-3">
                 {isInputFocused1 || searchText1 ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
                     viewBox="0 0 20 20"
-                    className="text-gray-500 cursor-pointer"
+                    className="text-gray-500 cursor-pointer w-6 h-6"
                     fill="currentColor"
                   >
                     <path d="M10,20A10,10,0,1,0,0,10,10,10,0,0,0,10,20ZM8.711,4.3l5.7,5.766L8.7,15.711,7.3,14.289l4.289-4.242L7.289,5.7Z" />
@@ -479,7 +478,7 @@ const Skills = () => {
                 ) : (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-gray-500"
+                    className="h-6 w-6 text-gray-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -501,7 +500,7 @@ const Skills = () => {
                 <div key={index} className="relative">
                   <div
                     onClick={() => toggleDropdown(index)}
-                    className="px-3 gap-1 border-2 border-[#0072DC] shadow-[0px_0px_8px_rgba(0,0,0,0.4)] py-1 rounded-full text-sm cursor-pointer flex items-center justify-between hover:bg-gray-100 text-blue-500 mb-2"
+                    className="px-4 py-2 text-md gap-2 border-2 border-[#0072DC] shadow-[0px_0px_8px_rgba(0,0,0,0.4)] rounded-full cursor-pointer flex items-center justify-between hover:bg-gray-100 text-blue-500 mb-2"
                   >
                     {skill}
                     {(() => {
@@ -520,26 +519,26 @@ const Skills = () => {
                     })()}
                   </div>
                   {dropdownVisible1 === index && (
-                    <div className="absolute mt-1 bg-white border rounded-md shadow-md z-10">
+                    <div className="absolute mt-1 bg-white border rounded-md shadow-md z-99">
                       <div
                         onClick={() => handleSelection(index, "Easy")}
-                        className="p-2 hover:bg-gray-100 flex items-center cursor-pointer"
+                        className="py-2 px-6 hover:bg-gray-100 flex items-center cursor-pointer"
                       >
-                        <span className="w-2 h-2 bg-green-500 rounded-full inline-block mr-1"></span>{" "}
+                        <span className="w-2 h-2 text-lg bg-green-500 rounded-full inline-block mr-1"></span>{" "}
                         Easy
                       </div>
                       <div
                         onClick={() => handleSelection(index, "Medium")}
-                        className="p-2 hover:bg-gray-100 flex items-center cursor-pointer"
+                        className="py-2 px-6 hover:bg-gray-100 flex items-center cursor-pointer"
                       >
-                        <span className="w-2 h-2 bg-blue-500 rounded-full inline-block mr-1"></span>{" "}
+                        <span className="w-2 h-2 text-lg bg-blue-500 rounded-full inline-block mr-1"></span>{" "}
                         Medium
                       </div>
                       <div
                         onClick={() => handleSelection(index, "Hard")}
-                        className="p-2 hover:bg-gray-100 flex items-center cursor-pointer"
+                        className="py-2 px-6 hover:bg-gray-100 flex items-center cursor-pointer"
                       >
-                        <span className="w-2 h-2 bg-red-500 rounded-full inline-block mr-1"></span>{" "}
+                        <span className="w-2 h-2 text-lg bg-red-500 rounded-full inline-block mr-1"></span>{" "}
                         Hard
                       </div>
                     </div>

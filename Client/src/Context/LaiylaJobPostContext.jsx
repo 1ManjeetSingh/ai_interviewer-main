@@ -316,12 +316,18 @@ export const JobProvider = ({ children }) => {
     }
   };
 
+  const [jupiterStatus, setJupiterStatus] = useState(false);
+
+  const toggleJupiterStatus = () => {
+    setJupiterStatus(!jupiterStatus);
+  }
+
   return (
     <JobContext.Provider value={{
       jobCards, setJobCards, fetchJobPosts, dataCollection, setDataCollection,
       fetchTranscript, conversationId, setConversationId, conversation, jobPost, setJobPost,
       handleGenerateDescription, getTranscriptData, throughLaiyla, setThroughLaiyla, postJobCard,
-      capitalizeWords
+      capitalizeWords, jupiterStatus, setJupiterStatus, toggleJupiterStatus
     }}>
       {children}
     </JobContext.Provider>
