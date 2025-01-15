@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import Jupiter from "../assets/enlargedJupiter.png";
-import Send from "../assets/send.svg";
+import Send from "../assets/Send.svg";
 import WhiteSend from "../assets/whiteSend.svg";
 import Smile from "../assets/smile.svg";
 import starConfetti from '../assets/Star confetti.svg';
