@@ -500,3 +500,116 @@ table td:last-child {
 }
 
 /* after selection ended */
+
+
+/* interview dashboard started */
+
+.pulse-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+  overflow: visible;
+}
+
+.pulse-wrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+}
+
+.pulse-layer {
+  position: absolute;
+  border-radius: 50%;
+  animation: pulse 3s infinite;
+  z-index: -1;
+  opacity: 0.8;
+}
+
+.expanding-border {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #0072dc;
+  border-radius: 50%;
+  box-sizing: border-box;
+  z-index: 1;
+  animation: expand-border 4s ease-out infinite;
+  transform: translate(-50%, -50%) scale(0.1);
+}
+
+.pulse-layer.low {
+  width: 45%;
+  height: 45%;
+  background: linear-gradient(
+    318.5deg,
+    rgba(92, 154, 255, 0.57) 15%,
+    rgba(38, 88, 206, 0.82) 45%
+  );
+  z-index: -1;
+}
+
+.pulse-layer.medium {
+  width: 55%;
+  height: 55%;
+  background: linear-gradient(
+    318.5deg,
+    rgba(226, 175, 255, 1) 0%,
+    rgba(92, 162, 255, 0.63) 69%
+  );
+  z-index: -2;
+}
+
+.pulse-layer.high {
+  width: 65%;
+  height: 65%;
+  background: linear-gradient(
+    144.14deg,
+    rgba(231, 210, 255, 0.5) 15%,
+    rgba(179, 218, 255, 0.38) 40%
+  );
+  z-index: -3;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes expand-border {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* interview dashboard ended */

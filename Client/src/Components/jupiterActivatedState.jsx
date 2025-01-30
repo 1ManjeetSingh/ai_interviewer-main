@@ -122,7 +122,7 @@ const JupiterActivatedState = ({ onEnlargedJupiterClick }) => {
 
     return (
         <div className="h-full mr-10 pl-10">
-            <div className="text-white border border-black h-[80%] bg-black rounded-3xl p-[10px] relative">
+            <div className="text-white border border-black h-[82%] bg-black rounded-3xl p-[10px] relative">
                 <div className="flex justify-end">
                     <img src={starConfetti} alt="" className="w-[29px] h-[29px] mt-[6%] animate-blink" />
                     <p className="mt-[8%] h-16 items-center flex px-[19px] mr-10 bg-white text-black outline-2 w-[225px] outline-dashed outline-[#FFDB5B] rounded-full rounded-tr-md relative">

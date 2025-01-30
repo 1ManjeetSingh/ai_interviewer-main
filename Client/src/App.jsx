@@ -21,6 +21,7 @@ import Skills from "./Pages/Skills";
 import { JobProvider } from "./Context/LaiylaJobPostContext";
 import NonTechnicalPracticeSimulation from "./Pages/nonTechnicalPracticeSimulation";
 import TechnicalPracticeSimulation from "./Pages/technicalPracticeSimulation";
+import Interview from "./Pages/AiInterview_Liyla";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/ManualSkills" element={<Skills />} />
+          <Route path="/Interview" element={<Interview />} />
           <Route path="/afterSelectionUpdated" element={<AfterSelectionUpdated />} />
           <Route path="/applicantPool" element={<ApplicantPool />} />
           <Route path="/aiInterview" element={<AiInterview />} />
